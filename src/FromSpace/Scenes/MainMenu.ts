@@ -47,7 +47,6 @@ export default class MainMenu extends Scene {
         this.alien.position.set(center.x + 200, center.y - 45);
 
         this.title= <Label>this.add.uiElement(UIElementType.LABEL, "mainMenu", {position: new Vec2(center.x, center.y - 225), text: "From Udder Space"});
-        this.title.size.set(1200, 60);
         this.title.borderRadius = 0;
         this.title.textColor = Color.BLACK;
         this.title.fontSize = 48;
@@ -59,7 +58,7 @@ export default class MainMenu extends Scene {
         play.size.set(200, 50);
         play.borderWidth = 2;
         play.borderColor = Color.WHITE;
-        play.backgroundColor = Color.TRANSPARENT;
+        play.backgroundColor = Color.BLACK;
         play.onClickEventId = "play";
 
         // Add level select button
@@ -67,7 +66,7 @@ export default class MainMenu extends Scene {
         level_select.size.set(200, 50);
         level_select.borderWidth = 2;
         level_select.borderColor = Color.WHITE;
-        level_select.backgroundColor = Color.TRANSPARENT;
+        level_select.backgroundColor = Color.BLACK;
         level_select.onClickEventId = "level_select";
 
 
@@ -76,7 +75,7 @@ export default class MainMenu extends Scene {
         about.size.set(200, 50);
         about.borderWidth = 2;
         about.borderColor = Color.WHITE;
-        about.backgroundColor = Color.TRANSPARENT;
+        about.backgroundColor = Color.BLACK;
         about.onClickEventId = "about";
 
         /* ########## ABOUT SCREEN ########## */
@@ -84,25 +83,73 @@ export default class MainMenu extends Scene {
         this.about.setHidden(true);
 
         const aboutHeader = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 250), text: "About"});
-        aboutHeader.textColor = Color.WHITE;
+        aboutHeader.textColor = Color.BLACK;
+        aboutHeader.fontSize = 45;
+
+        const text4 = "Our protagonist, Tim the Cow, has lived a peaceful and uneventful life";
+        const text5 = "on the farm, spending his days grazing and farting to his heart’s content."; 
+        const text6 = "That is until extra-terrestrial cattle rustlers from udder space threaten"; 
+        const text7 = "his way of life and begin abducting his fellow bovines.";
+
+        const text8 = "Tim must reach the alien mothership and defeat the aliens by pushing the"; 
+        const text9 = "large red self-destruct button that will destroy the alien fleet and save"; 
+        const text10 = "his cattle friends. Using his beefy legs, Tim will overcome obstacles"; 
+        const text11 = "and traverse the dangerous landscape all while avoiding being detected"; 
+        const text12 = "by the aliens. Steaks are high; will Tim prevail?";
+
+        const line4 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 200), text: text4});
+        const line5 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 165), text: text5});
+        const line6 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 130), text: text6});
+        const line7 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 95), text: text7});
+        const line8 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 40), text: text8});
+        const line9 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 5), text: text9});
+        const line10 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 30), text: text10});
+        const line11 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 65), text: text11});
+        const line12 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 100), text: text12});
+
+        line4.textColor = Color.BLACK
+        line5.textColor = Color.BLACK;
+        line6.textColor = Color.BLACK;
+        line7.textColor = Color.BLACK;
+        line8.textColor = Color.BLACK;
+        line9.textColor = Color.BLACK;
+        line10.textColor = Color.BLACK;
+        line11.textColor = Color.BLACK;
+        line12.textColor = Color.BLACK;
+        line4.fontSize = 22;
+        line5.fontSize = 22;
+        line6.fontSize = 22;
+        line7.fontSize = 22;
+        line8.fontSize = 22;
+        line9.fontSize = 22;
+        line10.fontSize = 22;
+        line11.fontSize = 22;
+        line12.fontSize = 22;
+
+        
+
 
         const text1 = "This game was created by Peter Christensen, Kevin Mai, and Jacob Richichi";
         const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
         const text3 = "Joe Weaver and Richard McKenna.";
 
-        const line1 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 50), text: text1});
-        const line2 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y), text: text2});
-        const line3 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 50), text: text3});
+        const line1 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 150), text: text1});
+        const line2 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 170), text: text2});
+        const line3 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 190), text: text3});
 
-        line1.textColor = Color.WHITE;
-        line2.textColor = Color.WHITE;
-        line3.textColor = Color.WHITE;
+        line1.textColor = Color.BLACK;
+        line2.textColor = Color.BLACK;
+        line3.textColor = Color.BLACK;
+        line1.fontSize = 18;
+        line2.fontSize = 18;
+        line3.fontSize = 18;
+
 
         const aboutBack = this.add.uiElement(UIElementType.BUTTON, "about", {position: new Vec2(center.x, center.y + 250), text: "Back"});
         aboutBack.size.set(200, 50);
         aboutBack.borderWidth = 2;
         aboutBack.borderColor = Color.WHITE;
-        aboutBack.backgroundColor = Color.TRANSPARENT;
+        aboutBack.backgroundColor = Color.BLACK;
         aboutBack.onClickEventId = "menu";
 
         // Add controls button
@@ -110,20 +157,22 @@ export default class MainMenu extends Scene {
         control.size.set(200, 50);
         control.borderWidth = 2;
         control.borderColor = Color.WHITE;
-        control.backgroundColor = Color.TRANSPARENT;
+        control.backgroundColor = Color.BLACK;
         control.onClickEventId = "control"; 
         
         this.control = this.addUILayer("control");
         this.control.setHidden(true);
 
         const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 250), text: "Controls"});
-        aboutHeader.textColor = Color.WHITE;
+        controlsHeader.textColor = Color.BLACK;
+        controlsHeader.fontSize = 45;
 
-        const controls1 = "Right Click to move"
-        const controls2 = "E to pick up item"
-        const controls3 = "Q to drop item"
-        const controls4 = "1 and 2 keys to select inventory item"
-        const controls5 = "Z and X to swap between characters"
+
+        const controls1 = "WASD to Move"
+        const controls2 = "Spacebar to Jump"
+        const controls3 = "Q to Hide under Box"
+        const controls4 = "E to Fart"
+        const controls5 = "ESC to Pause"
 
         const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 150), text: controls1});
         const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 100), text: controls2});
@@ -131,17 +180,17 @@ export default class MainMenu extends Scene {
         const control_line4 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y), text: controls4});
         const control_line5 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y + 50), text: controls5});
 
-        control_line1.textColor = Color.WHITE;
-        control_line2.textColor = Color.WHITE;
-        control_line3.textColor = Color.WHITE;
-        control_line4.textColor = Color.WHITE;
-        control_line5.textColor = Color.WHITE;
+        control_line1.textColor = Color.BLACK;
+        control_line2.textColor = Color.BLACK;
+        control_line3.textColor = Color.BLACK;
+        control_line4.textColor = Color.BLACK;
+        control_line5.textColor = Color.BLACK;
 
         const controlBack = this.add.uiElement(UIElementType.BUTTON, "control", {position: new Vec2(center.x, center.y + 250), text: "Back"});
         controlBack.size.set(200, 50);
         controlBack.borderWidth = 2;
         controlBack.borderColor = Color.WHITE;
-        controlBack.backgroundColor = Color.TRANSPARENT;
+        controlBack.backgroundColor = Color.BLACK;
         controlBack.onClickEventId = "menu";
     
 
