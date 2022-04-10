@@ -169,7 +169,7 @@ export default class MainMenu extends Scene {
         aboutHeader.fontSize = 45;
 
         const text4 = "Our protagonist, Tim the Cow, has lived a peaceful and uneventful life on the farm, spending ";
-        const text5 = "his days grazing and farting to his heart’s content. That is until extra-terrestrial cattle"; 
+        const text5 = "his days grazing and farting to his heart’s content. That is, until extra-terrestrial cattle"; 
         const text6 = "rustlers from udder space threaten his way of life and begin abducting his fellow bovines."; 
 
         const text7 = "Tim must reach the alien mothership and defeat the aliens by pushing the large red self-destruct"; 
