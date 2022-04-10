@@ -86,26 +86,22 @@ export default class MainMenu extends Scene {
         aboutHeader.textColor = Color.BLACK;
         aboutHeader.fontSize = 45;
 
-        const text4 = "Our protagonist, Tim the Cow, has lived a peaceful and uneventful life";
-        const text5 = "on the farm, spending his days grazing and farting to his heart’s content."; 
-        const text6 = "That is until extra-terrestrial cattle rustlers from udder space threaten"; 
-        const text7 = "his way of life and begin abducting his fellow bovines.";
+        const text4 = "Our protagonist, Tim the Cow, has lived a peaceful and uneventful life on the farm, spending ";
+        const text5 = "his days grazing and farting to his heart’s content. That is until extra-terrestrial cattle"; 
+        const text6 = "rustlers from udder space threaten his way of life and begin abducting his fellow bovines."; 
 
-        const text8 = "Tim must reach the alien mothership and defeat the aliens by pushing the"; 
-        const text9 = "large red self-destruct button that will destroy the alien fleet and save"; 
-        const text10 = "his cattle friends. Using his beefy legs, Tim will overcome obstacles"; 
-        const text11 = "and traverse the dangerous landscape all while avoiding being detected"; 
-        const text12 = "by the aliens. Steaks are high; will Tim prevail?";
+        const text7 = "Tim must reach the alien mothership and defeat the aliens by pushing the large red self-destruct"; 
+        const text8 = "button that will destroy the alien fleet and save his cattle friends. Using his beefy legs, Tim"; 
+        const text9 = "will overcome obstacles and traverse the dangerous landscape all while avoiding being detected"; 
+        const text10 = "by the aliens. Steaks are high; will Tim prevail?";
 
-        const line4 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 200), text: text4});
-        const line5 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 165), text: text5});
-        const line6 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 130), text: text6});
-        const line7 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 95), text: text7});
-        const line8 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 40), text: text8});
-        const line9 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 5), text: text9});
-        const line10 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 30), text: text10});
-        const line11 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 65), text: text11});
-        const line12 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 100), text: text12});
+        const line4 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 180), text: text4});
+        const line5 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 145), text: text5});
+        const line6 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 110), text: text6});
+        const line7 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 40), text: text7});
+        const line8 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y - 5), text: text8});
+        const line9 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 30), text: text9});
+        const line10 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 65), text: text10});
 
         line4.textColor = Color.BLACK
         line5.textColor = Color.BLACK;
@@ -114,8 +110,7 @@ export default class MainMenu extends Scene {
         line8.textColor = Color.BLACK;
         line9.textColor = Color.BLACK;
         line10.textColor = Color.BLACK;
-        line11.textColor = Color.BLACK;
-        line12.textColor = Color.BLACK;
+       
         line4.fontSize = 22;
         line5.fontSize = 22;
         line6.fontSize = 22;
@@ -123,8 +118,7 @@ export default class MainMenu extends Scene {
         line8.fontSize = 22;
         line9.fontSize = 22;
         line10.fontSize = 22;
-        line11.fontSize = 22;
-        line12.fontSize = 22;
+       
 
         
 
@@ -133,9 +127,9 @@ export default class MainMenu extends Scene {
         const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
         const text3 = "Joe Weaver and Richard McKenna.";
 
-        const line1 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 150), text: text1});
-        const line2 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 170), text: text2});
-        const line3 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 190), text: text3});
+        const line1 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 120), text: text1});
+        const line2 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 140), text: text2});
+        const line3 = <Label>this.add.uiElement(UIElementType.LABEL, "about", {position: new Vec2(center.x, center.y + 160), text: text3});
 
         line1.textColor = Color.BLACK;
         line2.textColor = Color.BLACK;
