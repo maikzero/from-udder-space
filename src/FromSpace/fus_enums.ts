@@ -4,5 +4,7 @@ export enum FUS_Events {
     LEVEL_END = "LevelEnd",
     PLAYER_ENTERED_LEVEL_END = "PlayerEnteredLevelEnd",
     PICKUP_BOX = "PickupBox",
-    DROP_BOX = "DropBox"
+    DROP_BOX = "DropBox",
+    EQUIP_BOX = "EquipBox",
+    REMOVE_BOX = "RemoveBox"
 }

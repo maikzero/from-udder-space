@@ -11,6 +11,7 @@ export default class Jump extends InAir {
 
 	onEnter(options: Record<string, any>): void {
 		this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
+		this.owner.animation.play('idle', true)
 	}
 
     update(deltaT: number): void {

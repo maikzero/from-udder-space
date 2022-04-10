@@ -28,15 +28,9 @@ export default class Level2 extends GameLevel {
 
         super.startScene();
 
-        this.initBoxes();
-
         this.addLevelEnd(new Vec2(60, 12), new Vec2(2, 2));
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
-    }
-
-    initBoxes(): void {
-        this.boxes = []
     }
 
     updateScene(deltaT: number): void {

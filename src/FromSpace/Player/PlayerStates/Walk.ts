@@ -9,6 +9,7 @@ export default class Walk extends OnGround {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
+		this.owner.animation.play('walk', true)
 	}
 
     update(deltaT: number): void {
@@ -24,6 +25,12 @@ export default class Walk extends OnGround {
 				this.finished(PlayerStates.RUN);
 			}
 		}
+
+		if(Input.isKeyJustPressed("E")){
+			this.finished(PlayerStates.IN_BOX)
+		}
+
+		
 
 		this.parent.velocity.x = dir.x * this.parent.speed
 

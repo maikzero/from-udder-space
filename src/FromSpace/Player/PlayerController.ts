@@ -1,10 +1,13 @@
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import Input from "../../Wolfie2D/Input/Input";
 import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import { FUS_Events } from "../fus_enums";
 import Fall from "./PlayerStates/Fall";
 import Idle from "./PlayerStates/Idle";
 import InAir from "./PlayerStates/InAir";
+import InBox from "./PlayerStates/InBox";
 import Jump from "./PlayerStates/Jump";
 import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
@@ -21,7 +24,8 @@ export enum PlayerStates {
     RUN = "run",
     JUMP = "jump",
     FALL = "fall",
-    PREVIOUS = "previous"
+    PREVIOUS = "previous",
+    IN_BOX = "in_box"
 }
 
 export default class PlayerController extends StateMachineAI {
@@ -38,6 +42,9 @@ export default class PlayerController extends StateMachineAI {
         this.owner = owner;
 
         this.initializePlatformer();
+
+        this.receiver.subscribe(FUS_Events.EQUIP_BOX)
+        this.receiver.subscribe(FUS_Events.REMOVE_BOX)
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         
@@ -58,6 +65,8 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.JUMP, jump);
         let fall = new Fall(this, this.owner);
         this.addState(PlayerStates.FALL, fall);
+        let inBox = new InBox(this, this.owner)
+        this.addState(PlayerStates.IN_BOX, inBox)
         
         this.initialize(PlayerStates.IDLE);
     }
@@ -69,14 +78,16 @@ export default class PlayerController extends StateMachineAI {
             this.stack.push(this.stateMap.get(stateName));
         }
 
+        // Dont let player equip box in mid air
+        if((stateName === PlayerStates.IN_BOX) && !(this.stack.peek() instanceof InAir)){
+            this.stack.push(this.stateMap.get(stateName))
+        }
+
         super.changeState(stateName);
     }
 
     update(deltaT: number): void {
 		super.update(deltaT);
-
-
-
     }
 
 

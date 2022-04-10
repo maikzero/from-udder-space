@@ -22,7 +22,7 @@ export default abstract class PlayerState extends State {
 	}
 
     handleInput(event: GameEvent): void {
-
+		
     }
 
     /** 
@@ -35,16 +35,8 @@ export default abstract class PlayerState extends State {
 		return direction;
 	}
 
-    /**This function is left to be overrided by any of the classes that extend this base class. That way, each
-	 * class can swap their animations accordingly.
-	*/
-	updateSuit() {
-		
-	}
-
 	update(deltaT: number): void {
-		// Do gravity
-		this.updateSuit();
+
 		if (this.positionTimer.isStopped()){
 			this.emitter.fireEvent(FUS_Events.PLAYER_MOVE, {position: this.owner.position.clone()});
 			this.positionTimer.start();

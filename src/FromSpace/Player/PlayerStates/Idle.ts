@@ -8,6 +8,7 @@ export default class Idle extends OnGround {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
+		this.owner.animation.play('idle', true)
 	}
 
     update(deltaT: number): void {
@@ -26,6 +27,10 @@ export default class Idle extends OnGround {
 		this.parent.velocity.x = 0;
 
 		this.owner.move(this.parent.velocity.scaled(deltaT));
+
+		if(Input.isKeyJustPressed("E")){
+			this.finished(PlayerStates.IN_BOX)
+		}
 	}
 
 	onExit(): Record<string, any> {
