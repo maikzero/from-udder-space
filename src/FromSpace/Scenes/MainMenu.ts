@@ -18,7 +18,7 @@ export default class MainMenu extends Scene {
     private mainMenu: Layer;
     private about: Layer;
     private control: Layer;
-    private level_select: Layer
+    private level_select: Layer;
     private cow: Sprite;
     private alien: Sprite;
     private logo: Sprite;
