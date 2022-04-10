@@ -10,6 +10,16 @@ dist/*
 # Include the built-in asset folder
 !dist/builtin/
 
+#include html files
+!dist/html_files/
+
+#include final project assets
+!dist/final project assets/
+
+#include pdf_assets
+!dist/pdf_assets/
+
+
 ### IF YOU ARE MAKING A PROJECT, YOU MAY WANT TO UNCOMMENT THIS LINE ###
 # !dist/assets/
 
