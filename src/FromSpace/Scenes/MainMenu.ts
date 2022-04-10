@@ -17,6 +17,7 @@ export default class MainMenu extends Scene {
     private mainMenu: Layer;
     private about: Layer;
     private control: Layer;
+    private level_select: Layer
     private cow: Sprite;
     private alien: Sprite;
     private title: Label;
@@ -69,6 +70,63 @@ export default class MainMenu extends Scene {
         level_select.backgroundColor = Color.BLACK;
         level_select.onClickEventId = "level_select";
 
+         /* ########## LEVEL SELECT SCREEN ########## */
+        this.level_select = this.addUILayer("level_select");
+        this.level_select.setHidden(true);
+        
+        const levelHeader = <Label>this.add.uiElement(UIElementType.LABEL, "level_select", {position: new Vec2(center.x, center.y - 250), text: "Level Select"});
+        levelHeader.textColor = Color.BLACK;
+        levelHeader.fontSize = 45;
+
+        const level1 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 150), text: "Level 1"});
+        level1.size.set(200, 50);
+        level1.borderWidth = 2;
+        level1.borderColor = Color.WHITE;
+        level1.backgroundColor = Color.BLACK;
+        level1.onClickEventId = "level1";
+
+        const level2 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 150), text: "Level 2"});
+        level2.size.set(200, 50);
+        level2.borderWidth = 2;
+        level2.borderColor = Color.WHITE;
+        level2.backgroundColor = Color.BLACK;
+        level2.onClickEventId = "level2";
+
+        const level3 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 50), text: "Level 3"});
+        level3.size.set(200, 50);
+        level3.borderWidth = 2;
+        level3.borderColor = Color.WHITE;
+        level3.backgroundColor = Color.BLACK;
+        level3.onClickEventId = "level3";
+
+        const level4 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 50), text: "Level 4"});
+        level4.size.set(200, 50);
+        level4.borderWidth = 2;
+        level4.borderColor = Color.WHITE;
+        level4.backgroundColor = Color.BLACK;
+        level4.onClickEventId = "level4";
+
+        const level5 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y + 50), text: "Level 5"});
+        level5.size.set(200, 50);
+        level5.borderWidth = 2;
+        level5.borderColor = Color.WHITE;
+        level5.backgroundColor = Color.BLACK;
+        level5.onClickEventId = "level5";
+
+        const level6 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y + 50), text: "Level 6"});
+        level6.size.set(200, 50);
+        level6.borderWidth = 2;
+        level6.borderColor = Color.WHITE;
+        level6.backgroundColor = Color.BLACK;
+        level6.onClickEventId = "level6";
+
+        const levelBack = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        levelBack.size.set(200, 50);
+        levelBack.borderWidth = 2;
+        levelBack.borderColor = Color.WHITE;
+        levelBack.backgroundColor = Color.BLACK;
+        levelBack.onClickEventId = "menu";
+
 
         // Add about button
         const about = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x - 200, center.y + 175), text: "About"});
@@ -119,10 +177,6 @@ export default class MainMenu extends Scene {
         line9.fontSize = 22;
         line10.fontSize = 22;
        
-
-        
-
-
         const text1 = "This game was created by Peter Christensen, Kevin Mai, and Jacob Richichi";
         const text2 = "using the Wolfie2D game engine, a TypeScript game engine created by";
         const text3 = "Joe Weaver and Richard McKenna.";
@@ -153,7 +207,8 @@ export default class MainMenu extends Scene {
         control.borderColor = Color.WHITE;
         control.backgroundColor = Color.BLACK;
         control.onClickEventId = "control"; 
-        
+    
+         /* ########## CONTROLS SCREEN ########## */
         this.control = this.addUILayer("control");
         this.control.setHidden(true);
 
@@ -193,7 +248,7 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
         this.receiver.subscribe("control");
-        this.receiver.subscribe("level_seelct")
+        this.receiver.subscribe("level_select")
 
         // Scene has started, so start playing music
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
@@ -217,10 +272,15 @@ export default class MainMenu extends Scene {
                 this.mainMenu.setHidden(false);
                 this.about.setHidden(true);
                 this.control.setHidden(true);
+                this.level_select.setHidden(true)
             }
             if(event.type === "control"){
                 this.mainMenu.setHidden(true);
                 this.control.setHidden(false);
+            }
+            if(event.type === "level_select"){
+                this.mainMenu.setHidden(true);
+                this.level_select.setHidden(false);
             }
 
         }
