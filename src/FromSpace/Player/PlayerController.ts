@@ -31,6 +31,8 @@ export default class PlayerController extends StateMachineAI {
 	MIN_SPEED: number = 200;
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
+    hidden: Boolean = false;
+    boxUnder: GameNode = null;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
@@ -72,6 +74,9 @@ export default class PlayerController extends StateMachineAI {
 
     update(deltaT: number): void {
 		super.update(deltaT);
+
+
+
     }
 
 

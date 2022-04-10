@@ -4,6 +4,10 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Level2 from "./Level2";
+import BoxController from "../Objects/BoxController";
+import Input from "../../Wolfie2D/Input/Input";
+import PlayerController from "../Player/PlayerController";
+import { FUS_Events } from "../fus_enums";
 
 export default class Level1 extends GameLevel {
     
@@ -41,10 +45,16 @@ export default class Level1 extends GameLevel {
 
         this.nextLevel = Level2;
 
+        this.initBoxes()
+
         // TODO: Initialing enemy pools and positions
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
 
+    }
+
+    initBoxes(): void {
+        this.boxes = []
     }
 
     updateScene(deltaT: number): void {

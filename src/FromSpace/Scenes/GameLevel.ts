@@ -14,6 +14,7 @@ import Timer from "../../Wolfie2D/Timing/Timer";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import BoxController from "../Objects/BoxController";
 
 // TODO: Possible Player Stamina
 // TODO: Puzzle elements, tasks to do before entering level end
@@ -37,6 +38,8 @@ export default class GameLevel extends Scene {
     // Screen fading timer
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
+
+    protected boxes: Array<BoxController>;
 
     startScene(): void {
         this.initLayers();
@@ -92,6 +95,23 @@ export default class GameLevel extends Scene {
                     break;
             }
         }
+
+        if(Input.isKeyJustPressed("E")){
+            // Dropping the box
+            if((<PlayerController>this.player._ai).hidden){
+
+            }
+
+            // Trying to pick up box
+            else{
+                for (let box of this.boxes) {
+                    if (this.player.collisionShape.overlaps(box.owner.collisionShape)) {
+                        // We overlap it, try to pick it up
+                        this.emitter.fireEvent(FUS_Events.PICKUP_BOX, { box: box })
+                    }
+                }
+            }
+        }
     }
 
     protected initLayers(): void {
@@ -100,6 +120,11 @@ export default class GameLevel extends Scene {
 
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
+    }
+
+    // Needs to be overridden
+    protected initBoxes(): void {
+
     }
 
     /**
@@ -114,7 +139,9 @@ export default class GameLevel extends Scene {
      */
     protected subscribeToEvents(){
         this.receiver.subscribe([
-
+            FUS_Events.PLAYER_ENTERED_LEVEL_END,
+            FUS_Events.LEVEL_END,
+            FUS_Events.LEVEL_START
         ])
     }
 
