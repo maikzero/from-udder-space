@@ -14,12 +14,14 @@ import Level1 from "./Level1";
 export default class MainMenu extends Scene {
 
     animatedSprite: AnimatedSprite;
+    private startScreen: Layer;
     private mainMenu: Layer;
     private about: Layer;
     private control: Layer;
     private level_select: Layer
     private cow: Sprite;
     private alien: Sprite;
+    private logo: Sprite;
     private title: Label;
 
     loadScene(): void {
@@ -27,17 +29,37 @@ export default class MainMenu extends Scene {
         //this.load.audio("menu", "hw5_assets/music/scroller-music-2.mp3");
         this.load.image("cow", "demo_assets/images/Cow_face.png");
         this.load.image("alien", "demo_assets/images/Alien_face.png");
+        this.load.image("logo", "demo_assets/images/Cow_Logo.png");
     }
 
     startScene(): void {
-        this.mainMenu = this.addUILayer("mainMenu");
-
         // Center the viewport
         let size = this.viewport.getHalfSize();
         this.viewport.setFocus(size);
         const center = this.viewport.getCenter();
-
+ 
         this.viewport.setZoomLevel(1);
+
+        this.startScreen = this.addUILayer("start");
+        this.logo = this.add.sprite("logo", "start");
+        this.logo.position.set(center.x, center.y - 80);
+
+        this.title= <Label>this.add.uiElement(UIElementType.LABEL, "start", {position: new Vec2(center.x, center.y + 150), text: "From Udder Space"});
+        this.title.borderRadius = 0;
+        this.title.textColor = Color.BLACK;
+        this.title.fontSize = 60;
+        this.title.font = "VT323";
+
+        const start = this.add.uiElement(UIElementType.BUTTON, "start", {position: new Vec2(center.x, center.y + 250), text: "Start"});
+        start.size.set(200, 50);
+        start.borderWidth = 2;
+        start.borderColor = Color.WHITE;
+        start.backgroundColor = Color.BLACK;
+        start.onClickEventId = "menu";
+
+
+        this.mainMenu = this.addUILayer("mainMenu");
+        this.mainMenu.setHidden(true);
 
         // TODO UI Building for different menu's goes here
         // Add cow and alien logos
@@ -47,11 +69,13 @@ export default class MainMenu extends Scene {
         this.cow.position.set(center.x - 200, center.y - 80);
         this.alien.position.set(center.x + 200, center.y - 45);
 
+        /*
         this.title= <Label>this.add.uiElement(UIElementType.LABEL, "mainMenu", {position: new Vec2(center.x, center.y - 225), text: "From Udder Space"});
         this.title.borderRadius = 0;
         this.title.textColor = Color.BLACK;
         this.title.fontSize = 48;
         this.title.font = "VT323";
+        */
 
 
         // Add play button, and give it an event to emit on press
@@ -270,6 +294,7 @@ export default class MainMenu extends Scene {
 
             if(event.type === "menu"){
                 this.mainMenu.setHidden(false);
+                this.startScreen.setHidden(true);
                 this.about.setHidden(true);
                 this.control.setHidden(true);
                 this.level_select.setHidden(true)
