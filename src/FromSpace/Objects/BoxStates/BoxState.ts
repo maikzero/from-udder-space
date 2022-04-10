@@ -2,6 +2,7 @@ import State from "../../../Wolfie2D/DataTypes/State/State";
 import StateMachine from "../../../Wolfie2D/DataTypes/State/StateMachine";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import InUse from "./InUse";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
 import { FUS_Color } from "../../fus_color";
@@ -19,8 +20,14 @@ export default abstract class BoxState extends State {
 
     handleInput(event: GameEvent): void {
         if(event.type === FUS_Events.PICKUP_BOX){
+            // If the box picked up matches this box object, switch to IN_USE state
             if((<BoxController>event.data.get('box')) == this.parent){
                 this.finished(BoxStates.IN_USE)
+            }
+        }
+        else if(event.type === FUS_Events.DROP_BOX){
+            if(this.parent.getState() instanceof InUse){
+
             }
         }
     }

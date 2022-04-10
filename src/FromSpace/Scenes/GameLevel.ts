@@ -99,7 +99,7 @@ export default class GameLevel extends Scene {
         if(Input.isKeyJustPressed("E")){
             // Dropping the box
             if((<PlayerController>this.player._ai).hidden){
-
+                this.emitter.fireEvent(FUS_Events.DROP_BOX)
             }
 
             // Trying to pick up box

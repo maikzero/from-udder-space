@@ -1,6 +1,7 @@
 import GameNode from "../../Wolfie2D/Nodes/GameNode";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
+import State from "../../Wolfie2D/DataTypes/State/State";
 import { FUS_Events } from "../fus_enums";
 import { FUS_Color } from "../fus_color";
 import Idle from "./BoxStates/Idle";
@@ -52,4 +53,8 @@ export default class BoxController extends StateMachineAI {
 		super.update(deltaT);
         this.getPlayerPosition()
 	}
+
+    getState(): State {
+        return this.currentState
+    }
 }
