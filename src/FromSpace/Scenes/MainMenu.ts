@@ -7,6 +7,7 @@ import Scene from "../../Wolfie2D/Scene/Scene";
 import Color from "../../Wolfie2D/Utils/Color";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import Layer from "../../Wolfie2D/Scene/Layer";
+import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Level1 from "./Level1";
 
 
@@ -16,10 +17,15 @@ export default class MainMenu extends Scene {
     private mainMenu: Layer;
     private about: Layer;
     private control: Layer;
+    private cow: Sprite;
+    private alien: Sprite;
+    private title: Label;
 
     loadScene(): void {
-        // Load the menu song
+        // Load the menu song and images
         //this.load.audio("menu", "hw5_assets/music/scroller-music-2.mp3");
+        this.load.image("cow", "demo_assets/images/Cow_face.png");
+        this.load.image("alien", "demo_assets/images/Alien_face.png");
     }
 
     startScene(): void {
@@ -33,8 +39,23 @@ export default class MainMenu extends Scene {
         this.viewport.setZoomLevel(1);
 
         // TODO UI Building for different menu's goes here
+        // Add cow and alien logos
+        this.cow = this.add.sprite("cow", "mainMenu");
+        this.alien = this.add.sprite("alien", "mainMenu");
+
+        this.cow.position.set(center.x - 200, center.y - 80);
+        this.alien.position.set(center.x + 200, center.y - 45);
+
+        this.title= <Label>this.add.uiElement(UIElementType.LABEL, "mainMenu", {position: new Vec2(center.x, center.y - 225), text: "From Udder Space"});
+        this.title.size.set(1200, 60);
+        this.title.borderRadius = 0;
+        this.title.textColor = Color.BLACK;
+        this.title.fontSize = 48;
+        this.title.font = "VT323";
+
+
         // Add play button, and give it an event to emit on press
-        const play = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x - 200, center.y + 50), text: "Play"});
+        const play = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x - 200, center.y + 75), text: "Play"});
         play.size.set(200, 50);
         play.borderWidth = 2;
         play.borderColor = Color.WHITE;
@@ -42,7 +63,7 @@ export default class MainMenu extends Scene {
         play.onClickEventId = "play";
 
         // Add level select button
-        const level_select = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x + 200, center.y + 50), text: "Level Select"});
+        const level_select = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x + 200, center.y + 75), text: "Level Select"});
         level_select.size.set(200, 50);
         level_select.borderWidth = 2;
         level_select.borderColor = Color.WHITE;
@@ -51,7 +72,7 @@ export default class MainMenu extends Scene {
 
 
         // Add about button
-        const about = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x - 200, center.y + 150), text: "About"});
+        const about = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x - 200, center.y + 175), text: "About"});
         about.size.set(200, 50);
         about.borderWidth = 2;
         about.borderColor = Color.WHITE;
@@ -85,7 +106,7 @@ export default class MainMenu extends Scene {
         aboutBack.onClickEventId = "menu";
 
         // Add controls button
-        const control = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x + 200, center.y + 150), text: "Controls"});
+        const control = this.add.uiElement(UIElementType.BUTTON, "mainMenu", {position: new Vec2(center.x + 200, center.y + 175), text: "Controls"});
         control.size.set(200, 50);
         control.borderWidth = 2;
         control.borderColor = Color.WHITE;
