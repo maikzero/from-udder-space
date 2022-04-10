@@ -102,42 +102,42 @@ export default class MainMenu extends Scene {
         levelHeader.textColor = Color.BLACK;
         levelHeader.fontSize = 45;
 
-        const level1 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 150), text: "Level 1"});
+        const level1 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 120), text: "Level 1"});
         level1.size.set(200, 50);
         level1.borderWidth = 2;
         level1.borderColor = Color.WHITE;
         level1.backgroundColor = Color.BLACK;
         level1.onClickEventId = "level1";
 
-        const level2 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 150), text: "Level 2"});
+        const level2 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 120), text: "Level 2"});
         level2.size.set(200, 50);
         level2.borderWidth = 2;
         level2.borderColor = Color.WHITE;
         level2.backgroundColor = Color.BLACK;
         level2.onClickEventId = "level2";
 
-        const level3 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 50), text: "Level 3"});
+        const level3 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y - 20), text: "Level 3"});
         level3.size.set(200, 50);
         level3.borderWidth = 2;
         level3.borderColor = Color.WHITE;
         level3.backgroundColor = Color.BLACK;
         level3.onClickEventId = "level3";
 
-        const level4 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 50), text: "Level 4"});
+        const level4 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y - 20), text: "Level 4"});
         level4.size.set(200, 50);
         level4.borderWidth = 2;
         level4.borderColor = Color.WHITE;
         level4.backgroundColor = Color.BLACK;
         level4.onClickEventId = "level4";
 
-        const level5 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y + 50), text: "Level 5"});
+        const level5 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x - 200, center.y + 80), text: "Level 5"});
         level5.size.set(200, 50);
         level5.borderWidth = 2;
         level5.borderColor = Color.WHITE;
         level5.backgroundColor = Color.BLACK;
         level5.onClickEventId = "level5";
 
-        const level6 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y + 50), text: "Level 6"});
+        const level6 = this.add.uiElement(UIElementType.BUTTON, "level_select", {position: new Vec2(center.x + 200, center.y + 80), text: "Level 6"});
         level6.size.set(200, 50);
         level6.borderWidth = 2;
         level6.borderColor = Color.WHITE;
