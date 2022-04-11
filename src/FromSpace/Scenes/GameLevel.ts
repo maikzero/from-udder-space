@@ -41,7 +41,6 @@ export default class GameLevel extends Scene {
 
     // Pause Screen
     protected pause: Layer;
-    //protected pauseBack: Button;
 
     startScene(): void {
         this.initLayers();
@@ -50,7 +49,7 @@ export default class GameLevel extends Scene {
         this.subscribeToEvents();
         this.addUI();
 
-        //this.pause.setHidden(true);
+        this.pause.setHidden(true);
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -149,7 +148,7 @@ export default class GameLevel extends Scene {
         this.addUILayer("UI");
 
         // Add a layer for Pause screen
-        this.pause = this.addUILayer('pause');
+        this.pause = this.addUILayer("pause");
 
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
