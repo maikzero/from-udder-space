@@ -32,6 +32,9 @@ export default abstract class PlayerState extends State {
 		let direction = Vec2.ZERO;
 		direction.x = (Input.isPressed("left") ? -1 : 0) + (Input.isPressed("right") ? 1 : 0);
 		direction.y = (Input.isJustPressed("jump") ? -1 : 0);
+		if(Input.isJustPressed("jump")){
+			console.log('hi')
+		}
 		return direction;
 	}
 

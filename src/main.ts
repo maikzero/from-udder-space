@@ -13,8 +13,7 @@ import MainMenu from "./FromSpace/Scenes/MainMenu";
         canvasSize: {x: 1200, y: 800},          // The size of the game
         clearColor: {r: 90, g: 90, b: 90},   // The color the game clears to
         inputs: [
-            {name: "forward", keys: ["w"]},
-            {name: "backward", keys: ["s"]},
+            {name: "jump", keys: ["w"]},
             {name: "left", keys: ["a"]},
             {name: "right", keys: ["d"]},
             {name: "pickup", keys: ["e"]},

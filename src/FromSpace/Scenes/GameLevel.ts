@@ -86,16 +86,21 @@ export default class GameLevel extends Scene {
                     {
                         // Go to the next level
                         if(this.nextLevel){
-                            this.sceneManager.changeToScene(this.nextLevel, {}, {});
+                            let sceneOptions = {
+                                physics: {
+                                    groupNames: ["ground", "player"],
+                                    collisions:
+                                    [
+                                        [0, 1, 1],
+                                        [1, 0, 0]
+                                    ]
+                                }
+                            }
+                            this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
                         }
                     }
                     break;
             }
-        }
-
-        if(Input.isKeyJustPressed("E")){
-            
-            
         }
     }
 

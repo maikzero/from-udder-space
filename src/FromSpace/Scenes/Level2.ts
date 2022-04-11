@@ -13,7 +13,7 @@ export default class Level2 extends GameLevel {
      */
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level2", "hw5_assets/tilemaps/level2.json");
+      //  this.load.tilemap("level2", "hw5_assets/tilemaps/level2.json");
         /*this.load.spritesheet("player", "hw5_assets/spritesheets/spike.json");
         this.load.audio("jump", "hw5_assets/sounds/jump.wav");
         this.load.audio("player_death", "hw5_assets/sounds/player_death.wav");*/
@@ -21,7 +21,7 @@ export default class Level2 extends GameLevel {
 
     startScene(): void {
         // Add the level 2 tilemap
-        this.add.tilemap("level2", new Vec2(2, 2));
+        this.add.tilemap("level1", new Vec2(2, 2));
         this.viewport.setBounds(0, 0, 64*32, 20*32);
 
         this.playerSpawn = new Vec2(4*32, 15*32);

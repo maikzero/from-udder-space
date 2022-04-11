@@ -13,18 +13,16 @@ export default class Level1 extends GameLevel {
     // TODO: Add enemy sprites and various other sound effects
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level1", "hw5_assets/tilemaps/level1.json");
-        this.load.spritesheet("player", "hw5_assets/spritesheets/spike.json");
-        this.load.audio("jump", "hw5_assets/sounds/jump.wav");
-        this.load.audio("player_death", "hw5_assets/sounds/player_death.wav");
-        this.load.audio("level_music", "hw5_assets/music/scroller-music-2.mp3");
+        //this.load.tilemap("level1", "final_project_assets/.json");
+        this.load.tilemap("level1", "demo_assets/tilemaps/platformer/platformer.json");
+        this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
+        this.load.audio("jump", "demo_assets/sounds/jump.wav");
     }
 
     unloadScene(){
         this.resourceManager.keepSpritesheet("player")
         this.resourceManager.keepAudio("jump")
-        this.resourceManager.keepAudio("player_death")
-        this.resourceManager.keepAudio("level_music")
+        this.resourceManager.keepTilemap("level1")
     }
 
     startScene(): void {
@@ -46,7 +44,7 @@ export default class Level1 extends GameLevel {
 
         // TODO: Initialing enemy pools and positions
 
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
+        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
 
     }
 

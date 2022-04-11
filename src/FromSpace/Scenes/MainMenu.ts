@@ -283,9 +283,19 @@ export default class MainMenu extends Scene {
 
             console.log(event);
 
-            /*if(event.type === "play"){
-                this.sceneManager.changeToScene(hw4_scene, {});
-            }*/
+            if(event.type === "play"){
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player"],
+                        collisions:
+                        [
+                            [0, 1, 1],
+                            [1, 0, 0]
+                        ]
+                    }
+                }
+                this.sceneManager.changeToScene(Level1, {}, sceneOptions);
+            }
 
             if(event.type === "about"){
                 this.about.setHidden(false);
