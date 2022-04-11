@@ -14,7 +14,10 @@ export default class Level1 extends GameLevel {
     loadScene(): void {
         // Load resources
         //this.load.tilemap("level1", "final_project_assets/.json");
+<<<<<<< HEAD
+=======
         //this.load.tilemap("level1", "demo_assets/tilemaps/platformer/platformer.json");
+>>>>>>> 6992cdf651ff7fb0e817025ce3a1671a17217309
         this.load.tilemap("level1", "final project assets/barn.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
@@ -34,12 +37,16 @@ export default class Level1 extends GameLevel {
         // TODO: Adding totals for tasks ie switches
 
         // TODO: Different Spawn
+<<<<<<< HEAD
+        this.playerSpawn = new Vec2(8*32, 8*32);
+=======
         this.playerSpawn = new Vec2(5*32, 5*32);
+>>>>>>> 6992cdf651ff7fb0e817025ce3a1671a17217309
 
         super.startScene();
 
         // TODO: Different level end
-        this.addLevelEnd(new Vec2(60, 13), new Vec2(5, 5));
+       // this.addLevelEnd(new Vec2(60, 13), new Vec2(5, 5));
 
         this.nextLevel = Level2;
 
