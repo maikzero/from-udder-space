@@ -17,20 +17,22 @@ export default class Walk extends OnGround {
 		let dir = this.getInputDirection();
 
 		if(dir.isZero()){
+			console.log('walk')
 			this.finished(PlayerStates.IDLE);
 		} else {
-            // TODO Add Stamina Check here?
-
 			if(Input.isPressed("run")){
+				console.log('walk')
 				this.finished(PlayerStates.RUN);
 			}
 		}
 
-		if(Input.isKeyJustPressed("E")){
+		if(Input.isJustPressed("hide")){
+			console.log('walk rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
-
-		
+		else if(Input.isJustPressed("attack")){
+			this.finished(PlayerStates.ATTACK)
+		}
 
 		this.parent.velocity.x = dir.x * this.parent.speed
 

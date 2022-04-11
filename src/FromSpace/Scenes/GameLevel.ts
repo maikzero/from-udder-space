@@ -14,6 +14,7 @@ import Timer from "../../Wolfie2D/Timing/Timer";
 import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import Layer from "../../Wolfie2D/Scene/Layer";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -36,6 +37,9 @@ export default class GameLevel extends Scene {
     // Screen fading timer
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
+
+    // Pause Screen
+    protected pauseScreen: Layer;
 
 
     startScene(): void {
@@ -64,6 +68,28 @@ export default class GameLevel extends Scene {
             
             // TODO, Event handling
             switch(event.type){
+                case FUS_Events.PAUSE:
+                    {
+                        this.pauseScreen.setHidden(false);
+                    }
+                    break;
+                case FUS_Events.PLAY_HIDE:
+                    {
+                        this.player.animation.playIfNotAlready("hiding", true)
+                    }
+                    break;
+                case FUS_Events.ATTACK_FINISHED:
+                    {
+                        (<PlayerController>this.player._ai).attacking = false
+                        console.log('hi')
+                    }
+                    break;
+
+                case FUS_Events.FINISHED_HIDING:
+                    {
+                        (<PlayerController>this.player._ai).hiding = false
+                    }   
+                    break 
                 // Level end area assumes the sole goal is just to get to this area, once entered, level is over
                 case FUS_Events.PLAYER_ENTERED_LEVEL_END:
                     {   
@@ -127,11 +153,29 @@ export default class GameLevel extends Scene {
         this.receiver.subscribe([
             FUS_Events.PLAYER_ENTERED_LEVEL_END,
             FUS_Events.LEVEL_END,
-            FUS_Events.LEVEL_START
+            FUS_Events.LEVEL_START,
+            FUS_Events.PLAY_HIDE,
+            FUS_Events.PAUSE,
+            FUS_Events.ATTACK_FINISHED,
+            FUS_Events.FINISHED_HIDING
         ])
     }
 
     protected addUI(){
+        // Pause Screen
+        const center = this.viewport.getCenter();
+ 
+        this.pauseScreen = this.addUILayer("pause");
+        const pause = this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x, center.y + 250), text: "Back"});
+        pause.size.set(200, 50);
+        pause.borderWidth = 2;
+        pause.borderColor = Color.WHITE;
+        pause.backgroundColor = Color.BLACK;
+        pause.onClickEventId = "menu";
+        this.pauseScreen.setHidden(true);
+
+
+
         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(-300, 200), text: "Level Complete"});
         this.levelEndLabel.size.set(1200, 60);
