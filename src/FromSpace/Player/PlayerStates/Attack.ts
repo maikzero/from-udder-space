@@ -2,15 +2,16 @@ import Input from "../../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { FUS_Events } from "../../fus_enums";
 import { PlayerStates } from "../PlayerController";
-import OnGround from "./OnGround";
 import PlayerState from "./PlayerState";
+import OnGround from "./OnGround";
+
 
 export default class InBox extends PlayerState {
-	owner: AnimatedSprite;
+    owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-		this.parent.speed = this.parent.MIN_SPEED;;
-        this.owner.animation.play('hide', false, FUS_Events.PLAY_HIDE)
+        this.owner.animation.play('fart', false, FUS_Events.ATTACK_FINISHED)
+        this.parent.attacking = true
 	}
 
     update(deltaT: number): void {
@@ -18,19 +19,14 @@ export default class InBox extends PlayerState {
 			this.parent.velocity.y = 0;
 		}
         super.update(deltaT)
-        if(Input.isJustPressed("unhide")){
-            console.log('inbox')
-			this.finished(PlayerStates.IDLE)
-		}
-
         this.parent.velocity.x = 0;
-
+        if(!this.parent.attacking){
+            this.finished(PlayerStates.IDLE)
+        }
     }
 
     onExit(): Record<string, any> {
-        this.owner.animation.stop();
-        this.owner.animation.play('unhide', false);
-
-		return {};
-	}
+        console.log('gtfo')
+        return { }
+    }
 }

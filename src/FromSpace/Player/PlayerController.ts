@@ -11,6 +11,7 @@ import InBox from "./PlayerStates/InBox";
 import Jump from "./PlayerStates/Jump";
 import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
+import Attack from "./PlayerStates/Attack";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -25,7 +26,8 @@ export enum PlayerStates {
     JUMP = "jump",
     FALL = "fall",
     PREVIOUS = "previous",
-    IN_BOX = "in_box"
+    IN_BOX = "in_box",
+    ATTACK = "attack"
 }
 
 export default class PlayerController extends StateMachineAI {
@@ -35,8 +37,7 @@ export default class PlayerController extends StateMachineAI {
 	MIN_SPEED: number = 200;
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
-    hidden: Boolean = false;
-    boxUnder: GameNode = null;
+    attacking: Boolean = false;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
@@ -45,6 +46,7 @@ export default class PlayerController extends StateMachineAI {
 
         this.receiver.subscribe(FUS_Events.EQUIP_BOX)
         this.receiver.subscribe(FUS_Events.REMOVE_BOX)
+        this.receiver.subscribe(FUS_Events.ATTACK_FINISHED)
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         
@@ -67,6 +69,8 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.FALL, fall);
         let inBox = new InBox(this, this.owner)
         this.addState(PlayerStates.IN_BOX, inBox)
+        let attack = new Attack(this, this.owner)
+        this.addState(PlayerStates.ATTACK, attack)
         
         this.initialize(PlayerStates.IDLE);
     }
@@ -74,6 +78,8 @@ export default class PlayerController extends StateMachineAI {
     changeState(stateName: string): void {
         // If we jump or fall, push the state so we can go back to our current state later
         // unless we're going from jump to fall or something
+        console.log('changing with')
+        console.log(stateName)
         if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof InAir)){
             this.stack.push(this.stateMap.get(stateName));
         }
@@ -88,6 +94,19 @@ export default class PlayerController extends StateMachineAI {
 
     update(deltaT: number): void {
 		super.update(deltaT);
+        while(this.receiver.hasNextEvent()){
+            console.log('next event')
+            let event = this.receiver.getNextEvent();
+
+            switch(event.type){
+                case FUS_Events.ATTACK_FINISHED:
+                    {
+                        console.log('got attack finish')
+                        this.changeState(PlayerStates.IDLE)
+                    }
+            }
+
+        }
     }
 
 
