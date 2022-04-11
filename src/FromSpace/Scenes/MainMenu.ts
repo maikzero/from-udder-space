@@ -273,7 +273,7 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
         this.receiver.subscribe("control");
-        this.receiver.subscribe("level_select")
+        this.receiver.subscribe("level_select");
 
         // Scene has started, so start playing music
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});

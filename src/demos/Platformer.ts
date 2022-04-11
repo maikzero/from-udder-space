@@ -12,7 +12,8 @@ export default class Platformer extends Scene {
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/player.json");
 
         // Load the tilemap
-        this.load.tilemap("platformer", "demo_assets/tilemaps/platformer/platformer.json");
+        //this.load.tilemap("platformer", "demo_assets/tilemaps/platformer/platformer.json");
+        this.load.tilemap("platformer", "final project assets/barn.json");
 
         // Load the background image
         this.load.image("background", "demo_assets/images/platformer_background.png");
@@ -28,14 +29,14 @@ export default class Platformer extends Scene {
         // Add the player in the starting position
         this.player = this.add.animatedSprite("player", "primary");
         this.player.animation.play("IDLE");
-        this.player.position.set(3*16, 18*16);
+        this.player.position.set(5*32, 2*32);
 
         // Add physics so the player can move
         this.player.addPhysics();
         this.player.addAI(PlayerController, {jumpSoundKey: "jump"});
 
         // Size of the tilemap is 64x20. Tile size is 16x16
-        this.viewport.setBounds(0, 0, 64*16, 20*16);
+        this.viewport.setBounds(0, 0, 64*32, 24*32);
         this.viewport.follow(this.player);
 
         // Add the tilemap. Top left corner is (0, 0) by default
