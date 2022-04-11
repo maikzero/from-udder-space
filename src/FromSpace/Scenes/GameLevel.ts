@@ -76,7 +76,7 @@ export default class GameLevel extends Scene {
             switch(event.type){
                 case FUS_Events.PAUSE:
                     {
-                        //Input.disableInput();
+                      //  Input.disableInput();
                         this.pause.setHidden(false);
                     }
                     break;
@@ -182,12 +182,15 @@ export default class GameLevel extends Scene {
         // Pause Screen
         const center = this.viewport.getCenter();
 
-        const pauseBack = this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, center.y / 2), text: "Back"});
+        let pauseBack = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, center.y / 2), text: "Back"});
         pauseBack.size.set(200, 50);
         pauseBack.borderWidth = 2;
         pauseBack.borderColor = Color.WHITE;
         pauseBack.backgroundColor = Color.BLACK;
-        pauseBack.onClickEventId = FUS_Events.UNPAUSE;
+        pauseBack.onClick = () => {
+            console.log('hi')
+            this.pause.setHidden(true);
+        }
 
 
         // End of level label (start off screen)
