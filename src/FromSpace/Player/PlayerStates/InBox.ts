@@ -9,7 +9,8 @@ export default class InBox extends PlayerState {
 	owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-		this.parent.speed = this.parent.MIN_SPEED;;
+		this.parent.speed = this.parent.MIN_SPEED;
+        this.parent.hiding = true
         this.owner.animation.play('hide', false, FUS_Events.PLAY_HIDE)
 	}
 
@@ -20,8 +21,11 @@ export default class InBox extends PlayerState {
         super.update(deltaT)
         if(Input.isJustPressed("unhide")){
             console.log('inbox')
-			this.finished(PlayerStates.IDLE)
+            this.owner.animation.play('unhide', false, FUS_Events.FINISHED_HIDING)
 		}
+        if(!this.parent.hiding){
+            this.finished(PlayerStates.IDLE)
+        }
 
         this.parent.velocity.x = 0;
 
@@ -29,8 +33,6 @@ export default class InBox extends PlayerState {
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
-        this.owner.animation.play('unhide', false);
-
 		return {};
 	}
 }

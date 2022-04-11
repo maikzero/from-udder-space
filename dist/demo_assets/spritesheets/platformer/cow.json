@@ -8,7 +8,7 @@
 	"topBuffer": 0,
 	"bottomBuffer": 0,
 	"columns": 5,
-	"rows": 10,
+	"rows": 5,
 	"animations": [
 		{
 			"name": "idle",
@@ -37,132 +37,28 @@
 			]
 		},
 		{
-			"name": "idleLeft",
-			"repeat": true,
-			"frames": [
-				{
-					"index": 0,
-					"duration": 50
-				},
-				{
-					"index": 1,
-					"duration": 50
-				},
-				{
-					"index": 2,
-					"duration": 50
-				},
-				{
-					"index": 3,
-					"duration": 50
-				},
-				{
-					"index": 4,
-					"duration": 50
-				}
-			]
-		},
-		{
-			"name": "idleRight",
-			"repeat": true,
-			"frames": [
-				{
-					"index": 5,
-					"duration": 50
-				},
-				{
-					"index": 6,
-					"duration": 50
-				},
-				{
-					"index": 7,
-					"duration": 50
-				},
-				{
-					"index": 8,
-					"duration": 50
-				},
-				{
-					"index": 9,
-					"duration": 50
-				}
-			]
-		},
-		{
 			"name": "walk",
 			"repeat": true,
 			"frames": [
 				{
-					"index": 10,
-					"duration": 50
+					"index": 5,
+					"duration": 5
 				},
 				{
-					"index": 11,
-					"duration": 50
+					"index": 6,
+					"duration": 5
 				},
 				{
-					"index": 12,
-					"duration": 50
+					"index": 7,
+					"duration": 5
 				},
 				{
-					"index": 13,
-					"duration": 50
+					"index": 8,
+					"duration": 5
 				},
 				{
-					"index": 14,
-					"duration": 50
-				}
-			]
-		},
-		{
-			"name": "walkLeft",
-			"repeat": true,
-			"frames": [
-				{
-					"index": 10,
-					"duration": 50
-				},
-				{
-					"index": 11,
-					"duration": 50
-				},
-				{
-					"index": 12,
-					"duration": 50
-				},
-				{
-					"index": 13,
-					"duration": 50
-				},
-				{
-					"index": 14,
-					"duration": 50
-				}
-			]
-		},
-		{
-			"name": "walkRight",
-			"repeat": true,
-			"frames": [
-				{
-					"index": 15,
-					"duration": 50
-				},
-				{
-					"index": 16,
-					"duration": 50
-				},
-				{
-					"index": 17,
-					"duration": 50
-				},
-				{
-					"index": 18,
-					"duration": 50
-				},
-				{
-					"index": 19,
-					"duration": 50
+					"index": 9,
+					"duration": 5
 				}
 			]
 		},
@@ -171,85 +67,33 @@
 			"repeat": false,
 			"frames": [
 				{
-					"index": 20,
+					"index": 10,
 					"duration": 15
 				},
 				{
-					"index": 21,
+					"index": 1,
 					"duration": 15
 				},
 				{
-					"index": 22,
+					"index": 12,
 					"duration": 15
 				},
 				{
-					"index": 23,
+					"index": 13,
 					"duration": 15
 				},
 				{
-					"index": 24,
+					"index": 14,
 					"duration": 15
 				}
 			]
 		},
-		{
-			"name": "fartLeft",
-			"repeat": false,
-			"frames": [
-				{
-					"index": 20,
-					"duration": 50
-				},
-				{
-					"index": 21,
-					"duration": 50
-				},
-				{
-					"index": 22,
-					"duration": 50
-				},
-				{
-					"index": 23,
-					"duration": 50
-				},
-				{
-					"index": 24,
-					"duration": 50
-				}
-			]
-		},
-        {
-            "name": "fartRight",
-            "repeat": false,
-            "frames": [
-                {
-                    "index": 25,
-                    "duration": 50
-                },
-                {
-                    "index": 26,
-                    "duration": 50
-                },
-                {
-                    "index": 27,
-                    "duration": 50
-                },
-                {
-                    "index": 28,
-                    "duration": 50
-                },
-                {
-                    "index": 29,
-                    "duration": 50
-                }
-            ]
-        },
 		{
             "name": "hiding",
             "repeat": true,
             "frames": [
                 {
-                    "index": 34,
+                    "index": 19,
                     "duration": 50
                 }
             ]
@@ -259,76 +103,24 @@
             "repeat": false,
             "frames": [
                 {
-                    "index": 30,
+                    "index": 15,
                     "duration": 10
                 },
                 {
-                    "index": 31,
+                    "index": 16,
                     "duration": 10
                 },
                 {
-                    "index": 32,
+                    "index": 17,
                     "duration": 10
                 },
                 {
-                    "index": 33,
+                    "index": 18,
                     "duration": 10
                 },
                 {
-                    "index": 34,
+                    "index": 19,
                     "duration": 10
-                }
-            ]
-        },
-        {
-            "name": "hideLeft",
-            "repeat": false,
-            "frames": [
-                {
-                    "index": 30,
-                    "duration": 50
-                },
-                {
-                    "index": 31,
-                    "duration": 50
-                },
-                {
-                    "index": 32,
-                    "duration": 50
-                },
-                {
-                    "index": 33,
-                    "duration": 50
-                },
-                {
-                    "index": 34,
-                    "duration": 50
-                }
-            ]
-        },
-        {
-            "name": "hideRight",
-            "repeat": false,
-            "frames": [
-                {
-                    "index": 35,
-                    "duration": 50
-                },
-                {
-                    "index": 36,
-                    "duration": 50
-                },
-                {
-                    "index": 37,
-                    "duration": 50
-                },
-                {
-                    "index": 38,
-                    "duration": 50
-                },
-                {
-                    "index": 39,
-                    "duration": 50
                 }
             ]
         },
@@ -337,76 +129,24 @@
             "repeat": false,
             "frames": [
                 {
-                    "index": 40,
+                    "index": 20,
                     "duration": 10
                 },
                 {
-                    "index": 41,
+                    "index": 21,
                     "duration": 10
                 },
                 {
-                    "index": 42,
+                    "index": 22,
                     "duration": 10
                 },
                 {
-                    "index": 43,
+                    "index": 23,
                     "duration": 10
                 },
                 {
-                    "index": 44,
+                    "index": 24,
                     "duration": 10
-                }
-            ]
-        },
-        {
-            "name": "unhideLeft",
-            "repeat": false,
-            "frames": [
-                {
-                    "index": 40,
-                    "duration": 50
-                },
-                {
-                    "index": 41,
-                    "duration": 50
-                },
-                {
-                    "index": 42,
-                    "duration": 50
-                },
-                {
-                    "index": 43,
-                    "duration": 50
-                },
-                {
-                    "index": 44,
-                    "duration": 50
-                }
-            ]
-        },
-        {
-            "name": "unhideRight",
-            "repeat": false,
-            "frames": [
-                {
-                    "index": 45,
-                    "duration": 50
-                },
-                {
-                    "index": 46,
-                    "duration": 50
-                },
-                {
-                    "index": 47,
-                    "duration": 50
-                },
-                {
-                    "index": 48,
-                    "duration": 50
-                },
-                {
-                    "index": 49,
-                    "duration": 50
                 }
             ]
         }

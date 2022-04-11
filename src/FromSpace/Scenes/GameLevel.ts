@@ -69,12 +69,18 @@ export default class GameLevel extends Scene {
                         this.player.animation.playIfNotAlready("hiding", true)
                     }
                     break;
-                    case FUS_Events.ATTACK_FINISHED:
+                case FUS_Events.ATTACK_FINISHED:
                     {
                         (<PlayerController>this.player._ai).attacking = false
                         console.log('hi')
                     }
                     break;
+
+                case FUS_Events.FINISHED_HIDING:
+                    {
+                        (<PlayerController>this.player._ai).hiding = false
+                    }   
+                    break 
                 // Level end area assumes the sole goal is just to get to this area, once entered, level is over
                 case FUS_Events.PLAYER_ENTERED_LEVEL_END:
                     {   
@@ -140,7 +146,8 @@ export default class GameLevel extends Scene {
             FUS_Events.LEVEL_END,
             FUS_Events.LEVEL_START,
             FUS_Events.PLAY_HIDE,
-            FUS_Events.ATTACK_FINISHED
+            FUS_Events.ATTACK_FINISHED,
+            FUS_Events.FINISHED_HIDING
         ])
     }
 

@@ -38,6 +38,7 @@ export default class PlayerController extends StateMachineAI {
     MAX_SPEED: number = 300;
     tilemap: OrthogonalTilemap;
     attacking: Boolean = false;
+    hiding: Boolean = false;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
