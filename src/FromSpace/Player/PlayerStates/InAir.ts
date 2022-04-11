@@ -14,6 +14,7 @@ export default abstract class InAir extends PlayerState {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
         if(this.owner.onGround){
+            console.log('in air')
 			this.finished(PlayerStates.IDLE);
 		}
     }

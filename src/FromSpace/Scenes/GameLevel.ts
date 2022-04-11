@@ -64,6 +64,11 @@ export default class GameLevel extends Scene {
             
             // TODO, Event handling
             switch(event.type){
+                case FUS_Events.PLAY_HIDE:
+                    {
+                        this.player.animation.playIfNotAlready("hiding", true)
+                    }
+                    break;
                 // Level end area assumes the sole goal is just to get to this area, once entered, level is over
                 case FUS_Events.PLAYER_ENTERED_LEVEL_END:
                     {   
@@ -127,7 +132,8 @@ export default class GameLevel extends Scene {
         this.receiver.subscribe([
             FUS_Events.PLAYER_ENTERED_LEVEL_END,
             FUS_Events.LEVEL_END,
-            FUS_Events.LEVEL_START
+            FUS_Events.LEVEL_START,
+            FUS_Events.PLAY_HIDE
         ])
     }
 

@@ -218,6 +218,42 @@
                 }
             ]
         },
+		{
+            "name": "hiding",
+            "repeat": true,
+            "frames": [
+                {
+                    "index": 34,
+                    "duration": 50
+                }
+            ]
+        },
+		{
+            "name": "hide",
+            "repeat": false,
+            "frames": [
+                {
+                    "index": 30,
+                    "duration": 50
+                },
+                {
+                    "index": 31,
+                    "duration": 50
+                },
+                {
+                    "index": 32,
+                    "duration": 50
+                },
+                {
+                    "index": 33,
+                    "duration": 50
+                },
+                {
+                    "index": 34,
+                    "duration": 50
+                }
+            ]
+        },
         {
             "name": "hideLeft",
             "repeat": false,
@@ -266,6 +302,32 @@
                 },
                 {
                     "index": 39,
+                    "duration": 50
+                }
+            ]
+        },
+		{
+            "name": "unhide",
+            "repeat": false,
+            "frames": [
+                {
+                    "index": 40,
+                    "duration": 50
+                },
+                {
+                    "index": 41,
+                    "duration": 50
+                },
+                {
+                    "index": 42,
+                    "duration": 50
+                },
+                {
+                    "index": 43,
+                    "duration": 50
+                },
+                {
+                    "index": 44,
                     "duration": 50
                 }
             ]
