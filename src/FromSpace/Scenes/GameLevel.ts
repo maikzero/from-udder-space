@@ -15,6 +15,7 @@ import { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
 import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Layer from "../../Wolfie2D/Scene/Layer";
+import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -39,8 +40,8 @@ export default class GameLevel extends Scene {
     protected levelTransitionScreen: Rect;
 
     // Pause Screen
-    protected pauseScreen: Layer;
-
+    protected pause: Layer;
+    //protected pauseBack: Button;
 
     startScene(): void {
         this.initLayers();
@@ -48,6 +49,8 @@ export default class GameLevel extends Scene {
         this.initPlayer();
         this.subscribeToEvents();
         this.addUI();
+
+        //this.pause.setHidden(true);
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -63,14 +66,25 @@ export default class GameLevel extends Scene {
     }
 
     updateScene(deltaT: number){
+        if (Input.isJustPressed("pause")) {
+            this.emitter.fireEvent(FUS_Events.PAUSE);
+        }
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
             
             // TODO, Event handling
+            console.log(event.type);
             switch(event.type){
                 case FUS_Events.PAUSE:
                     {
-                        this.pauseScreen.setHidden(false);
+                        //Input.disableInput();
+                        this.pause.setHidden(false);
+                    }
+                    break;
+                case FUS_Events.UNPAUSE:
+                    {
+                        console.log("UNPAUSE");
+                        this.pause.setHidden(true);
                     }
                     break;
                 case FUS_Events.PLAY_HIDE:
@@ -134,6 +148,9 @@ export default class GameLevel extends Scene {
         // Add a layer for UI
         this.addUILayer("UI");
 
+        // Add a layer for Pause screen
+        this.pause = this.addUILayer('pause');
+
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
     }
@@ -157,23 +174,21 @@ export default class GameLevel extends Scene {
             FUS_Events.PLAY_HIDE,
             FUS_Events.PAUSE,
             FUS_Events.ATTACK_FINISHED,
-            FUS_Events.FINISHED_HIDING
-        ])
+            FUS_Events.FINISHED_HIDING,
+            FUS_Events.UNPAUSE
+        ]);
     }
 
     protected addUI(){
         // Pause Screen
         const center = this.viewport.getCenter();
- 
-        this.pauseScreen = this.addUILayer("pause");
-        const pause = this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x, center.y + 250), text: "Back"});
-        pause.size.set(200, 50);
-        pause.borderWidth = 2;
-        pause.borderColor = Color.WHITE;
-        pause.backgroundColor = Color.BLACK;
-        pause.onClickEventId = "menu";
-        this.pauseScreen.setHidden(true);
 
+        const pauseBack = this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, center.y / 2), text: "Back"});
+        pauseBack.size.set(200, 50);
+        pauseBack.borderWidth = 2;
+        pauseBack.borderColor = Color.WHITE;
+        pauseBack.backgroundColor = Color.BLACK;
+        pauseBack.onClickEventId = FUS_Events.UNPAUSE;
 
 
         // End of level label (start off screen)

@@ -8,7 +8,8 @@ export enum FUS_Events {
     EQUIP_BOX = "EquipBox",
     REMOVE_BOX = "RemoveBox",
     PLAY_HIDE = "PlayHide",
-    PAUSE = "Pause",
+    PAUSE = "pause",
+    UNPAUSE = "unpause",
     ATTACK_FINISHED = "AttackFinished",
     FINISHED_HIDING = "FinishedHiding"
 }
