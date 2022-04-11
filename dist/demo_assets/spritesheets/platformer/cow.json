@@ -1,8 +1,8 @@
 {
 	"name": "cow",
 	"spriteSheetImage": "cow.png",
-	"spriteWidth": 256,
-	"spriteHeight": 128,
+	"spriteWidth": 32,
+	"spriteHeight": 16,
 	"leftBuffer": 0,
 	"rightBuffer": 0,
 	"topBuffer": 0,
