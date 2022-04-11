@@ -80,10 +80,7 @@ export default class GameLevel extends Scene {
             switch(event.type){
                 case FUS_Events.PAUSE:
                     {
-<<<<<<< HEAD
                       //  Input.disableInput();
-=======
->>>>>>> 2084952947d1c1100f4e022109d38fc226a83b24
                         this.pause.setHidden(false);
                     }
                     break;
