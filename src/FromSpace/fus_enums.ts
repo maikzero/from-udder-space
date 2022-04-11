@@ -7,5 +7,6 @@ export enum FUS_Events {
     DROP_BOX = "DropBox",
     EQUIP_BOX = "EquipBox",
     REMOVE_BOX = "RemoveBox",
-    PLAY_HIDE = "PlayHide"
+    PLAY_HIDE = "PlayHide",
+    PAUSE = "Pause"
 }

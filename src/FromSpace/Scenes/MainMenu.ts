@@ -9,6 +9,7 @@ import Label from "../../Wolfie2D/Nodes/UIElements/Label";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Level1 from "./Level1";
+import Input from "../../Wolfie2D/Input/Input";
 
 
 export default class MainMenu extends Scene {

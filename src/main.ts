@@ -21,6 +21,7 @@ import MainMenu from "./FromSpace/Scenes/MainMenu";
             {name: "attack", keys: ["q"]},
             {name: "slot1", keys: ["1"]},
             {name: "slot2", keys: ["2"]},
+            {name: "escape", keys: ["escape"]}
         ],
         useWebGL: false,                        // Tell the game we want to use webgl
         showDebug: false                       // Whether to show debug messages. You can change this to true if you want
