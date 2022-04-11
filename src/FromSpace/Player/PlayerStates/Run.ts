@@ -17,11 +17,13 @@ export default class Run extends OnGround {
 		let dir = this.getInputDirection();
 
 		if(dir.isZero()){
+			console.log('run')
 			this.finished(PlayerStates.IDLE);
 		} else {
 
             // TODO Add stamina check here?
 			if(!Input.isPressed("run")){
+				console.log('run')
 				this.finished(PlayerStates.WALK);
 			}
 		}

@@ -9,22 +9,27 @@ export default class InBox extends OnGround {
 	owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-		this.parent.speed = 0;
-        this.parent.velocity.x = 0
-        this.parent.velocity.y = 0
-        this.owner.animation.play('inBox', true)
+		this.parent.speed = this.parent.MIN_SPEED;;
+        this.owner.animation.play('hide', false, FUS_Events.PLAY_HIDE)
 	}
 
     update(deltaT: number): void {
-        super.update(deltaT);
-        if(Input.isKeyJustPressed("E")){
+        if(this.parent.velocity.y > 0){
+			this.parent.velocity.y = 0;
+		}
+        if(Input.isJustPressed("unhide")){
+            console.log('inbox')
 			this.finished(PlayerStates.IDLE)
 		}
+
+        this.parent.velocity.x = 0;
 
     }
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
+        this.owner.animation.play('unhide', false);
+
 		return {};
 	}
 }

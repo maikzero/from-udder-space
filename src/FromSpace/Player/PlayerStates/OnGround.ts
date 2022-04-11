@@ -23,10 +23,12 @@ export default class OnGround extends PlayerState {
         // If we jump, move to the Jump state, give a burst of upwards velocity, and play our flip tween animation if 
 		// we're moving left or right
 		if(Input.isJustPressed("jump")){
+			console.log('onground')
 			this.finished("jump");
 			this.parent.velocity.y = -500;
         } 
         else if(!this.owner.onGround){
+			console.log('onground')
 			this.finished("fall");
 		}
     }

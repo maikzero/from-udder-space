@@ -18,8 +18,10 @@ export default class Idle extends OnGround {
 
 		if(!dir.isZero() && dir.y === 0){
 			if(Input.isPressed("run")){
+				console.log('idle')
 				this.finished(PlayerStates.RUN);
 			} else {
+				console.log('idle')
 				this.finished(PlayerStates.WALK);
 			}
 		}
@@ -28,7 +30,8 @@ export default class Idle extends OnGround {
 
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
-		if(Input.isKeyJustPressed("E")){
+		if(Input.isJustPressed("hide")){
+			console.log('idle rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
 	}
