@@ -65,9 +65,13 @@ export default class GameLevel extends Scene {
     }
 
     updateScene(deltaT: number){
-        if (Input.isJustPressed("pause")) {
+        if (Input.isJustPressed("pause") && this.pause.isHidden()) {
             this.emitter.fireEvent(FUS_Events.PAUSE);
         }
+        if (Input.isJustPressed("pause") && !this.pause.isHidden()) {
+            this.emitter.fireEvent(FUS_Events.UNPAUSE);
+        }
+        
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
             
@@ -76,7 +80,10 @@ export default class GameLevel extends Scene {
             switch(event.type){
                 case FUS_Events.PAUSE:
                     {
+<<<<<<< HEAD
                       //  Input.disableInput();
+=======
+>>>>>>> 2084952947d1c1100f4e022109d38fc226a83b24
                         this.pause.setHidden(false);
                     }
                     break;
@@ -191,7 +198,6 @@ export default class GameLevel extends Scene {
             console.log('hi')
             this.pause.setHidden(true);
         }
-
 
         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(-300, 200), text: "Level Complete"});
