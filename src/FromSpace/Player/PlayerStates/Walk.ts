@@ -30,8 +30,9 @@ export default class Walk extends OnGround {
 			console.log('walk rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
-
-		
+		else if(Input.isJustPressed("attack")){
+			this.finished(PlayerStates.ATTACK)
+		}
 
 		this.parent.velocity.x = dir.x * this.parent.speed
 

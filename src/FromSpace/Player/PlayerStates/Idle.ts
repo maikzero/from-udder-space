@@ -34,6 +34,9 @@ export default class Idle extends OnGround {
 			console.log('idle rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
+		else if(Input.isJustPressed("attack")){
+			this.finished(PlayerStates.ATTACK)
+		}
 	}
 
 	onExit(): Record<string, any> {
