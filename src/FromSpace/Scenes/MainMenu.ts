@@ -314,7 +314,6 @@ export default class MainMenu extends Scene {
             }
 
 
-
             if(event.type === "about"){
                 this.about.setHidden(false);
                 this.mainMenu.setHidden(true);
