@@ -273,7 +273,8 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe("about");
         this.receiver.subscribe("menu");
         this.receiver.subscribe("control");
-        this.receiver.subscribe("level_select")
+        this.receiver.subscribe("level_select");
+        this.receiver.subscribe(["level1", "level2", "level3", "level4", "level5", "level6"]);
 
         // Scene has started, so start playing music
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
@@ -297,6 +298,21 @@ export default class MainMenu extends Scene {
                 }
                 this.sceneManager.changeToScene(Level1, {}, sceneOptions);
             }
+
+            if(event.type === "level1"){
+                let sceneOptions = {
+                    physics: {
+                        groupNames: ["ground", "player"],
+                        collisions:
+                        [
+                            [0, 1, 1],
+                            [1, 0, 0]
+                        ]
+                    }
+                }
+                this.sceneManager.changeToScene(Level1, {}, sceneOptions);
+            }
+
 
             if(event.type === "about"){
                 this.about.setHidden(false);
