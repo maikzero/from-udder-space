@@ -41,6 +41,7 @@ export default class GameLevel extends Scene {
 
     // Pause Screen
     protected pause: Layer;
+    protected isPaused: Boolean;
 
     startScene(): void {
         this.initLayers();
@@ -49,6 +50,7 @@ export default class GameLevel extends Scene {
         this.subscribeToEvents();
         this.addUI();
 
+        this.isPaused = false;
         this.pause.setHidden(true);
 
         this.levelTransitionTimer = new Timer(500);
@@ -65,11 +67,8 @@ export default class GameLevel extends Scene {
     }
 
     updateScene(deltaT: number){
-        if (Input.isJustPressed("pause") && this.pause.isHidden()) {
+        if (Input.isJustPressed("pause")) {
             this.emitter.fireEvent(FUS_Events.PAUSE);
-        }
-        if (Input.isJustPressed("pause") && !this.pause.isHidden()) {
-            this.emitter.fireEvent(FUS_Events.UNPAUSE);
         }
         
         while(this.receiver.hasNextEvent()){
@@ -80,14 +79,17 @@ export default class GameLevel extends Scene {
             switch(event.type){
                 case FUS_Events.PAUSE:
                     {
-                      //  Input.disableInput();
                         this.pause.setHidden(false);
+                        this.isPaused = true;
+                        (<PlayerController>this.player._ai).paused = true;
                     }
                     break;
                 case FUS_Events.UNPAUSE:
                     {
                         console.log("UNPAUSE");
+                        this.isPaused = false;
                         this.pause.setHidden(true);
+                        (<PlayerController>this.player._ai).paused = false;
                     }
                     break;
                 case FUS_Events.PLAY_HIDE:
@@ -191,10 +193,7 @@ export default class GameLevel extends Scene {
         pauseBack.borderWidth = 2;
         pauseBack.borderColor = Color.WHITE;
         pauseBack.backgroundColor = Color.BLACK;
-        pauseBack.onClick = () => {
-            console.log('hi')
-            this.pause.setHidden(true);
-        }
+        pauseBack.onClickEventId = FUS_Events.UNPAUSE;
 
         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(-300, 200), text: "Level Complete"});

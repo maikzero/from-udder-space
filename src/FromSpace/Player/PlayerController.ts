@@ -12,6 +12,7 @@ import Jump from "./PlayerStates/Jump";
 import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
 import Attack from "./PlayerStates/Attack";
+import Paused from "./PlayerStates/Paused";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -27,7 +28,9 @@ export enum PlayerStates {
     FALL = "fall",
     PREVIOUS = "previous",
     IN_BOX = "in_box",
-    ATTACK = "attack"
+    ATTACK = "attack",
+    PAUSED = "paused"
+
 }
 
 export default class PlayerController extends StateMachineAI {
@@ -39,6 +42,7 @@ export default class PlayerController extends StateMachineAI {
     tilemap: OrthogonalTilemap;
     attacking: Boolean = false;
     hiding: Boolean = false;
+    paused: Boolean = false;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
@@ -48,6 +52,8 @@ export default class PlayerController extends StateMachineAI {
         this.receiver.subscribe(FUS_Events.EQUIP_BOX)
         this.receiver.subscribe(FUS_Events.REMOVE_BOX)
         this.receiver.subscribe(FUS_Events.ATTACK_FINISHED)
+        this.receiver.subscribe(FUS_Events.PAUSE)
+        this.receiver.subscribe(FUS_Events.UNPAUSE)
 
         this.tilemap = this.owner.getScene().getTilemap(options.tilemap) as OrthogonalTilemap;
         
@@ -72,6 +78,8 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.IN_BOX, inBox)
         let attack = new Attack(this, this.owner)
         this.addState(PlayerStates.ATTACK, attack)
+        let paused = new Paused(this, this.owner)
+        this.addState(PlayerStates.PAUSED, paused)
         
         this.initialize(PlayerStates.IDLE);
     }
@@ -90,7 +98,12 @@ export default class PlayerController extends StateMachineAI {
             this.stack.push(this.stateMap.get(stateName))
         }
 
-        super.changeState(stateName);
+        if (this.paused && !(this.stack.peek() instanceof Paused)) {
+            this.stack.pop();
+            super.changeState(PlayerStates.PAUSED);
+        }
+        else
+            super.changeState(stateName);
     }
 
     update(deltaT: number): void {
@@ -103,6 +116,18 @@ export default class PlayerController extends StateMachineAI {
                 case FUS_Events.ATTACK_FINISHED:
                     {
                         console.log('got attack finish')
+                        this.changeState(PlayerStates.IDLE)
+                    }
+                    break;
+                case FUS_Events.PAUSE:
+                    {
+                        console.log('got pause');
+                        this.changeState(PlayerStates.PAUSED);
+                    }
+                    break;
+                case FUS_Events.UNPAUSE:
+                    {
+                        console.log('got unpause');
                         this.changeState(PlayerStates.IDLE)
                     }
             }

@@ -242,23 +242,26 @@ export default class MainMenu extends Scene {
         controlsHeader.fontSize = 45;
 
 
-        const controls1 = "WASD to Move"
-        const controls2 = "Spacebar to Jump"
-        const controls3 = "Q to Hide under Box"
-        const controls4 = "E to Fart"
-        const controls5 = "ESC to Pause"
+        const controls1 = "AD to Move Left and Right"
+        const controls2 = "W to Jump"
+        const controls3 = "E to Hide under Box"
+        const controls4 = "R to Remove Box"
+        const controls5 = "Q to Fart"
+        const controls6 = "ESC to Pause"
 
         const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 150), text: controls1});
         const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 100), text: controls2});
         const control_line3 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 50), text: controls3});
         const control_line4 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y), text: controls4});
         const control_line5 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y + 50), text: controls5});
+        const control_line6 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y + 100), text: controls6});
 
         control_line1.textColor = Color.BLACK;
         control_line2.textColor = Color.BLACK;
         control_line3.textColor = Color.BLACK;
         control_line4.textColor = Color.BLACK;
         control_line5.textColor = Color.BLACK;
+        control_line6.textColor = Color.BLACK;
 
         const controlBack = this.add.uiElement(UIElementType.BUTTON, "control", {position: new Vec2(center.x, center.y + 250), text: "Back"});
         controlBack.size.set(200, 50);
