@@ -4,11 +4,11 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
 import { FUS_Events } from "../fus_enums";
 import { FUS_Color } from "../fus_color";
+import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import EnemyController from "./EnemyController";
 import Patrol from "./AlienStates/Patrol";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-//import Fire from "./AlienStates/Fire";
-//import MoveCloser from "./AlienStates/MoveCloser";
+import Fire from "./AlienStates/Fire";
+import MoveCloser from "./AlienStates/MoveCloser";
 
 export enum AlienStates {
 	FIRE = "fire",
@@ -27,8 +27,8 @@ export default class AlienController extends EnemyController {
         // State transitions will be handled in the update method, Balloon method of state transition
         // Not top down shooter GOAP
         this.addState(AlienStates.PATROL, new Patrol(this, owner, options.startPosition));
-        //this.addState(AlienStates.FIRE, new Fire(this, owner))
-        //this.addState(AlienStates.MOVE_CLOSER, new MoveCloser(this, owner))
+        this.addState(AlienStates.FIRE, new Fire(this, owner))
+        this.addState(AlienStates.MOVE_CLOSER, new MoveCloser(this, owner))
 
         // TODO: Add more attributes specific to certain aliens (Health, weapon, etc)
 
