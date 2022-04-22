@@ -3,41 +3,42 @@ import AlienState from './AlienState';
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import { AlienStates } from "../AlienController";
+import PlayerController from "../../Player/PlayerController";
 
-export default class Fire extends AlienState {
+export default class Chase extends AlienState {
     owner: AnimatedSprite;
     pollTimer: Timer;
     exitTimer: Timer;
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('shoot', true)
+        this.owner.animation.play('chase', true)
         this.pollTimer = new Timer(100)
         this.exitTimer = new Timer(1000)
 	}
 
     update(deltaT: number): void {
-        if (this.pollTimer.isStopped()) {
-            // Restart the timer
-            this.pollTimer.start();
-            this.parent.playerPos = this.parent.getPlayerPosition();
-            this.parent.lastPlayerPos = this.parent.playerPos;
-            this.exitTimer.start();
+        super.update(deltaT)
+        this.parent.playerPos = this.parent.getPlayerPosition()
+        this.parent.lastPlayerPos = this.parent.playerPos;
+        let distance = this.owner.position.distanceTo(this.parent.playerPos);
+
+        // if player is no longer visible/in range, or is now hiding, go back to patrol
+        if(this.parent.playerPos === null || distance > this.parent.inRange || (<PlayerController>this.parent.player._ai).hiding){
+            this.finished(AlienStates.PATROL)
         }
 
-        if (this.exitTimer.isStopped()) {
-            this.finished(AlienStates.PATROL);
-        }
-
-        if (this.parent.playerPos !== null) {
-            let distance = this.owner.position.distanceTo(this.parent.playerPos);
-            if (distance < this.parent.inRange) {
-                let dir = this.parent.playerPos.clone().sub(this.owner.position).normalize();
-                dir.rotateCCW(Math.PI / 4 * Math.random() - Math.PI/8);
-                if(this.parent.weapon.use(this.owner, "alien", dir)){
-                    // If we fired, face that direction
-                    this.owner.rotation = Vec2.UP.angleToCCW(dir);
-                }
+        else{
+            if(this.parent.playerPos.x > this.owner.position.x){
+                this.parent.direction.x = 1;
+                (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
             }
+            else{
+                this.parent.direction.x = -1;
+                (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
+            }
+
+            this.parent.velocity.x = this.parent.direction.x * this.parent.speed
+		    this.owner.move(this.parent.velocity.scaled(deltaT));
         }
     }
 

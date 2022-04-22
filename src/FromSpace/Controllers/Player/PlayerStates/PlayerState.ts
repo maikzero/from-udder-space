@@ -10,7 +10,6 @@ import PlayerController from "../PlayerController";
 
 export default abstract class PlayerState extends State {
     owner: GameNode;
-	gravity: number = 1000;
 	parent: PlayerController;
 	positionTimer: Timer;
 
@@ -41,6 +40,6 @@ export default abstract class PlayerState extends State {
 			this.emitter.fireEvent(FUS_Events.PLAYER_MOVE, {position: this.owner.position.clone()});
 			this.positionTimer.start();
 		}
-		this.parent.velocity.y += this.gravity*deltaT;
+		this.parent.velocity.y += this.parent.gravity*deltaT;
 	}
 }

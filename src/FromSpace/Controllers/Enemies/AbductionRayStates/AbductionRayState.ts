@@ -6,24 +6,23 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import MathUtils from "../../../../Wolfie2D/Utils/MathUtils";
 import { FUS_Color } from "../../../fus_color";
 import { FUS_Events } from "../../../fus_enums";
-import AlienController, { AlienStates } from "../AlienController";
+import AbductionRayController, { AbductionRayStates } from "../AbductionRayController";
 
-export default abstract class BalloonState extends State {
+export default abstract class AbductionRayState extends State {
     owner: GameNode;
-	gravity: number = 500;
-	parent: AlienController;
+	gravity: number = 0;
+	parent: AbductionRayController;
 
 	constructor(parent: StateMachine, owner: GameNode) {
 		super(parent);
 		this.owner = owner;
 	}
 
+    update(deltaT: number): void {
+		
+    }
+    
     handleInput(event: GameEvent): void {
         
-    }
-
-    update(deltaT: number): void {
-		// gravity
-		this.parent.velocity.y += this.gravity * deltaT;
     }
 }

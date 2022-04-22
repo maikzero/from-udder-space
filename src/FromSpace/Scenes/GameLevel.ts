@@ -17,6 +17,7 @@ import { UIElementType } from "../../Wolfie2D/Nodes/UIElements/UIElementTypes";
 import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
+import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -145,6 +146,34 @@ export default class GameLevel extends Scene {
                             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
                         }
                     }
+                    case FUS_Events.ALIEN_HIT_PLAYER: 
+                    {
+                        let node = this.sceneGraph.getNode(event.data.get("node"));
+                        let other = this.sceneGraph.getNode(event.data.get("other"));
+
+                        var alienSprite
+                        var playerSprite
+                        
+                        if(node === this.player){
+                            // Node is player, other is balloon
+                            alienSprite = <AnimatedSprite>other
+                            playerSprite = <AnimatedSprite>node
+                        } else {
+                            // Other is player, node is balloon
+                            alienSprite = <AnimatedSprite>node
+                            playerSprite = <AnimatedSprite>other
+                        }
+
+                        this.handlePlayerAlienCollision(playerSprite, alienSprite);
+                    }
+                    
+                    case FUS_Events.PLAYER_CAUGHT: 
+                    {
+                        Input.disableInput();
+                        this.player.disablePhysics();
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_caught", loop: false, holdReference: false});
+                        this.player.tweens.play("caught");
+                    }
                     break;
             }
         }
@@ -181,7 +210,9 @@ export default class GameLevel extends Scene {
             FUS_Events.PAUSE,
             FUS_Events.ATTACK_FINISHED,
             FUS_Events.FINISHED_HIDING,
-            FUS_Events.UNPAUSE
+            FUS_Events.UNPAUSE,
+            FUS_Events.ALIEN_HIT_PLAYER,
+            FUS_Events.PLAYER_CAUGHT
         ]);
     }
 
@@ -287,7 +318,14 @@ export default class GameLevel extends Scene {
         alien.scale.set(2, 2);
         alien.addPhysics();
         alien.addAI(AlienController, aiOptions);
+        alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
         alien.setGroup("alien");
+    }
+
+    protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
+        if(typeof alien !== 'undefined'){
+            this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
+        }
     }
 
 }

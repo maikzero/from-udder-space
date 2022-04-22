@@ -1,0 +1,94 @@
+import StateMachineAI from "../../../Wolfie2D/AI/StateMachineAI";
+import Map from "../../../Wolfie2D/DataTypes/Map";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB";
+import Stack from "../../../Wolfie2D/DataTypes/Stack";
+import State from "../../../Wolfie2D/DataTypes/State/State";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import Emitter from "../../../Wolfie2D/Events/Emitter";
+import GameEvent from "../../../Wolfie2D/Events/GameEvent";
+import Receiver from "../../../Wolfie2D/Events/Receiver";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import Line from "../../../Wolfie2D/Nodes/Graphics/Line";
+import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import Active from "./AbductionRayStates/Active";
+import UFOController from "./UFOController";
+
+export enum AbductionRayStates {
+    ACTIVE = "active",
+    INACTIVE = "inactive",
+    ABDUCTING = "abducting"
+}
+
+export default class AbductionRayController extends StateMachineAI  {
+    protected owner: GameNode;
+    direction: Vec2 = Vec2.ZERO;
+	velocity: Vec2 = Vec2.ZERO;
+    speed: number = 0;
+    ufo: GameNode;
+    startPosition: Vec2;
+    index: number;
+    player: GameNode;
+
+    initializeAI(owner: GameNode, options: Record<string, any>){
+        super.initializeAI(owner, options)
+        this.ufo = options.ufo
+        this.startPosition = options.startPosition
+        this.index = options.index
+        this.direction = new Vec2(0, -1);
+        this.player = options.player
+        this.addState(AbductionRayStates.ACTIVE, new Active(this, owner));
+    }
+
+    updateRay(): void {
+        let start = this.startPosition.clone();
+        let end = this.startPosition.clone().add(this.direction.scaled(900));
+        let delta = end.clone().sub(start);
+
+        // Iterate through the tilemap region until we find a collision
+        let minX = Math.min(start.x, end.x);
+        let maxX = Math.max(start.x, end.x);
+        let minY = Math.min(start.y, end.y);
+        let maxY = Math.max(start.y, end.y);
+        // Get the wall tilemap
+        let walls = <OrthogonalTilemap>this.owner.getScene().getLayer("Wall").getItems()[0];
+
+        let minIndex = walls.getColRowAt(new Vec2(minX, minY));
+		let maxIndex = walls.getColRowAt(new Vec2(maxX, maxY));
+
+        let tileSize = walls.getTileSize();
+
+        for(let col = minIndex.x; col <= maxIndex.x; col++){
+            for(let row = minIndex.y; row <= maxIndex.y; row++){
+                if(walls.isTileCollidable(col, row)){
+                    // Get the position of this tile
+                    let tilePos = new Vec2(col * tileSize.x + tileSize.x/2, row * tileSize.y + tileSize.y/2);
+
+                    // Create a collider for this tile
+                    let collider = new AABB(tilePos, tileSize.scaled(1/2));
+
+                    let hit = collider.intersectSegment(start, delta, Vec2.ZERO);
+
+                    if(hit !== null && start.distanceSqTo(hit.pos) < start.distanceSqTo(end)){
+                        console.log("Found hit");
+                        end = hit.pos;
+                    }
+                }
+            }
+        }
+
+        (<Line>this.owner).start = start;
+        (<Line>this.owner).end = end;
+    }
+
+    hits(): boolean {
+        let line = <Line>this.owner
+        return this.player.collisionShape.getBoundingRect().intersectSegment((line).start, line.end.clone().sub(line.start)) !== null
+    }
+
+    update(deltaT: number): void {
+		super.update(deltaT);
+	}
+    changeState(stateName: string): void {
+        super.changeState(stateName);
+	}
+}

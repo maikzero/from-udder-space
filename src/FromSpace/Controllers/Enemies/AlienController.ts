@@ -7,29 +7,17 @@ import { FUS_Color } from "../../fus_color";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
 import EnemyController from "./EnemyController";
 import Patrol from "./AlienStates/Patrol";
-import Fire from "./AlienStates/Fire";
-import MoveCloser from "./AlienStates/MoveCloser";
-import Weapon from "../../GameSystems/items/Weapon";
-import BattlerController from "../BattlerController";
+import Chase from "./AlienStates/Chase";
 
 export enum AlienStates {
-	FIRE = "fire",
-	PATROL = "patrol",
-    MOVE_CLOSER = "move_closer"
+	CHASE = "CHASE",
+	PATROL = "patrol"
 }
 
-export default class AlienController extends EnemyController implements BattlerController {
+export default class AlienController extends EnemyController {
     speed: number = 100;
 	gravity: number = 1000;
-    leftLimit: number
-    rightLimit: number
     inRange: number = 100
-    health: number = 100;
-    weapon: Weapon
-    
-    damage(damage: number): void {
-        this.health -= damage;
-    }
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -38,66 +26,17 @@ export default class AlienController extends EnemyController implements BattlerC
         // State transitions will be handled in the update method, Balloon method of state transition
         // Not top down shooter GOAP
         this.addState(AlienStates.PATROL, new Patrol(this, owner));
-        this.addState(AlienStates.FIRE, new Fire(this, owner))
-        this.addState(AlienStates.MOVE_CLOSER, new MoveCloser(this, owner))
+        this.addState(AlienStates.CHASE, new Chase(this, owner))
 
-        // TODO: Add more attributes specific to certain aliens (Health, weapon, etc)
-        // the initial position should be set in GameLevel.ts, and then the left and right limits
-        // are kept in here
         this.direction = new Vec2(-1, 0);
-        this.leftLimit = options.leftLimit
-        this.rightLimit = options.rightLimit
-        this.weapon = options.weapon
-
         // Initialize starting state as patrol
         this.initialize(AlienStates.PATROL)
 
         this.getPlayerPosition()
     }
 
-    // TODO, need to figure out how TopDownShooter method works, prob gonna go to OH
-    // That implementation can prob be ported to this, with some adjustments
-    // Override the parent Enemy method
-    // I believe getPlayerPosition in EnemyController will go to this method, not positive though
     isPlayerVisible(pos: Vec2): Vec2 {
-        // Get the new player location
-        let start = this.owner.position.clone();
-        let delta = pos.clone().sub(start);
-
-        // Iterate through the tilemap region until we find a collision
-        let minX = Math.min(start.x, pos.x);
-        let maxX = Math.max(start.x, pos.x);
-        let minY = Math.min(start.y, pos.y);
-        let maxY = Math.max(start.y, pos.y);
-
-        // Get the wall tilemap
-        let walls = <OrthogonalTilemap>this.owner.getScene().getLayer("Wall").getItems()[0];
-
-        let minIndex = walls.getColRowAt(new Vec2(minX, minY));
-        let maxIndex = walls.getColRowAt(new Vec2(maxX, maxY));
-
-        let tileSize = walls.getTileSize();
-
-        for (let col = minIndex.x; col <= maxIndex.x; col++) {
-            for (let row = minIndex.y; row <= maxIndex.y; row++) {
-                if (walls.isTileCollidable(col, row)) {
-                    // Get the position of this tile
-                    let tilePos = new Vec2(col * tileSize.x + tileSize.x / 2, row * tileSize.y + tileSize.y / 2);
-
-                    // Create a collider for this tile
-                    let collider = new AABB(tilePos, tileSize.scaled(1 / 2));
-
-                    let hit = collider.intersectSegment(start, delta, Vec2.ZERO);
-
-                    if (hit !== null && start.distanceSqTo(hit.pos) < start.distanceSqTo(pos)) {
-                        // We hit a wall, we can't see the player
-                        return null;
-                    }
-                }
-            }
-        }
-
-        return pos;
+        return super.isPlayerVisible(pos)
     }
 
     getPlayerPosition(): Vec2 {

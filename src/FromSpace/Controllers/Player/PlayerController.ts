@@ -43,6 +43,7 @@ export default class PlayerController extends StateMachineAI {
     attacking: Boolean = false;
     hiding: Boolean = false;
     paused: Boolean = false;
+    gravity: number = 1000;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
