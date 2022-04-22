@@ -9,7 +9,7 @@ import EnemyController from "./EnemyController";
 import Patrol from "./AlienStates/Patrol";
 import Fire from "./AlienStates/Fire";
 import MoveCloser from "./AlienStates/MoveCloser";
-//import Weapon from "../../GameSystems/items/Weapon";
+import Weapon from "../../GameSystems/items/Weapon";
 import BattlerController from "../BattlerController";
 
 export enum AlienStates {
@@ -25,11 +25,11 @@ export default class AlienController extends EnemyController implements BattlerC
     rightLimit: number
     inRange: number = 100
     health: number = 100;
+    weapon: Weapon
     
     damage(damage: number): void {
         this.health -= damage;
     }
-    //weapon: Weapon
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -47,6 +47,7 @@ export default class AlienController extends EnemyController implements BattlerC
         this.direction = new Vec2(-1, 0);
         this.leftLimit = options.leftLimit
         this.rightLimit = options.rightLimit
+        this.weapon = options.weapon
 
         // Initialize starting state as patrol
         this.initialize(AlienStates.PATROL)
