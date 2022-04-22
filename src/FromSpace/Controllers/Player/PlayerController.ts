@@ -13,7 +13,6 @@ import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
 import Attack from "./PlayerStates/Attack";
 import Paused from "./PlayerStates/Paused";
-import BattlerController from "../BattlerController";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -34,7 +33,7 @@ export enum PlayerStates {
 
 }
 
-export default class PlayerController extends StateMachineAI implements BattlerController {
+export default class PlayerController extends StateMachineAI {
     owner: GameNode;
     velocity: Vec2 = Vec2.ZERO;
 	speed: number = 200;
@@ -44,11 +43,6 @@ export default class PlayerController extends StateMachineAI implements BattlerC
     attacking: Boolean = false;
     hiding: Boolean = false;
     paused: Boolean = false;
-    health: number = 100;
-    
-    damage(damage: number): void {
-        this.health -= damage;
-    }
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
