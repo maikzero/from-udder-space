@@ -1,4 +1,5 @@
 import AABB from "../../Wolfie2D/DataTypes/Shapes/AABB";
+import AlienController from "../Controllers/Enemies/AlienController";
 import AnimatedSprite from "../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
@@ -7,7 +8,7 @@ import { FUS_Events } from "../fus_enums";
 import { GraphicType } from "../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Input from "../../Wolfie2D/Input/Input";
 import Label from "../../Wolfie2D/Nodes/UIElements/Label";
-import PlayerController from "../Player/PlayerController";
+import PlayerController from "../Controllers/Player/PlayerController";
 import Rect from "../../Wolfie2D/Nodes/Graphics/Rect";
 import Scene from "../../Wolfie2D/Scene/Scene";
 import Timer from "../../Wolfie2D/Timing/Timer";
@@ -277,6 +278,16 @@ export default class GameLevel extends Scene {
         this.levelEndArea.addPhysics(undefined, undefined, false, true);
         this.levelEndArea.setTrigger("player", FUS_Events.PLAYER_ENTERED_LEVEL_END, null);
         this.levelEndArea.color = new Color(0, 0, 0, 0);
+    }
+    
+    protected addAlien(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
+        let alien = this.add.animatedSprite(spriteKey, "primary");
+        alien.isCollidable = true;
+        alien.position.set(tilePos.x*32, tilePos.y*32);
+        alien.scale.set(2, 2);
+        alien.addPhysics();
+        alien.addAI(AlienController, aiOptions);
+        alien.setGroup("alien");
     }
 
 }

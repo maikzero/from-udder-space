@@ -1,6 +1,6 @@
-import Input from "../../../Wolfie2D/Input/Input";
-import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import { FUS_Events } from "../../fus_enums";
+import Input from "../../../../Wolfie2D/Input/Input";
+import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { FUS_Events } from "../../../fus_enums";
 import { PlayerStates } from "../PlayerController";
 import OnGround from "./OnGround";
 import PlayerState from "./PlayerState";

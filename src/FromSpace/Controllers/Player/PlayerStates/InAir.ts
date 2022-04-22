@@ -1,8 +1,8 @@
-import GameEvent from "../../../Wolfie2D/Events/GameEvent";
+import GameEvent from "../../../../Wolfie2D/Events/GameEvent";
 import { PlayerStates } from "../PlayerController";
 import PlayerState from "./PlayerState";
-import Sprite from "../../../Wolfie2D/Nodes/Sprites/Sprite";
-import MathUtils from "../../../Wolfie2D/Utils/MathUtils";
+import Sprite from "../../../../Wolfie2D/Nodes/Sprites/Sprite";
+import MathUtils from "../../../../Wolfie2D/Utils/MathUtils";
 
 export default abstract class InAir extends PlayerState {
     update(deltaT: number): void {

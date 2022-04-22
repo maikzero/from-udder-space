@@ -1,9 +1,9 @@
-import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
-import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import Input from "../../Wolfie2D/Input/Input";
-import GameNode, { TweenableProperties } from "../../Wolfie2D/Nodes/GameNode";
-import OrthogonalTilemap from "../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
-import { FUS_Events } from "../fus_enums";
+import StateMachineAI from "../../../Wolfie2D/AI/StateMachineAI";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import Input from "../../../Wolfie2D/Input/Input";
+import GameNode, { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
+import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import { FUS_Events } from "../../fus_enums";
 import Fall from "./PlayerStates/Fall";
 import Idle from "./PlayerStates/Idle";
 import InAir from "./PlayerStates/InAir";
@@ -13,6 +13,7 @@ import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
 import Attack from "./PlayerStates/Attack";
 import Paused from "./PlayerStates/Paused";
+import BattlerController from "../BattlerController";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -33,8 +34,8 @@ export enum PlayerStates {
 
 }
 
-export default class PlayerController extends StateMachineAI {
-    protected owner: GameNode;
+export default class PlayerController extends StateMachineAI implements BattlerController {
+    owner: GameNode;
     velocity: Vec2 = Vec2.ZERO;
 	speed: number = 200;
 	MIN_SPEED: number = 200;
@@ -43,6 +44,11 @@ export default class PlayerController extends StateMachineAI {
     attacking: Boolean = false;
     hiding: Boolean = false;
     paused: Boolean = false;
+    health: number = 100;
+    
+    damage(damage: number): void {
+        this.health -= damage;
+    }
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;

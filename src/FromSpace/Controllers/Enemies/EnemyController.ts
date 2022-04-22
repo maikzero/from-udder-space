@@ -1,8 +1,8 @@
-import GameNode from "../../Wolfie2D/Nodes/GameNode";
-import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
-import StateMachineAI from "../../Wolfie2D/AI/StateMachineAI";
-import { FUS_Events } from "../fus_enums";
-import { FUS_Color } from "../fus_color";
+import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
+import StateMachineAI from "../../../Wolfie2D/AI/StateMachineAI";
+import { FUS_Events } from "../../fus_enums";
+import { FUS_Color } from "../../fus_color";
 
 export default class EnemyController extends StateMachineAI {
 	owner: GameNode;

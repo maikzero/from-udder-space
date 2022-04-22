@@ -1,8 +1,8 @@
-import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
-import AnimatedSprite from "../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
-import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
-import { FUS_Events } from "../../fus_enums";
+import GameEvent from "../../../../Wolfie2D/Events/GameEvent";
+import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
+import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
+import { EaseFunctionType } from "../../../../Wolfie2D/Utils/EaseFunctions";
+import { FUS_Events } from "../../../fus_enums";
 import { PlayerStates } from "../PlayerController";
 import InAir from "./InAir";
 

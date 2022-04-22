@@ -11,5 +11,6 @@ export enum FUS_Events {
     PAUSE = "pause",
     UNPAUSE = "unpause",
     ATTACK_FINISHED = "AttackFinished",
-    FINISHED_HIDING = "FinishedHiding"
+    FINISHED_HIDING = "FinishedHiding",
+    UNLOAD_ASSET = "UNLOAD_ASSET"
 }

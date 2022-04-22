@@ -1,11 +1,11 @@
-import State from "../../../Wolfie2D/DataTypes/State/State";
-import StateMachine from "../../../Wolfie2D/DataTypes/State/StateMachine";
-import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
-import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import Input from "../../../Wolfie2D/Input/Input";
-import GameNode from "../../../Wolfie2D/Nodes/GameNode";
-import Timer from "../../../Wolfie2D/Timing/Timer";
-import { FUS_Events } from "../../fus_enums";
+import State from "../../../../Wolfie2D/DataTypes/State/State";
+import StateMachine from "../../../../Wolfie2D/DataTypes/State/StateMachine";
+import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
+import GameEvent from "../../../../Wolfie2D/Events/GameEvent";
+import Input from "../../../../Wolfie2D/Input/Input";
+import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
+import Timer from "../../../../Wolfie2D/Timing/Timer";
+import { FUS_Events } from "../../../fus_enums";
 import PlayerController from "../PlayerController";
 
 export default abstract class PlayerState extends State {

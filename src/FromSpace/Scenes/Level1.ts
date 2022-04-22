@@ -5,7 +5,7 @@ import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Level2 from "./Level2";
 import Input from "../../Wolfie2D/Input/Input";
-import PlayerController from "../Player/PlayerController";
+import PlayerController from "../Controllers/Player/PlayerController";
 import { FUS_Events } from "../fus_enums";
 
 export default class Level1 extends GameLevel {
@@ -43,7 +43,15 @@ export default class Level1 extends GameLevel {
 
         this.nextLevel = Level2;
 
-        // TODO: Initialing enemy pools and positions
+        let aliensInitial = [{ start: new Vec2(18, 8), left: new Vec2(15, 8), right: new Vec2(17, 8)},
+                        {start: new Vec2(18, 1), left: new Vec2(15, 1), right: new Vec2(17, 1)}, 
+                        {start: new Vec2(18, 12), left: new Vec2(15, 12), right: new Vec2(17, 12)}]
+
+        aliensInitial.forEach((options) => {
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right});
+        })
+
+        // TODO: Start positions for UFO's
 
         //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
 
