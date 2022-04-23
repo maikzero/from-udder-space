@@ -315,7 +315,7 @@ export default class GameLevel extends Scene {
         let alien = this.add.animatedSprite(spriteKey, "primary");
         alien.isCollidable = true;
         alien.position.set(tilePos.x*32, tilePos.y*32);
-        alien.scale.set(2, 2);
+        alien.scale.set(.5, .5);
         alien.addPhysics();
         alien.addAI(AlienController, aiOptions);
         alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)

@@ -11,7 +11,7 @@ export default class Chase extends AlienState {
     exitTimer: Timer;
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('chase', true)
+        this.owner.animation.play('RUNNING', true)
         this.pollTimer = new Timer(100)
         this.exitTimer = new Timer(1000)
 	}

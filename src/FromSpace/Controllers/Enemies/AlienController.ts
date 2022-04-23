@@ -48,6 +48,12 @@ export default class AlienController extends EnemyController {
         return position
     }
 
+    // This method will check whether or not there is a dropoff in aliens path before alien moves
+    // this prevents them from falling off a cliff and getting stuck
+    checkForDrop(): boolean {
+        return false
+    }
+
     changeState(stateName: string): void {
         super.changeState(stateName);
 	}

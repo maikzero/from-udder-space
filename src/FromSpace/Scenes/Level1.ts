@@ -17,6 +17,8 @@ export default class Level1 extends GameLevel {
         //this.load.tilemap("level1", "demo_assets/tilemaps/platformer/platformer.json");
         this.load.tilemap("level1", "final project assets/barn.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
+        this.load.spritesheet("alien", "final project assets/sprites/devils_flower_mantis.json");
+        this.load.spritesheet("ufo", "final project assets/sprites/sentient_car.json");
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
     }
 
@@ -43,12 +45,13 @@ export default class Level1 extends GameLevel {
 
         this.nextLevel = Level2;
 
-        let aliensInitial = [{ start: new Vec2(18, 8), left: new Vec2(15, 8), right: new Vec2(17, 8)},
-                        {start: new Vec2(18, 1), left: new Vec2(15, 1), right: new Vec2(17, 1)}, 
-                        {start: new Vec2(18, 12), left: new Vec2(15, 12), right: new Vec2(17, 12)}]
+        let aliensInitial = [{start: new Vec2(18, 1), left: 15, right: 20}
+             //start: new Vec2(18, 8), left: new Vec2(15, 8), right: new Vec2(17, 8)},
+                        
+                        /*{start: new Vec2(18, 12), left: new Vec2(15, 12), right: new Vec2(17, 12)}*/]
 
         aliensInitial.forEach((options) => {
-            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right});
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })
 
         // TODO: Start positions for UFO's
