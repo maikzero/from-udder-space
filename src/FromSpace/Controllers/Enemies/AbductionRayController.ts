@@ -7,9 +7,11 @@ import Vec2 from "../../../Wolfie2D/DataTypes/Vec2";
 import Emitter from "../../../Wolfie2D/Events/Emitter";
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
 import Receiver from "../../../Wolfie2D/Events/Receiver";
-import GameNode from "../../../Wolfie2D/Nodes/GameNode";
+import GameNode, { TweenableProperties } from "../../../Wolfie2D/Nodes/GameNode";
 import Line from "../../../Wolfie2D/Nodes/Graphics/Line";
 import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilemap";
+import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
+import Abducting from "./AbductionRayStates/Abducting";
 import Active from "./AbductionRayStates/Active";
 import UFOController from "./UFOController";
 
@@ -31,12 +33,29 @@ export default class AbductionRayController extends StateMachineAI  {
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
+        this.owner = owner;
+        (<Line>this.owner).tweens.add("fade", {
+            startDelay: 0,
+            duration: 300,
+            effects: [
+                {
+                    property: TweenableProperties.alpha,
+                    start: 1,
+                    end: 0,
+                    ease: EaseFunctionType.OUT_SINE
+                }
+            ],
+            //onEnd: hw4_Events.UNLOAD_ASSET
+        });
+
         this.ufo = options.ufo
         this.startPosition = options.startPosition
         this.index = options.index
-        this.direction = new Vec2(0, -1);
+        this.direction = new Vec2(0, 1);
         this.player = options.player
         this.addState(AbductionRayStates.ACTIVE, new Active(this, owner));
+        this.addState(AbductionRayStates.ABDUCTING, new Abducting(this, owner));
+        this.initialize(AbductionRayStates.ACTIVE)
     }
 
     updateRay(): void {
@@ -50,7 +69,7 @@ export default class AbductionRayController extends StateMachineAI  {
         let minY = Math.min(start.y, end.y);
         let maxY = Math.max(start.y, end.y);
         // Get the wall tilemap
-        let walls = <OrthogonalTilemap>this.owner.getScene().getLayer("Wall").getItems()[0];
+        let walls = <OrthogonalTilemap>this.owner.getScene().getLayer("Main").getItems()[0];
 
         let minIndex = walls.getColRowAt(new Vec2(minX, minY));
 		let maxIndex = walls.getColRowAt(new Vec2(maxX, maxY));
@@ -69,7 +88,6 @@ export default class AbductionRayController extends StateMachineAI  {
                     let hit = collider.intersectSegment(start, delta, Vec2.ZERO);
 
                     if(hit !== null && start.distanceSqTo(hit.pos) < start.distanceSqTo(end)){
-                        console.log("Found hit");
                         end = hit.pos;
                     }
                 }
@@ -78,6 +96,8 @@ export default class AbductionRayController extends StateMachineAI  {
 
         (<Line>this.owner).start = start;
         (<Line>this.owner).end = end;
+        (<Line>this.owner).tweens.play('fade')
+
     }
 
     hits(): boolean {

@@ -8,6 +8,7 @@ import AbductionRayController from "./AbductionRayController"
 import Scan from "./UFOStates/Scan";
 import Abduct from "./UFOStates/Abduct";
 import Graphic from "../../../Wolfie2D/Nodes/Graphic";
+import Line from "../../../Wolfie2D/Nodes/Graphics/Line";
 
 export enum UFOStates {
 	SCAN = "scan",
@@ -44,12 +45,15 @@ export default class UFOController extends EnemyController {
     initializeRays(): void {
         this.abductionRays = []
         let scene = this.owner.getScene()
-        let start = this.owner.position.x - 10
-        let end = this.owner.position.x + 10
-        for(let i = start; i <= end; i++){
-            let ray = scene.add.graphic("LINE", "primary");
+        // this.owner.position.x - 10
+        let start = this.owner.position.sub(new Vec2(1, 30));
+        let end = this.owner.position.add(new Vec2(1, -30));
+
+        for(let i = start.x; i <= end.x; i++){
+            let ray = scene.add.graphic("LINE", "primary", {start: start, end: start.add(new Vec2(0, 100))});
+            (<Line>ray).thickness = 10
             ray.addPhysics()
-            ray.addAI(AbductionRayController, { startPosition: i, index: i - this.owner.position.x + 10 })
+            ray.addAI(AbductionRayController, { startPosition: i, index: i - this.owner.position.x + 1, ufo: this.owner, player: this.player })
             ray.setGroup('ray')
         }
     }
