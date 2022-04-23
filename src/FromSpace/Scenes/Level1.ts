@@ -54,6 +54,11 @@ export default class Level1 extends GameLevel {
             this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })
 
+        let ufosInitial = [{start: new Vec2(20, 1), left: 16, right: 24}]
+        ufosInitial.forEach((options) => {
+            this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        })
+
         // TODO: Start positions for UFO's
 
         //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});

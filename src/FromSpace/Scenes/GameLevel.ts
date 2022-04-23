@@ -18,6 +18,7 @@ import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
 import Layer from "../../Wolfie2D/Scene/Layer";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
+import UFOController from "../Controllers/Enemies/UFOController";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -320,6 +321,17 @@ export default class GameLevel extends Scene {
         alien.addAI(AlienController, aiOptions);
         alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
         alien.setGroup("alien");
+    }
+
+    protected addUFO(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
+        let ufo = this.add.animatedSprite(spriteKey, "primary");
+        ufo.isCollidable = true;
+        ufo.position.set(tilePos.x*32, tilePos.y*32);
+        ufo.scale.set(.5, .5);
+        ufo.addPhysics();
+        ufo.addAI(UFOController, aiOptions);
+        //ufo.setTrigger('', FUS_Events.ALIEN_HIT_PLAYER, null)
+        ufo.setGroup("ufo");
     }
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
