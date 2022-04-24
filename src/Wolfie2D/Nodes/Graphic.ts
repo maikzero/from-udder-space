@@ -18,7 +18,7 @@ export default abstract class Graphic extends CanvasNode {
 	}
 
 	set alpha(a: number) {
-        console.log(a)
+        //console.log(a)
 
 		this.color.a = a;
 	}
