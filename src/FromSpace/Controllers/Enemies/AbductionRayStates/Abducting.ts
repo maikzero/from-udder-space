@@ -11,7 +11,8 @@ export default class Active extends AbductionRayState {
     pollTimer: Timer;
 
     onEnter(options: Record<string, any>): void {
-        (<PlayerController>this.parent.player._ai).gravity -= 500
+        (<PlayerController>this.parent.player._ai).gravity -= 500;
+        (<UFOController>this.parent.ufo._ai).abducting += 1;
         this.pollTimer = new Timer(100)
 	}
     update(deltaT: number): void {
@@ -32,7 +33,8 @@ export default class Active extends AbductionRayState {
     }
 
     onExit(): Record<string, any> {
-        (<PlayerController>this.parent.player._ai).gravity += 500
+        (<PlayerController>this.parent.player._ai).gravity += 500;
+        (<UFOController>this.parent.ufo._ai).abducting -= 1;
 		return {};
 	}
 }

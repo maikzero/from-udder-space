@@ -2,6 +2,7 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import UFOState from './UFOState'
 import { AlienStates } from "../AlienController";
 import PlayerController from "../../Player/PlayerController";
+import { UFOStates } from "../UFOController";
 
 export default class Scan extends UFOState {
     owner: AnimatedSprite;
@@ -13,6 +14,10 @@ export default class Scan extends UFOState {
         super.update(deltaT)
         this.parent.lastPlayerPos = this.parent.getPlayerPosition()
         
+        if(this.parent.abducting > 0 && !(<PlayerController>this.parent.player._ai).hiding){
+            this.finished(UFOStates.ABDUCT)
+        }
+
         // Player still out of sight/ out of range / hiding
 
         let dir = this.parent.direction

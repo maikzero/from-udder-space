@@ -148,7 +148,8 @@ export default class GameLevel extends Scene {
                         }
                     }
                     case FUS_Events.ALIEN_HIT_PLAYER: 
-                    {
+                    {   
+                        console.log('hit player')
                         let node = this.sceneGraph.getNode(event.data.get("node"));
                         let other = this.sceneGraph.getNode(event.data.get("other"));
 
@@ -171,9 +172,9 @@ export default class GameLevel extends Scene {
                     case FUS_Events.PLAYER_CAUGHT: 
                     {
                         Input.disableInput();
+                        this.player.tweens.play("caught");
                         this.player.disablePhysics();
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_caught", loop: false, holdReference: false});
-                        this.player.tweens.play("caught");
                     }
                     case FUS_Events.UNLOAD_ASSET: 
                     {
@@ -322,7 +323,7 @@ export default class GameLevel extends Scene {
         let alien = this.add.animatedSprite(spriteKey, "primary");
         alien.isCollidable = true;
         alien.position.set(tilePos.x*32, tilePos.y*32);
-        alien.scale.set(.5, .5);
+        alien.scale.set(2, 2);
         alien.addPhysics();
         alien.addAI(AlienController, aiOptions);
         alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
@@ -333,9 +334,10 @@ export default class GameLevel extends Scene {
         let ufo = this.add.animatedSprite(spriteKey, "primary");
         ufo.isCollidable = true;
         ufo.position.set(tilePos.x*32, tilePos.y*32);
-        ufo.scale.set(.5, .5);
+        ufo.scale.set(2, 2);
         ufo.addPhysics();
         ufo.addAI(UFOController, aiOptions);
+        ufo.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
         ufo.setGroup("ufo");
     }
 
