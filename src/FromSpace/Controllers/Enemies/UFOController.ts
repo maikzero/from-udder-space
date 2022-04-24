@@ -21,6 +21,7 @@ export default class UFOController extends EnemyController {
 	gravity: number = 0;
     abductionRays: Array<Graphic>
     inRange: number
+    abducting: number
 
 
     initializeAI(owner: GameNode, options: Record<string, any>){
@@ -34,6 +35,7 @@ export default class UFOController extends EnemyController {
         this.addState(UFOStates.ABDUCT, new Abduct(this, owner))
 
         this.inRange = 500
+        this.abducting = 0
         this.initializeRays()
         
         // Initialize starting state as patrol
@@ -61,7 +63,6 @@ export default class UFOController extends EnemyController {
             //console.log(direction);
             (<Line>ray).thickness = 70
             ray.color = Color.GREEN
-            ray
             ray.addPhysics()
             ray.addAI(AbductionRayController, { startPosition: rayStart.clone(), index: i - this.owner.position.x + 1, ufo: this.owner, player: this.player, direction: direction })
             ray.setGroup('ray')
