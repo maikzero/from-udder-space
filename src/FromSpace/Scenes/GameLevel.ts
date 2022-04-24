@@ -175,6 +175,11 @@ export default class GameLevel extends Scene {
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_caught", loop: false, holdReference: false});
                         this.player.tweens.play("caught");
                     }
+                    case FUS_Events.UNLOAD_ASSET: 
+                    {
+                        let asset = this.sceneGraph.getNode(event.data.get("node"));
+                        asset.destroy();
+                    }
                     break;
             }
         }
@@ -213,7 +218,8 @@ export default class GameLevel extends Scene {
             FUS_Events.FINISHED_HIDING,
             FUS_Events.UNPAUSE,
             FUS_Events.ALIEN_HIT_PLAYER,
-            FUS_Events.PLAYER_CAUGHT
+            FUS_Events.PLAYER_CAUGHT,
+            FUS_Events.UNLOAD_ASSET
         ]);
     }
 
@@ -330,7 +336,6 @@ export default class GameLevel extends Scene {
         ufo.scale.set(.5, .5);
         ufo.addPhysics();
         ufo.addAI(UFOController, aiOptions);
-        //ufo.setTrigger('', FUS_Events.ALIEN_HIT_PLAYER, null)
         ufo.setGroup("ufo");
     }
 

@@ -54,7 +54,7 @@ export default class Level1 extends GameLevel {
             this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })
 
-        let ufosInitial = [{start: new Vec2(20, 1), left: 16, right: 24}]
+        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14}]
         ufosInitial.forEach((options) => {
             this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })

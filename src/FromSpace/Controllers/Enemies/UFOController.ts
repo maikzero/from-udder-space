@@ -9,6 +9,7 @@ import Scan from "./UFOStates/Scan";
 import Abduct from "./UFOStates/Abduct";
 import Graphic from "../../../Wolfie2D/Nodes/Graphic";
 import Line from "../../../Wolfie2D/Nodes/Graphics/Line";
+import Color from "../../../Wolfie2D/Utils/Color";
 
 export enum UFOStates {
 	SCAN = "scan",
@@ -32,7 +33,6 @@ export default class UFOController extends EnemyController {
         this.addState(UFOStates.SCAN, new Scan(this, owner));
         this.addState(UFOStates.ABDUCT, new Abduct(this, owner))
 
-        this.direction = new Vec2(-1, 0);
         this.inRange = 500
         this.initializeRays()
         
@@ -46,15 +46,25 @@ export default class UFOController extends EnemyController {
         this.abductionRays = []
         let scene = this.owner.getScene()
         // this.owner.position.x - 10
-        let start = this.owner.position.sub(new Vec2(1, 30));
-        let end = this.owner.position.add(new Vec2(1, -30));
+        const ownerPos = this.owner.position
+        let start = new Vec2(ownerPos.x - 16, ownerPos.y+20)
+        let end = new Vec2(ownerPos.x + 16, ownerPos.y+20)
 
-        for(let i = start.x; i <= end.x; i++){
-            let ray = scene.add.graphic("LINE", "primary", {start: start, end: start.add(new Vec2(0, 100))});
-            (<Line>ray).thickness = 10
+        let startY = start.y
+        let directionalNum = -8
+
+        for(let i = start.x; i <= end.x; i+=2){
+            let rayStart = new Vec2(i, startY)
+
+            let ray = scene.add.graphic("LINE", "primary", {start: rayStart.clone(), end: start.add(new Vec2(0, 100))});
+            let direction = new Vec2(directionalNum * .05, 1);
+            console.log(direction);
+            (<Line>ray).thickness = 20
+            ray.color = Color.GREEN
             ray.addPhysics()
-            ray.addAI(AbductionRayController, { startPosition: i, index: i - this.owner.position.x + 1, ufo: this.owner, player: this.player })
+            ray.addAI(AbductionRayController, { startPosition: rayStart.clone(), index: i - this.owner.position.x + 1, ufo: this.owner, player: this.player, direction: direction })
             ray.setGroup('ray')
+            directionalNum+=1;
         }
     }
 

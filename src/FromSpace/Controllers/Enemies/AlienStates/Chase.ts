@@ -20,26 +20,33 @@ export default class Chase extends AlienState {
         super.update(deltaT)
         this.parent.playerPos = this.parent.getPlayerPosition()
         this.parent.lastPlayerPos = this.parent.playerPos;
-        let distance = this.owner.position.distanceTo(this.parent.playerPos);
 
-        // if player is no longer visible/in range, or is now hiding, go back to patrol
-        if(this.parent.playerPos === null || distance > this.parent.inRange || (<PlayerController>this.parent.player._ai).hiding){
+        if(this.parent.lastPlayerPos === null){
             this.finished(AlienStates.PATROL)
         }
-
         else{
-            if(this.parent.playerPos.x > this.owner.position.x){
-                this.parent.direction.x = 1;
-                (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
+            let distance = this.owner.position.distanceTo(this.parent.lastPlayerPos)
+            if(distance > this.parent.inRange || (<PlayerController>this.parent.player._ai).hiding){
+                this.finished(AlienStates.PATROL)
             }
             else{
-                this.parent.direction.x = -1;
-                (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
+                this.chaseOpps(deltaT)
             }
-
-            this.parent.velocity.x = this.parent.direction.x * this.parent.speed
-		    this.owner.move(this.parent.velocity.scaled(deltaT));
         }
+    }
+
+    chaseOpps(deltaT: number): void {
+        if(this.parent.playerPos.x > this.owner.position.x){
+            this.parent.direction.x = 1;
+            (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
+        }
+        else{
+            this.parent.direction.x = -1;
+            (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
+        }
+
+        this.parent.velocity.x = this.parent.direction.x * this.parent.speed
+        this.owner.move(this.parent.velocity.scaled(deltaT));
     }
 
     onExit(): Record<string, any> {

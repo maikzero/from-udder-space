@@ -30,8 +30,8 @@ export default class Abduct extends UFOState {
                 (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
             }
 
-            this.parent.velocity.x = this.parent.direction.x * this.parent.speed
-		    this.owner.move(this.parent.velocity.scaled(deltaT));
+             this.parent.velocity.x = this.parent.direction.x * this.parent.speed
+		     this.owner.move(this.parent.velocity.scaled(deltaT));
         }
     }
     onExit(): Record<string, any> {
