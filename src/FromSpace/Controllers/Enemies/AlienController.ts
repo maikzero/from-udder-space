@@ -18,6 +18,7 @@ export default class AlienController extends EnemyController {
     speed: number = 100;
 	gravity: number = 1000;
     inRange: number = 100
+    tilemap: OrthogonalTilemap;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -31,6 +32,7 @@ export default class AlienController extends EnemyController {
         this.direction = new Vec2(-1, 0);
         // Initialize starting state as patrol
         this.initialize(AlienStates.PATROL)
+        this.tilemap = this.owner.getScene().getTilemap("Main") as OrthogonalTilemap;  
 
         this.getPlayerPosition()
     }

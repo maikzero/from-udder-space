@@ -45,16 +45,16 @@ export default class Level1 extends GameLevel {
 
         this.nextLevel = Level2;
 
-        let aliensInitial = [{start: new Vec2(18, 1), left: 15, right: 20}
-             //start: new Vec2(18, 8), left: new Vec2(15, 8), right: new Vec2(17, 8)},
-                        
-                        /*{start: new Vec2(18, 12), left: new Vec2(15, 12), right: new Vec2(17, 12)}*/]
+        let aliensInitial = [{start: new Vec2(18, 1), left: 15, right: 20},
+                        {start: new Vec2(11, 17), left: 9, right: 11.5},
+                        {start: new Vec2(24, 14), left: 23, right: 25.5}]
 
         aliensInitial.forEach((options) => {
             this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })
 
-        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14}]
+        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14},
+            {start: new Vec2(15, 1), left: 20, right: 30}]
         ufosInitial.forEach((options) => {
             this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         })

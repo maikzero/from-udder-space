@@ -1,5 +1,6 @@
 import GameEvent from "../../../../Wolfie2D/Events/GameEvent";
 import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
+import Input from "../../../../Wolfie2D/Input/Input";
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import { EaseFunctionType } from "../../../../Wolfie2D/Utils/EaseFunctions";
 import { FUS_Events } from "../../../fus_enums";
@@ -26,6 +27,13 @@ export default class Jump extends InAir {
 			console.log('jump')
 			this.finished(PlayerStates.FALL);
 		}
+
+		if(Input.isJustPressed("hide")){
+			console.log('walk rehide')
+			this.finished(PlayerStates.MIDAIR_HIDE)
+		}
+
+		
 	}
 
 	onExit(): Record<string, any> {

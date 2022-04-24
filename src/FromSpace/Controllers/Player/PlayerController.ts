@@ -13,6 +13,7 @@ import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
 import Attack from "./PlayerStates/Attack";
 import Paused from "./PlayerStates/Paused";
+import MidAirHide from "./PlayerStates/MidAirHide";
 import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 
 export enum PlayerType {
@@ -30,7 +31,8 @@ export enum PlayerStates {
     PREVIOUS = "previous",
     IN_BOX = "in_box",
     ATTACK = "attack",
-    PAUSED = "paused"
+    PAUSED = "paused",
+    MIDAIR_HIDE = "midair_hide"
 
 }
 
@@ -103,6 +105,8 @@ export default class PlayerController extends StateMachineAI {
         this.addState(PlayerStates.ATTACK, attack)
         let paused = new Paused(this, this.owner)
         this.addState(PlayerStates.PAUSED, paused)
+        let midAirHide = new MidAirHide(this, this.owner)
+        this.addState(PlayerStates.MIDAIR_HIDE, midAirHide)
         
         this.initialize(PlayerStates.IDLE);
     }

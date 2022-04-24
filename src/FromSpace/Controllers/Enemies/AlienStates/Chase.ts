@@ -36,6 +36,10 @@ export default class Chase extends AlienState {
     }
 
     chaseOpps(deltaT: number): void {
+        let tilePosition = new Vec2(Math.floor(this.owner.position.x / 32), Math.ceil(this.owner.position.y / 32))
+        let tile = this.parent.tilemap.getTileAtRowCol(tilePosition)
+        console.log(tile)
+
         if(this.parent.playerPos.x > this.owner.position.x){
             this.parent.direction.x = 1;
             (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
