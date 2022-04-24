@@ -12,6 +12,7 @@ export default abstract class InAir extends PlayerState {
 
         if(dir.x !== 0){
 			(<Sprite>this.owner).invertX = MathUtils.sign(dir.x) < 0;
+            (<Sprite>this.owner).rotation
 		}
 
         // This equation slows you down horizontally as you fall/rise through the air

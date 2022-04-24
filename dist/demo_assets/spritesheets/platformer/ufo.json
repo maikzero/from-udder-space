@@ -1,6 +1,6 @@
 {
 	"name": "ufo",
-	"spriteSheetImage": "ufp.png",
+	"spriteSheetImage": "ufo.png",
 	"spriteWidth": 32,
 	"spriteHeight": 32,
 	"leftBuffer": 0,

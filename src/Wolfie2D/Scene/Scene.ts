@@ -187,6 +187,9 @@ export default class Scene implements Updateable {
     render(): void {
         // Get the visible set of nodes
         let visibleSet = this.sceneGraph.getVisibleSet();
+       // let visibleSet = this.sceneGraph.getAllNodes();
+
+       // visibleSet = visibleSet.filter(node => !node.getLayer().isHidden());
 
         // Add parallax layer items to the visible set (we're rendering them all for now)
         this.parallaxLayers.forEach(key => {

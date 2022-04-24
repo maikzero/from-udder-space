@@ -4,6 +4,7 @@ import Region from "../DataTypes/Interfaces/Region";
 import AABB from "../DataTypes/Shapes/AABB";
 import Debug from "../Debug/Debug";
 import Color from "../Utils/Color";
+import Line from "./Graphics/Line";
 
 /**
  * The representation of an object in the game world that can be drawn to the screen
@@ -96,8 +97,14 @@ export default abstract class CanvasNode extends GameNode implements Region {
 	// @docIgnore
 	/** Called if the position, size, or scale of the CanvasNode is changed. Updates the boundary. */
 	private updateBoundary(): void {
-		this._boundary.center.set(this.position.x, this.position.y);
-		this._boundary.halfSize.set(this.size.x*this.scale.x/2, this.size.y*this.scale.y/2);
+		if(this.group === 16){
+			this._boundary.center.set(this.position.x, this.position.y);
+			this._boundary.halfSize.set(this.size.x*this.scale.x/2 * 5000, this.size.y*this.scale.y/2 * 5000);
+		}
+		else{
+			this._boundary.center.set(this.position.x, this.position.y);
+			this._boundary.halfSize.set(this.size.x*this.scale.x/2, this.size.y*this.scale.y/2);
+		}
 	}
 
 	get boundary(): AABB {

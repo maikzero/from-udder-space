@@ -17,8 +17,8 @@ export default class Level1 extends GameLevel {
         //this.load.tilemap("level1", "demo_assets/tilemaps/platformer/platformer.json");
         this.load.tilemap("level1", "final project assets/barn.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
-        this.load.spritesheet("alien", "final project assets/sprites/devils_flower_mantis.json");
-        this.load.spritesheet("ufo", "final project assets/sprites/sentient_car.json");
+        this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
+        this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
     }
 

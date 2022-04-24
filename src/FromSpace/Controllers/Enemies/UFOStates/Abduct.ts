@@ -7,7 +7,7 @@ export default class Abduct extends UFOState {
     owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('', true)
+        this.owner.animation.play('abduct', true)
 	}
     update(deltaT: number): void {
         super.update(deltaT)

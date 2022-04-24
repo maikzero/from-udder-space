@@ -7,7 +7,7 @@ export default class Patrol extends AlienState {
     owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('WALKING', true)
+        this.owner.animation.play('walk', true)
 	}
 
     update(deltaT: number): void {

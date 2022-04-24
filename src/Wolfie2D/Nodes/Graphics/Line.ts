@@ -30,4 +30,8 @@ export default class Line extends Graphic {
     get end(): Vec2 {
         return this._end;
     }
+
+    //updateBoundary(): void {
+    //    this.boundary = 
+    //}
 }

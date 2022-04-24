@@ -59,8 +59,9 @@ export default class UFOController extends EnemyController {
             let ray = scene.add.graphic("LINE", "primary", {start: rayStart.clone(), end: start.add(new Vec2(0, 100))});
             let direction = new Vec2(directionalNum * .05, 1);
             console.log(direction);
-            (<Line>ray).thickness = 20
+            (<Line>ray).thickness = 70
             ray.color = Color.GREEN
+            ray
             ray.addPhysics()
             ray.addAI(AbductionRayController, { startPosition: rayStart.clone(), index: i - this.owner.position.x + 1, ufo: this.owner, player: this.player, direction: direction })
             ray.setGroup('ray')

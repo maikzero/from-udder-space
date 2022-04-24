@@ -7,7 +7,7 @@ export default class Scan extends UFOState {
     owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('IDLE_LEFT', true)
+        this.owner.animation.play('moving', true)
 	}
     update(deltaT: number): void {
         super.update(deltaT)
