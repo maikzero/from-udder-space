@@ -31,6 +31,7 @@ export default class AbductionRayController extends StateMachineAI  {
     startPosition: Vec2;
     index: number;
     player: GameNode;
+    
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -102,6 +103,9 @@ export default class AbductionRayController extends StateMachineAI  {
     }
 
     hits(): boolean {
+        if ((<UFOController>this.ufo._ai).invincible) {
+            return false
+        }
         let line = <Line>this.owner
         return this.player.collisionShape.getBoundingRect().intersectSegment((line).start, line.end.clone().sub(line.start)) !== null
     }

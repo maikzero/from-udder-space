@@ -283,6 +283,33 @@ export default class MainMenu extends Scene {
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
     }
     updateScene(){
+        if (Input.isKeyJustPressed("1")) {
+            this.emitter.fireEvent("level1");
+            console.log("Skip to lvl1");
+        }
+        else if (Input.isKeyJustPressed("2")) {
+            this.emitter.fireEvent("level2");
+            console.log("Skip to lvl2");
+        }
+        else if (Input.isKeyJustPressed("3")) {
+            this.emitter.fireEvent("level3");
+            console.log("Skip to lvl3");
+        }
+        else if (Input.isKeyJustPressed("4")) {
+            this.emitter.fireEvent("level4");
+            console.log("Skip to lvl4");
+        }
+        else if (Input.isKeyJustPressed("5")) {
+            this.emitter.fireEvent("level5");
+            console.log("Skip to lvl5");
+        }
+        else if (Input.isKeyJustPressed("6")) {
+            this.emitter.fireEvent("level6");
+            console.log("Skip to lvl6");
+        }
+
+
+
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
 

@@ -22,11 +22,13 @@ export default class UFOController extends EnemyController {
     abductionRays: Array<Graphic>
     inRange: number
     abducting: number
+    invincible: Boolean;
 
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
 
+        this.invincible = false;
         // TODO: Add Possible States
         this.direction = new Vec2(-1, 0);
 

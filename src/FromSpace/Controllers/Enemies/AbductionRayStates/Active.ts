@@ -21,7 +21,6 @@ export default class Active extends AbductionRayState {
         if(this.pollTimer.isStopped()){
             this.parent.updateRay()
             
-
             if(this.parent.hits()){
                 console.log('hit')
                 this.finished(AbductionRayStates.ABDUCTING)

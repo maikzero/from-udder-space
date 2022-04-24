@@ -20,6 +20,8 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import UFOController from "../Controllers/Enemies/UFOController";
 import MainMenu from "./MainMenu";
+import Level1 from "./Level1";
+import AbductionRayController from "../Controllers/Enemies/AbductionRayController";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -28,6 +30,11 @@ export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
+    protected invincible: Boolean;
+
+    // Enemy variables
+    protected alien: AnimatedSprite;
+    protected ufo: AnimatedSprite;
 
     // Lives counter
     protected static livesCount: number = 3;
@@ -78,6 +85,20 @@ export default class GameLevel extends Scene {
         if (Input.isJustPressed("pause")) {
             this.emitter.fireEvent(FUS_Events.PAUSE);
         }
+        if (Input.isJustPressed("1")) {
+            this.emitter.fireEvent("level1");
+        }
+        
+        if (Input.isKeyJustPressed("i")) {
+            (<UFOController>this.ufo.ai).invincible = true;
+            this.invincible = true;
+            console.log("Invincible");
+        }
+        if (Input.isKeyJustPressed("u")) {
+            (<UFOController>this.ufo.ai).invincible = false;
+            this.invincible = false;
+            console.log("Uninvincible");
+        }
         
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
@@ -85,6 +106,25 @@ export default class GameLevel extends Scene {
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
+                case 'level1':
+                    {
+                        let sceneOptions = {
+                            physics: {
+                                groupNames: ["ground", "player", "alien", "ufo", "ray"],
+                                collisions:
+                                [
+                                    [0, 1, 1, 1, 1],
+                                    [1, 0, 1, 1, 0],
+                                    [1, 1, 0, 1, 1],
+                                    [1, 1, 1, 0, 1],
+                                    [1, 0, 1, 1, 0],
+        
+                                ]
+                            }
+                        }
+                        this.sceneManager.changeToScene(Level1, {}, sceneOptions);
+                    }
+                    break;
                 case 'main menu':
                     {
                         let size = this.viewport.getHalfSize();
@@ -106,7 +146,7 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.PAUSE:
                     {
-                        //Input.disableKeyInput();
+                        Input.disableKeyInput();
                         console.log("PAUSED")
                         this.pause.setHidden(false);
                         this.isPaused = true;
@@ -116,7 +156,7 @@ export default class GameLevel extends Scene {
                 case FUS_Events.UNPAUSE:
                     {
                         console.log("UNPAUSED");
-                        //Input.enableKeyInput();
+                        Input.enableKeyInput();
                         this.isPaused = false;
                         this.pause.setHidden(true);
                         this.controls.setHidden(true);
@@ -177,6 +217,8 @@ export default class GameLevel extends Scene {
                     }
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
+                        if (this.invincible)
+                            break;
                         console.log('hit player')
                         let node = this.sceneGraph.getNode(event.data.get("node"));
                         let other = this.sceneGraph.getNode(event.data.get("other"));
@@ -387,6 +429,7 @@ export default class GameLevel extends Scene {
             this.playerSpawn = Vec2.ZERO;
         }
         this.player.position.copy(this.playerSpawn);
+        this.invincible = false;
 
         // TODO, Might have to switch up this AABB initialization
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
@@ -406,25 +449,25 @@ export default class GameLevel extends Scene {
     }
     
     protected addAlien(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
-        let alien = this.add.animatedSprite(spriteKey, "primary");
-        alien.isCollidable = true;
-        alien.position.set(tilePos.x*32, tilePos.y*32);
-        alien.scale.set(2, 2);
-        alien.addPhysics();
-        alien.addAI(AlienController, aiOptions);
-        alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
-        alien.setGroup("alien");
+        this.alien = this.add.animatedSprite(spriteKey, "primary");
+        this.alien.isCollidable = true;
+        this.alien.position.set(tilePos.x*32, tilePos.y*32);
+        this.alien.scale.set(2, 2);
+        this.alien.addPhysics();
+        this.alien.addAI(AlienController, aiOptions);
+        this.alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
+        this.alien.setGroup("alien");
     }
 
     protected addUFO(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
-        let ufo = this.add.animatedSprite(spriteKey, "primary");
-        ufo.isCollidable = true;
-        ufo.position.set(tilePos.x*32, tilePos.y*32);
-        ufo.scale.set(2, 2);
-        ufo.addPhysics();
-        ufo.addAI(UFOController, aiOptions);
-        ufo.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
-        ufo.setGroup("ufo");
+        this.ufo = this.add.animatedSprite(spriteKey, "primary");
+        this.ufo.isCollidable = true;
+        this.ufo.position.set(tilePos.x*32, tilePos.y*32);
+        this.ufo.scale.set(2, 2);
+        this.ufo.addPhysics();
+        this.ufo.addAI(UFOController, aiOptions);
+        this.ufo.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
+        this.ufo.setGroup("ufo");
     }
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
