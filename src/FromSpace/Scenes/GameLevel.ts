@@ -106,7 +106,7 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.PAUSE:
                     {
-                        Input.disableKeyInput();
+                        //Input.disableKeyInput();
                         console.log("PAUSED")
                         this.pause.setHidden(false);
                         this.isPaused = true;
@@ -116,7 +116,7 @@ export default class GameLevel extends Scene {
                 case FUS_Events.UNPAUSE:
                     {
                         console.log("UNPAUSED");
-                        Input.enableKeyInput();
+                        //Input.enableKeyInput();
                         this.isPaused = false;
                         this.pause.setHidden(true);
                         this.controls.setHidden(true);
