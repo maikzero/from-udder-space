@@ -11,9 +11,8 @@ export default class Abduct extends UFOState {
 	}
     update(deltaT: number): void {
         super.update(deltaT)
-        this.parent.playerPos = this.parent.getPlayerPosition()
+        this.parent.playerPos = this.parent.player.position.clone()
         this.parent.lastPlayerPos = this.parent.playerPos;
-        let distance = this.owner.position.distanceTo(this.parent.playerPos);
         let playerAI = <PlayerController>this.parent.player._ai
 
         // if player is no longer visible/in range, or is now hiding, go back to patrol

@@ -13,6 +13,7 @@ import Run from "./PlayerStates/Run";
 import Walk from "./PlayerStates/Walk";
 import Attack from "./PlayerStates/Attack";
 import Paused from "./PlayerStates/Paused";
+import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -60,6 +61,27 @@ export default class PlayerController extends StateMachineAI {
         
         // Tween animations are added here
         // Event subscription can also be added here
+        this.owner.tweens.add("caught", {
+            startDelay: 0,
+            duration: 2000,
+            effects: [
+                {
+                    property: "alpha",
+                    start: 1,
+                    end: 0,
+                    ease: EaseFunctionType.IN_SINE
+                },
+
+                {
+                    property: "rotation",
+                    start: 0,
+                    end: 6*Math.PI,
+                    ease: EaseFunctionType.IN_SINE
+                }
+
+            ]
+
+        })
     }
 
     initializePlatformer(): void {
