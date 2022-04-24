@@ -19,6 +19,7 @@ import Layer from "../../Wolfie2D/Scene/Layer";
 import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import UFOController from "../Controllers/Enemies/UFOController";
+import MainMenu from "./MainMenu";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -46,6 +47,9 @@ export default class GameLevel extends Scene {
     protected pause: Layer;
     protected isPaused: Boolean;
 
+    // Controls Screen
+    protected controls: Layer;
+
     startScene(): void {
         this.initLayers();
         this.initViewport();
@@ -55,6 +59,7 @@ export default class GameLevel extends Scene {
 
         this.isPaused = false;
         this.pause.setHidden(true);
+        this.controls.setHidden(true);
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -80,8 +85,29 @@ export default class GameLevel extends Scene {
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
+                case 'main menu':
+                    {
+                        let size = this.viewport.getHalfSize();
+                        this.viewport.setFocus(size.mult(new Vec2(2,2)));
+                        this.sceneManager.changeToScene(MainMenu, {});
+                    }
+                    break;
+                case 'controls':
+                    {
+                        this.controls.setHidden(false);
+                        this.pause.setHidden(true);
+                    }
+                    break;
+                case 'controlsBack':
+                    {
+                        this.controls.setHidden(true);
+                        this.pause.setHidden(false);
+                    }
+                    break;
                 case FUS_Events.PAUSE:
                     {
+                        Input.disableKeyInput();
+                        console.log("PAUSED")
                         this.pause.setHidden(false);
                         this.isPaused = true;
                         (<PlayerController>this.player._ai).paused = true;
@@ -89,9 +115,11 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.UNPAUSE:
                     {
-                        console.log("UNPAUSE");
+                        console.log("UNPAUSED");
+                        Input.enableKeyInput();
                         this.isPaused = false;
                         this.pause.setHidden(true);
+                        this.controls.setHidden(true);
                         (<PlayerController>this.player._ai).paused = false;
                     }
                     break;
@@ -192,6 +220,9 @@ export default class GameLevel extends Scene {
         // Add a layer for Pause screen
         this.pause = this.addUILayer("pause");
 
+        // Add a layer for the Controls screen
+        this.controls = this.addUILayer("controls");
+
         // Add a layer for players and enemies
         this.addLayer("primary", 1);
     }
@@ -219,7 +250,10 @@ export default class GameLevel extends Scene {
             FUS_Events.UNPAUSE,
             FUS_Events.ALIEN_HIT_PLAYER,
             FUS_Events.PLAYER_CAUGHT,
-            FUS_Events.UNLOAD_ASSET
+            FUS_Events.UNLOAD_ASSET,
+            'controls',
+            'controlsBack',
+            'main menu'
         ]);
     }
 
@@ -227,12 +261,64 @@ export default class GameLevel extends Scene {
         // Pause Screen
         const center = this.viewport.getCenter();
 
-        let pauseBack = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, center.y / 2), text: "Back"});
+        let pauseBack = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, (center.y / 2) + 50), text: "Back"});
         pauseBack.size.set(200, 50);
         pauseBack.borderWidth = 2;
         pauseBack.borderColor = Color.WHITE;
         pauseBack.backgroundColor = Color.BLACK;
         pauseBack.onClickEventId = FUS_Events.UNPAUSE;
+
+        let controls = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, (center.y / 2) - 50), text: "Controls"});
+        controls.size.set(200, 50);
+        controls.borderWidth = 2;
+        controls.borderColor = Color.WHITE;
+        controls.backgroundColor = Color.BLACK;
+        controls.onClickEventId = 'controls';
+
+        let home = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, center.y / 2), text: "Main Menu"});
+        home.size.set(200, 50);
+        home.borderWidth = 2;
+        home.borderColor = Color.WHITE;
+        home.backgroundColor = Color.BLACK;
+        home.onClickEventId = 'main menu';
+
+
+        const controlsBackground = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, center.y / 2), text: ''});
+        controlsBackground.size.set(600, 700);
+        controlsBackground.backgroundColor = Color.BLACK;
+
+        const controlsHeader = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 125), text: "Controls"});
+        controlsHeader.textColor = Color.WHITE;
+        controlsHeader.fontSize = 45;
+
+        const controls1 = "AD to Move Left and Right"
+        const controls2 = "W to Jump"
+        const controls3 = "E to Hide under Box"
+        const controls4 = "R to Remove Box"
+        const controls5 = "Q to Fart"
+        const controls6 = "ESC to Pause"
+
+        const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 60), text: controls1});
+        const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 40), text: controls2});
+        const control_line3 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 20), text: controls3});
+        const control_line4 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2)), text: controls4});
+        const control_line5 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 20), text: controls5});
+        const control_line6 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 40), text: controls6});
+
+        control_line1.textColor = Color.WHITE;
+        control_line2.textColor = Color.WHITE;
+        control_line3.textColor = Color.WHITE;
+        control_line4.textColor = Color.WHITE;
+        control_line5.textColor = Color.WHITE;
+        control_line6.textColor = Color.WHITE;
+
+        const controlBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 80), text: "Back"});
+        controlBack.size.set(200, 50);
+        controlBack.borderWidth = 2;
+        controlBack.borderColor = Color.WHITE;
+        controlBack.backgroundColor = Color.BLACK;
+        controlBack.onClickEventId = "controlsBack";
+
 
         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(-300, 200), text: "Level Complete"});

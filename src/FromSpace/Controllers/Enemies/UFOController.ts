@@ -58,7 +58,7 @@ export default class UFOController extends EnemyController {
 
             let ray = scene.add.graphic("LINE", "primary", {start: rayStart.clone(), end: start.add(new Vec2(0, 100))});
             let direction = new Vec2(directionalNum * .05, 1);
-            console.log(direction);
+            //console.log(direction);
             (<Line>ray).thickness = 70
             ray.color = Color.GREEN
             ray
