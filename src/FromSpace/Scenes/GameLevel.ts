@@ -30,6 +30,7 @@ export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
+    protected invincible: Boolean;
 
     // Enemy variables
     protected alien: AnimatedSprite;
@@ -90,10 +91,12 @@ export default class GameLevel extends Scene {
         
         if (Input.isKeyJustPressed("i")) {
             (<UFOController>this.ufo.ai).invincible = true;
+            this.invincible = true;
             console.log("Invincible");
         }
         if (Input.isKeyJustPressed("u")) {
             (<UFOController>this.ufo.ai).invincible = false;
+            this.invincible = false;
             console.log("Uninvincible");
         }
         
@@ -214,6 +217,8 @@ export default class GameLevel extends Scene {
                     }
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
+                        if (this.invincible)
+                            break;
                         console.log('hit player')
                         let node = this.sceneGraph.getNode(event.data.get("node"));
                         let other = this.sceneGraph.getNode(event.data.get("other"));
@@ -424,6 +429,7 @@ export default class GameLevel extends Scene {
             this.playerSpawn = Vec2.ZERO;
         }
         this.player.position.copy(this.playerSpawn);
+        this.invincible = false;
 
         // TODO, Might have to switch up this AABB initialization
         this.player.addPhysics(new AABB(Vec2.ZERO, new Vec2(14, 14)));
