@@ -20,7 +20,7 @@ export default class MidAirHide extends PlayerState {
         this.parent.hiding = true
 	}
 
-    update(deltaT: number): void {
+    update(deltaT: number): void {2
         super.update(deltaT)
 
         if(this.owner.onCeiling){
