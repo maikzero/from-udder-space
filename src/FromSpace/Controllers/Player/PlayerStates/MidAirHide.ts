@@ -13,6 +13,7 @@ export default class MidAirHide extends PlayerState {
 	owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
+        console.log('enter mahide')
         if(!this.parent.hiding){
             this.owner.animation.play('hide', false, FUS_Events.PLAY_HIDE)
         }
@@ -41,6 +42,7 @@ export default class MidAirHide extends PlayerState {
         if(Input.isJustPressed("unhide")){
             console.log('inbox')
             this.owner.animation.play('unhide', false, FUS_Events.FINISHED_HIDING)
+            this.finished(PlayerStates.JUMP)
 		}
         if(!this.parent.hiding){
             this.finished(PlayerStates.JUMP)
@@ -48,6 +50,8 @@ export default class MidAirHide extends PlayerState {
     }
 
     onExit(): Record<string, any> {
+        //console.log('leave mahide')
+        this.parent.hiding = false
         this.owner.animation.stop();
 		return {};
 	}

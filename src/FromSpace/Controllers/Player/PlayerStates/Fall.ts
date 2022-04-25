@@ -8,6 +8,7 @@ export default class Fall extends InAir {
     owner: AnimatedSprite;
 
 	onEnter(options: Record<string, any>): void {
+		console.log('enter fall')
         this.owner.animation.play("idle", true)
     }
 
@@ -23,6 +24,7 @@ export default class Fall extends InAir {
 	}
 
     onExit(): Record<string, any> {
+		//console.log('leave fall')
 		this.owner.animation.stop();
         return {};
     }

@@ -114,8 +114,6 @@ export default class PlayerController extends StateMachineAI {
     changeState(stateName: string): void {
         // If we jump or fall, push the state so we can go back to our current state later
         // unless we're going from jump to fall or something
-        console.log('changing with')
-        console.log(stateName)
         if((stateName === PlayerStates.JUMP || stateName === PlayerStates.FALL) && !(this.stack.peek() instanceof InAir)){
             this.stack.push(this.stateMap.get(stateName));
         }
@@ -136,25 +134,23 @@ export default class PlayerController extends StateMachineAI {
     update(deltaT: number): void {
 		super.update(deltaT);
         while(this.receiver.hasNextEvent()){
-            console.log('next event')
             let event = this.receiver.getNextEvent();
 
             switch(event.type){
                 case FUS_Events.ATTACK_FINISHED:
                     {
-                        console.log('got attack finish')
                         this.changeState(PlayerStates.IDLE)
                     }
                     break;
                 case FUS_Events.PAUSE:
                     {
-                        console.log('got pause');
+                       // console.log('got pause');
                         this.changeState(PlayerStates.PAUSED);
                     }
                     break;
                 case FUS_Events.UNPAUSE:
                     {
-                        console.log('got unpause');
+                       // console.log('got unpause');
                         this.changeState(PlayerStates.IDLE)
                     }
             }

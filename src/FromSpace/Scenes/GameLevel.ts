@@ -31,13 +31,14 @@ export default class GameLevel extends Scene {
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
     protected invincible: Boolean;
+    protected respawnTimer: Timer;
 
     // Enemy variables
     protected alien: AnimatedSprite;
     protected ufo: AnimatedSprite;
 
     // Lives counter
-    protected static livesCount: number = 3;
+    protected static livesCount: number = 20;
     protected livesCountLabel: Label;
 
     // Level end area
@@ -67,6 +68,14 @@ export default class GameLevel extends Scene {
         this.isPaused = false;
         this.pause.setHidden(true);
         this.controls.setHidden(true);
+
+        this.respawnTimer = new Timer(1000, () => {
+            this.player.position = this.playerSpawn.clone()
+            this.player.visible = true
+            this.player.enablePhysics();
+            Input.enableInput();
+            this.player.unfreeze();
+        });
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -207,14 +216,20 @@ export default class GameLevel extends Scene {
                                     groupNames: ["ground", "player", "alien", "ufo", "ray"],
                                     collisions:
                                     [
-                                        [0, 1, 1],
-                                        [1, 0, 0]
+                                        [0, 1, 1, 1, 1],
+                                        [1, 0, 1, 1, 0],
+                                        [1, 1, 0, 1, 1],
+                                        [1, 1, 1, 0, 1],
+                                        [1, 0, 1, 1, 0],
+
                                     ]
                                 }
                             }
                             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
                         }
                     }
+                    break;
+
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
                         if (this.invincible)
@@ -238,14 +253,30 @@ export default class GameLevel extends Scene {
 
                         this.handlePlayerAlienCollision(playerSprite, alienSprite);
                     }
+                    break;
                     
                     case FUS_Events.PLAYER_CAUGHT: 
-                    {
+                    {   
+                        GameLevel.livesCount--;
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "caught", loop: false, holdReference: false});
+                       // this.player.tweens.play("caught");
                         Input.disableInput();
-                        this.player.tweens.play("caught");
                         this.player.disablePhysics();
-                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "player_caught", loop: false, holdReference: false});
+                        this.player.position.x = 0;
+                        this.player.position.y = 0
+                        this.player.visible = false
+
+                        if(GameLevel.livesCount === 0){
+                            GameLevel.livesCount = 20
+                            this.sceneManager.changeToScene(MainMenu);
+                        }
+
+                        else{
+                            this.respawnTimer.start()
+                        }
                     }
+                    break;
+
                     case FUS_Events.UNLOAD_ASSET: 
                     {
                         let asset = this.sceneGraph.getNode(event.data.get("node"));
@@ -475,5 +506,4 @@ export default class GameLevel extends Scene {
             this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
         }
     }
-
 }
