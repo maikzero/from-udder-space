@@ -7,6 +7,7 @@ export default class Idle extends OnGround {
 	owner: AnimatedSprite;
 
 	onEnter(options: Record<string, any>): void {
+		console.log('enter idle')
 		this.parent.speed = this.parent.MIN_SPEED;
 		this.owner.animation.play('idle', true)
 	}
@@ -18,10 +19,10 @@ export default class Idle extends OnGround {
 
 		if(!dir.isZero() && dir.y === 0){
 			if(Input.isPressed("run")){
-				console.log('idle')
+			//	console.log('idle')
 				this.finished(PlayerStates.RUN);
 			} else {
-				console.log('idle')
+				//console.log('idle')
 				this.finished(PlayerStates.WALK);
 			}
 		}
@@ -31,7 +32,7 @@ export default class Idle extends OnGround {
 		this.owner.move(this.parent.velocity.scaled(deltaT));
 
 		if(Input.isJustPressed("hide")){
-			console.log('idle rehide')
+		//	console.log('idle rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
 		else if(Input.isJustPressed("attack")){
@@ -40,6 +41,7 @@ export default class Idle extends OnGround {
 	}
 
 	onExit(): Record<string, any> {
+	//	console.log('leave idle')
 		this.owner.animation.stop();
 		return {};
 	}

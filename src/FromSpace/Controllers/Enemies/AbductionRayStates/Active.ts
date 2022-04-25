@@ -22,7 +22,6 @@ export default class Active extends AbductionRayState {
             this.parent.updateRay()
             
             if(this.parent.hits()){
-                console.log('hit')
                 this.finished(AbductionRayStates.ABDUCTING)
             }
             else{

@@ -27,7 +27,7 @@ export default class OnGround extends PlayerState {
 			this.parent.velocity.y = -500;
         } 
         else if(!this.owner.onGround){
-			this.finished("fall");
+			this.finished("jump");
 		}
     }
 

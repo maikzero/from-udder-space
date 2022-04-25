@@ -22,6 +22,7 @@ export default class Level1 extends GameLevel {
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
         this.load.audio("abduct", "demo_assets/sounds/abduct.wav");
         this.load.audio("caught", "demo_assets/sounds/caught.wav");
+        this.load.audio("music", "demo_assets/sounds/game-music.mp3");
     }
 
     unloadScene(){
@@ -69,7 +70,7 @@ export default class Level1 extends GameLevel {
 
         // TODO: Start positions for UFO's
 
-        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
 
     }
 

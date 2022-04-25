@@ -11,6 +11,7 @@ export default class Jump extends InAir {
 	owner: AnimatedSprite;
 
 	onEnter(options: Record<string, any>): void {
+		console.log('enter jump')
 		this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "jump", loop: false, holdReference: false});
 		this.owner.animation.play('idle', true)
 	}
@@ -24,12 +25,10 @@ export default class Jump extends InAir {
 
 		// If we're falling, go to the fall state
 		if(this.parent.velocity.y >= 0){
-			console.log('jump')
 			this.finished(PlayerStates.FALL);
 		}
 
 		if(Input.isJustPressed("hide")){
-			console.log('walk rehide')
 			this.finished(PlayerStates.MIDAIR_HIDE)
 		}
 
@@ -37,6 +36,7 @@ export default class Jump extends InAir {
 	}
 
 	onExit(): Record<string, any> {
+		//console.log('leave jump')
 		this.owner.animation.stop();
 		return {};
 	}

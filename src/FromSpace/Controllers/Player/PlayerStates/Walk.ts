@@ -8,6 +8,7 @@ export default class Walk extends OnGround {
 	owner: AnimatedSprite;
 
 	onEnter(options: Record<string, any>): void {
+		console.log('enter walk')
 		this.parent.speed = this.parent.MIN_SPEED;
 		this.owner.animation.play('walk', true)
 	}
@@ -17,17 +18,17 @@ export default class Walk extends OnGround {
 		let dir = this.getInputDirection();
 
 		if(dir.isZero()){
-			console.log('walk')
+		//	console.log('walk')
 			this.finished(PlayerStates.IDLE);
 		} else {
 			if(Input.isPressed("run")){
-				console.log('walk')
+			//	console.log('walk')
 				this.finished(PlayerStates.RUN);
 			}
 		}
 
 		if(Input.isJustPressed("hide")){
-			console.log('walk rehide')
+		//	console.log('walk rehide')
 			this.finished(PlayerStates.IN_BOX)
 		}
 		else if(Input.isJustPressed("attack")){
@@ -40,6 +41,7 @@ export default class Walk extends OnGround {
 	}
 
 	onExit(): Record<string, any> {
+		//console.log('leave walk')
 		this.owner.animation.stop();
 		return {};
 	}

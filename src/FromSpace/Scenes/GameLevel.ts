@@ -306,7 +306,7 @@ export default class GameLevel extends Scene {
      * Initializes the viewport
      */
     protected initViewport(): void {
-        this.viewport.setZoomLevel(1);
+        this.viewport.setZoomLevel(2);
     }
 
     /**
