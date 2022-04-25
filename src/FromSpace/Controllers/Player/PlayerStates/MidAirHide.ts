@@ -52,7 +52,7 @@ export default class MidAirHide extends PlayerState {
     onExit(): Record<string, any> {
         //console.log('leave mahide')
         this.parent.hiding = false
-        this.owner.animation.stop();
+        //this.owner.animation.stop();
 		return {};
 	}
 }

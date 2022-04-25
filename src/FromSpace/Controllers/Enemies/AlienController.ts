@@ -17,7 +17,7 @@ export enum AlienStates {
 export default class AlienController extends EnemyController {
     speed: number = 100;
 	gravity: number = 1000;
-    inRange: number = 100
+    inRange: number = 150
     tilemap: OrthogonalTilemap;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
