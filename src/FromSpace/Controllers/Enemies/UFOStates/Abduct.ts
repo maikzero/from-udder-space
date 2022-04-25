@@ -2,12 +2,14 @@ import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import UFOState from './UFOState'
 import { UFOStates } from "../UFOController";
 import PlayerController from "../../Player/PlayerController";
+import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
 
 export default class Abduct extends UFOState {
     owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
         this.owner.animation.play('abduct', true)
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "abduct", loop: false, holdReference: false});
 	}
     update(deltaT: number): void {
         super.update(deltaT)
@@ -36,6 +38,7 @@ export default class Abduct extends UFOState {
     }
     onExit(): Record<string, any> {
         this.owner.animation.stop();
+        //this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "abduct"});
 		return {};
 	}
 }

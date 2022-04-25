@@ -20,11 +20,15 @@ export default class Level1 extends GameLevel {
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
+        this.load.audio("abduct", "demo_assets/sounds/abduct.wav");
+        this.load.audio("caught", "demo_assets/sounds/caught.wav");
     }
 
     unloadScene(){
         this.resourceManager.keepSpritesheet("player")
         this.resourceManager.keepAudio("jump")
+        this.resourceManager.keepAudio("abduct")
+        this.resourceManager.keepAudio("caught")
         this.resourceManager.keepTilemap("level1")
     }
 
@@ -45,9 +49,13 @@ export default class Level1 extends GameLevel {
 
         this.nextLevel = Level2;
 
-        let aliensInitial = [{start: new Vec2(18, 1), left: 15, right: 20},
+        let aliensInitial = [{start: new Vec2(17, 1), left: 17, right: 17},
                         {start: new Vec2(11, 17), left: 9, right: 11.5},
-                        {start: new Vec2(24, 14), left: 23, right: 25.5}]
+                        {start: new Vec2(24, 14), left: 23, right: 25.5},
+                        {start: new Vec2(34.5, 14), left: 34, right: 36},
+                        {start: new Vec2(43, 7), left: 41.25, right: 46},
+                        {start: new Vec2(52, 13), left: 50, right: 55},
+                    ]
 
         aliensInitial.forEach((options) => {
             this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
