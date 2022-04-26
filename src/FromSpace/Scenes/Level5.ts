@@ -3,12 +3,11 @@ import Debug from "../../Wolfie2D/Debug/Debug";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
-import Level3 from "./Level3";
 
 export default class Level2 extends GameLevel {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level2", "final project assets/level2.json");
+        this.load.tilemap("level5", "final project assets/spaceship.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
@@ -29,15 +28,14 @@ export default class Level2 extends GameLevel {
 
     startScene(): void {
         // Add the level 2 tilemap
-        this.add.tilemap("level2", new Vec2(1, 1));
-        this.viewport.setBounds(0, 0, 64*32, 24*32);
+        this.add.tilemap("level5", new Vec2(1, 1));
+        this.viewport.setBounds(0, 0, 60*32, 24*32);
 
         this.playerSpawn = new Vec2(4*32, 15*32);
 
         super.startScene();
-        this.nextLevel = Level3
 
-        this.addLevelEnd(new Vec2(1990/32, 720/32), new Vec2(2, 2));
+        this.addLevelEnd(new Vec2(58, 24), new Vec2(2, 2));
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }

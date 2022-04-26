@@ -32,6 +32,7 @@ export default class Level1 extends GameLevel {
         this.resourceManager.keepAudio("jump")
         this.resourceManager.keepAudio("abduct")
         this.resourceManager.keepAudio("caught")
+        this.resourceManager.keepAudio("music") 
     }
 
     startScene(): void {
