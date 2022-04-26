@@ -27,10 +27,11 @@ export default class Level1 extends GameLevel {
 
     unloadScene(){
         this.resourceManager.keepSpritesheet("player")
+        this.resourceManager.keepSpritesheet("alien")
+        this.resourceManager.keepSpritesheet("ufo")
         this.resourceManager.keepAudio("jump")
         this.resourceManager.keepAudio("abduct")
         this.resourceManager.keepAudio("caught")
-        this.resourceManager.keepTilemap("level1")
     }
 
     startScene(): void {
@@ -69,6 +70,8 @@ export default class Level1 extends GameLevel {
         })
 
         // TODO: Start positions for UFO's
+
+        this.addLevelEnd(new Vec2(62,18), new Vec2(2, 2))
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
 

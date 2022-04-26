@@ -5,15 +5,9 @@ import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 
 export default class Level2 extends GameLevel {
-    // HOMEWORK 5 - TODO
-    /**
-     * Decide which resource to keep and which to cull.
-     * 
-     * Not all of these loads are needed. Decide which to remove and handle keeping resources in Level1
-     */
     loadScene(): void {
         // Load resources
-      //  this.load.tilemap("level2", "hw5_assets/tilemaps/level2.json");
+        this.load.tilemap("level2", "final project assets/level2.json");
         /*this.load.spritesheet("player", "hw5_assets/spritesheets/spike.json");
         this.load.audio("jump", "hw5_assets/sounds/jump.wav");
         this.load.audio("player_death", "hw5_assets/sounds/player_death.wav");*/
@@ -21,14 +15,14 @@ export default class Level2 extends GameLevel {
 
     startScene(): void {
         // Add the level 2 tilemap
-        this.add.tilemap("level1", new Vec2(2, 2));
-        this.viewport.setBounds(0, 0, 64*32, 20*32);
+        this.add.tilemap("level2", new Vec2(1, 1));
+        this.viewport.setBounds(0, 0, 64*32, 24*32);
 
         this.playerSpawn = new Vec2(4*32, 15*32);
 
         super.startScene();
 
-        this.addLevelEnd(new Vec2(60, 12), new Vec2(2, 2));
+       // this.addLevelEnd(new Vec2(60, 12), new Vec2(2, 2));
 
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "level_music", loop: true, holdReference: true});
     }
