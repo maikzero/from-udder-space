@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="64" height="24" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="grass.tsx"/>
+ <editorsettings>
+  <export target="level2.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="grass" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="grass.png" width="1920" height="1080"/>
+ </tileset>
  <layer id="1" name="Background" width="64" height="24">
   <properties>
    <property name="Collidable" type="bool" value="false"/>

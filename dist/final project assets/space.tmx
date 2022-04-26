@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.2" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="space.tsx"/>
+ <editorsettings>
+  <export target="space.json" format="json"/>
+ </editorsettings>
+ <tileset firstgid="1" name="space" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="space.png" width="1920" height="1080"/>
+ </tileset>
  <tileset firstgid="1981" source="spaceship.tsx"/>
  <layer id="1" name="Background" width="60" height="60">
   <properties>

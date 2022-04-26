@@ -56,8 +56,17 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":60,
          "firstgid":1,
-         "source":"space.tsx"
+         "image":"space.png",
+         "imageheight":1080,
+         "imagewidth":1920,
+         "margin":0,
+         "name":"space",
+         "spacing":0,
+         "tilecount":1980,
+         "tileheight":32,
+         "tilewidth":32
         }, 
         {
          "firstgid":1981,

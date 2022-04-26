@@ -56,8 +56,17 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":60,
          "firstgid":1,
-         "source":"grass.tsx"
+         "image":"grass.png",
+         "imageheight":1080,
+         "imagewidth":1920,
+         "margin":0,
+         "name":"grass",
+         "spacing":0,
+         "tilecount":1980,
+         "tileheight":32,
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",

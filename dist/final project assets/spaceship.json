@@ -56,7 +56,20 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":60,
          "firstgid":1,
+         "image":"spaceship.png",
+         "imageheight":1080,
+         "imagewidth":1920,
+         "margin":0,
+         "name":"spaceship",
+         "spacing":0,
+         "tilecount":1980,
+         "tileheight":32,
+         "tilewidth":32
+        }, 
+        {
+         "firstgid":1981,
          "source":"spaceship.tsx"
         }],
  "tilewidth":32,
