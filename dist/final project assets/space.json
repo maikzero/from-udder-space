@@ -67,11 +67,8 @@
          "tilecount":1980,
          "tileheight":32,
          "tilewidth":32
-        }, 
-        {
-         "firstgid":1981,
-         "source":"spaceship.tsx"
-        }],
+        } 
+       ],
  "tilewidth":32,
  "type":"map",
  "version":"1.8",
