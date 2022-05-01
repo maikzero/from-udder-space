@@ -30,7 +30,9 @@ export default class MidAirHide extends PlayerState {
 
 
         // This equation slows you down horizontally as you fall/rise through the air
-		this.parent.velocity.x += this.parent.speed/3.5 - 0.3*this.parent.velocity.x;
+        if(this.parent.velocity.x !== 0){
+		    this.parent.velocity.x += this.parent.speed/3.5 - 0.4*this.parent.velocity.x;
+        }
 
         this.owner.move(this.parent.velocity.scaled(deltaT));
 
@@ -42,16 +44,18 @@ export default class MidAirHide extends PlayerState {
         if(Input.isJustPressed("unhide")){
             console.log('inbox')
             this.owner.animation.play('unhide', false, FUS_Events.FINISHED_HIDING)
-            this.finished(PlayerStates.JUMP)
+           // this.finished(PlayerStates.JUMP)
 		}
         if(!this.parent.hiding){
+            this.parent.hiding = false
+            this.owner.animation.stop();
             this.finished(PlayerStates.JUMP)
         }
     }
 
     onExit(): Record<string, any> {
         //console.log('leave mahide')
-        this.parent.hiding = false
+        //this.parent.hiding = false
         //this.owner.animation.stop();
 		return {};
 	}

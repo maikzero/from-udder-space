@@ -5,7 +5,7 @@ import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Level4 from "./Level4";
 
-export default class Level2 extends GameLevel {
+export default class Level3 extends GameLevel {
     loadScene(): void {
         // Load resources
         this.load.tilemap("level3", "final project assets/outsidebarn.json");
@@ -39,7 +39,7 @@ export default class Level2 extends GameLevel {
 
         this.addLevelEnd(new Vec2(418/32, 720/32), new Vec2(2, 2));
 
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
+      //  this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }
 
     updateScene(deltaT: number): void {

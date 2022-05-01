@@ -13,8 +13,6 @@ export default class Level1 extends GameLevel {
     // TODO: Add enemy sprites and various other sound effects
     loadScene(): void {
         // Load resources
-        //this.load.tilemap("level1", "final_project_assets/.json");
-        //this.load.tilemap("level1", "demo_assets/tilemaps/platformer/platformer.json");
         this.load.tilemap("level1", "final project assets/barn.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
@@ -47,12 +45,9 @@ export default class Level1 extends GameLevel {
 
         super.startScene();
 
-        // TODO: Different level end
-       // this.addLevelEnd(new Vec2(60, 13), new Vec2(5, 5));
-
         this.nextLevel = Level2;
 
-        let aliensInitial = [{start: new Vec2(17, 1), left: 17, right: 17},
+        let aliensInitial = [{start: new Vec2(17, 4), left: 17, right: 17},
                         {start: new Vec2(11, 17), left: 9, right: 11.5},
                         {start: new Vec2(24, 14), left: 23, right: 25.5},
                         {start: new Vec2(34.5, 14), left: 34, right: 36},

@@ -25,6 +25,7 @@ export default class Level2 extends GameLevel {
         this.resourceManager.keepAudio("jump")
         this.resourceManager.keepAudio("abduct")
         this.resourceManager.keepAudio("caught")
+        this.resourceManager.keepAudio("music")
     }
 
     startScene(): void {
@@ -39,7 +40,7 @@ export default class Level2 extends GameLevel {
 
         this.addLevelEnd(new Vec2(1990/32, 720/32), new Vec2(2, 2));
 
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
+        //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }
 
     updateScene(deltaT: number): void {

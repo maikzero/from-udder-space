@@ -4,7 +4,8 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 
-export default class Level2 extends GameLevel {
+
+export default class Level5 extends GameLevel {
     loadScene(): void {
         // Load resources
         this.load.tilemap("level5", "final project assets/spaceship.json");
@@ -34,10 +35,13 @@ export default class Level2 extends GameLevel {
         this.playerSpawn = new Vec2(4*32, 15*32);
 
         super.startScene();
+        this.nextLevel = null
 
         this.addLevelEnd(new Vec2(58, 24), new Vec2(2, 2));
 
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
+        
+
+       // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }
 
     updateScene(deltaT: number): void {
