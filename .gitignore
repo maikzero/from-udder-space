@@ -22,6 +22,9 @@ dist/*
 #this is the bundle.js for benchmark2
 !dist/bundle_benchmark2.js
 
+#this is the bundle.js for benchmark3
+!dist/bundle_benchmark3.js
+
 
 ### IF YOU ARE MAKING A PROJECT, YOU MAY WANT TO UNCOMMENT THIS LINE ###
 # !dist/assets/
