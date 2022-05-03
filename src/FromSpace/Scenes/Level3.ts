@@ -37,7 +37,7 @@ export default class Level3 extends GameLevel {
         super.startScene();
         this.nextLevel = Level4
 
-        this.addLevelEnd(new Vec2(418/32, 720/32), new Vec2(2, 2));
+       // this.addLevelEnd(new Vec2(418/32, 720/32), new Vec2(2, 2));
 
       //  this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }
