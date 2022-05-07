@@ -109,7 +109,6 @@ export default class AbductionRayController extends StateMachineAI  {
 
     hits(): boolean {
         if ((<UFOController>this.ufo._ai).invincible) {
-            console.log("here")
             return false
         }
         let line = <Line>this.owner

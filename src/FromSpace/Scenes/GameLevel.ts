@@ -20,15 +20,12 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import UFOController from "../Controllers/Enemies/UFOController";
 import MainMenu from "./MainMenu";
-//import Level1 from "./Level1";
+import Level1 from "./Level1";
 import AbductionRayController from "../Controllers/Enemies/AbductionRayController";
-// import Level2 from "./Level2";
-// import Level3 from "./Level3";
-// import Level4 from "./Level4";
-// import Level5 from "./Level5";
-// import Level3 from "./Level3";
-// import Level4 from "./Level4";
-// import Level5 from "./Level5";
+import Level2 from "./Level2";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
+import Level5 from "./Level5"; 
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -134,17 +131,17 @@ export default class GameLevel extends Scene {
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
-                // case 'level1':
-                //     {
-                //         this.goToLevel(Level1)
-                //     }
-                //     break;
+                 case 'level1':
+                     {
+                         this.goToLevel(Level1)
+                     }
+                     break;
 
-                // case 'level2':
-                //     {
-                //         this.goToLevel(Level2)
-                //     }
-                //     break;
+                case 'level2':
+                    {
+                        this.goToLevel(Level2)
+                    }
+                    break;
 
                 // case 'level3':
                 //     {
@@ -564,6 +561,24 @@ export default class GameLevel extends Scene {
                 this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
             }
         }
+    }
+
+    goToLevel(level: new (...args: any) => GameLevel): void{
+        let sceneOptions = {
+            physics: {
+                groupNames: ["ground", "player", "alien", "ufo", "ray"],
+                collisions:
+                [
+                    [0, 1, 1, 1, 1],
+                    [1, 0, 1, 0, 0],
+                    [1, 1, 0, 1, 1],
+                    [1, 0, 1, 0, 1],
+                    [1, 0, 1, 1, 0],
+
+                ]
+            }
+        }
+        this.sceneManager.changeToScene(level, {}, sceneOptions);
     }
 
 }
