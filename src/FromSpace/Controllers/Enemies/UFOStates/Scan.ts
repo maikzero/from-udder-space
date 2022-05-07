@@ -14,7 +14,7 @@ export default class Scan extends UFOState {
         super.update(deltaT)
         this.parent.lastPlayerPos = this.parent.getPlayerPosition()
         if (this.parent.paused) {
-			//this.finished(UFOStates.PAUSED)
+			this.finished(UFOStates.PAUSED)
         }
         
         else if(this.parent.abducting > 0 && !(<PlayerController>this.parent.player._ai).hiding){

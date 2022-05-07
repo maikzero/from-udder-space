@@ -21,7 +21,6 @@ export default class AlienController extends EnemyController {
 	gravity: number = 1000;
     inRange: number = 150
     tilemap: OrthogonalTilemap;
-    paused: Boolean;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
