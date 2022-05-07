@@ -25,8 +25,6 @@ export default class UFOController extends EnemyController {
     inRange: number;
     abducting: number;
     invincible: Boolean;
-    paused: Boolean;
-
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)

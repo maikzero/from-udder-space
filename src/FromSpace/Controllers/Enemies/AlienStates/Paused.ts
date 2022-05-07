@@ -13,7 +13,7 @@ export default class Paused extends AlienState {
 
    update(deltaT: number): void {
         super.update(deltaT)
-        this.owner.move(new Vec2(0,1))
+        //this.owner.move(new Vec2(0,1))
         if (!this.parent.paused) 
             this.finished(AlienStates.PATROL)
     }

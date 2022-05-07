@@ -18,6 +18,8 @@ export default class EnemyController extends StateMachineAI {
 	playerPos: Vec2;
 	lastPlayerPos: Vec2;
 
+    paused: Boolean
+
     initializeAI(owner: GameNode, options: Record<string, any>){
 		this.owner = owner;
 		this.receiver.subscribe(FUS_Events.PLAYER_MOVE);

@@ -8,6 +8,7 @@ export default class Paused extends UFOState {
 
     onEnter(options: Record<string, any>): void {
         this.owner.animation.play('moving', true)
+        this.parent.speed = 0
         console.log('UFO Paused');
 	}
     update(deltaT: number): void {
@@ -18,6 +19,7 @@ export default class Paused extends UFOState {
     }
     onExit(): Record<string, any> {
         console.log("UFO Unpaused")
+        this.parent.speed = 100
         this.owner.animation.stop();
 		return {};
 	}
