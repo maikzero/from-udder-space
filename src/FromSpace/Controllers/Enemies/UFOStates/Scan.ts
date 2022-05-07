@@ -13,8 +13,11 @@ export default class Scan extends UFOState {
     update(deltaT: number): void {
         super.update(deltaT)
         this.parent.lastPlayerPos = this.parent.getPlayerPosition()
+        if (this.parent.paused) {
+			//this.finished(UFOStates.PAUSED)
+        }
         
-        if(this.parent.abducting > 0 && !(<PlayerController>this.parent.player._ai).hiding){
+        else if(this.parent.abducting > 0 && !(<PlayerController>this.parent.player._ai).hiding){
             this.finished(UFOStates.ABDUCT)
         }
 

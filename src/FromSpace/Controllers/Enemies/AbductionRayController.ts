@@ -14,12 +14,14 @@ import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 import { FUS_Events } from "../../fus_enums";
 import Abducting from "./AbductionRayStates/Abducting";
 import Active from "./AbductionRayStates/Active";
+import Paused from "./AbductionRayStates/Paused";
 import UFOController from "./UFOController";
 
 export enum AbductionRayStates {
     ACTIVE = "active",
     INACTIVE = "inactive",
-    ABDUCTING = "abducting"
+    ABDUCTING = "abducting",
+    PAUSED = "paused"
 }
 
 export default class AbductionRayController extends StateMachineAI  {
@@ -31,6 +33,7 @@ export default class AbductionRayController extends StateMachineAI  {
     startPosition: Vec2;
     index: number;
     player: GameNode;
+    paused: Boolean;
     
 
     initializeAI(owner: GameNode, options: Record<string, any>){
@@ -57,6 +60,8 @@ export default class AbductionRayController extends StateMachineAI  {
         this.player = options.player
         this.addState(AbductionRayStates.ACTIVE, new Active(this, owner));
         this.addState(AbductionRayStates.ABDUCTING, new Abducting(this, owner));
+        this.addState(AbductionRayStates.PAUSED, new Paused(this, owner));
+
         this.initialize(AbductionRayStates.ACTIVE)
     }
 
@@ -104,6 +109,7 @@ export default class AbductionRayController extends StateMachineAI  {
 
     hits(): boolean {
         if ((<UFOController>this.ufo._ai).invincible) {
+            console.log("here")
             return false
         }
         let line = <Line>this.owner
