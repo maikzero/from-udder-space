@@ -290,6 +290,7 @@ export default class MainMenu extends Scene {
     updateScene(){
 
         if (Input.isKeyJustPressed("1")) {
+            console.log("Skipping to level 1")
             this.goToLevel(Level1)
         }
 

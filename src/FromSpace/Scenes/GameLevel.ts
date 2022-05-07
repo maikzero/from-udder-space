@@ -25,7 +25,7 @@ import AbductionRayController from "../Controllers/Enemies/AbductionRayControlle
 import Level2 from "./Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
-import Level5 from "./Level5"; 
+//import Level5 from "./Level5"; 
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -124,6 +124,24 @@ export default class GameLevel extends Scene {
             this.invincible = false;
             console.log("Uninvincible");
         }
+
+        if (Input.isKeyJustPressed("1")) {
+            this.goToLevel(Level1)
+        }
+        /*
+        if (Input.isKeyJustPressed("2")) {
+            this.goToLevel(Level2)
+        }
+
+        if (Input.isKeyJustPressed("3")) {
+            this.goToLevel(Level3)
+        }
+        if (Input.isKeyJustPressed("4")) {
+            this.goToLevel(Level4)
+        }
+        if (Input.isKeyJustPressed("5")) {
+            this.goToLevel(Level5)
+        }*/
         
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
@@ -131,36 +149,6 @@ export default class GameLevel extends Scene {
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
-                 case 'level1':
-                     {
-                         this.goToLevel(Level1)
-                     }
-                     break;
-
-                case 'level2':
-                    {
-                        this.goToLevel(Level2)
-                    }
-                    break;
-
-                // case 'level3':
-                //     {
-                //         this.goToLevel(Level3)
-                //     }
-                //     break;
-
-                // case 'level4':
-                //     {
-                //         this.goToLevel(Level4)
-                //     }
-                //     break;
-
-                // case 'level5':
-                //     {
-                //         this.goToLevel(Level5)
-                //     }
-                //     break;
-
                 case 'main menu':
                     {
                         let size = this.viewport.getHalfSize();
