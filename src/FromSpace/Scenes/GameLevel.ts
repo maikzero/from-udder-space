@@ -37,7 +37,7 @@ export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
-    protected invincible: Boolean;
+    invincible: Boolean;
     protected respawnTimer: Timer;
 
     // Enemy variables

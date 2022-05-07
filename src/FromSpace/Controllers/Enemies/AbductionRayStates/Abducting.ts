@@ -1,6 +1,5 @@
 import AnimatedSprite from "../../../../Wolfie2D/Nodes/Sprites/AnimatedSprite";
 import AbductionRayState from './AbductionRayState'
-import { AlienStates } from "../AlienController";
 import UFOController from "../UFOController";
 import PlayerController from "../../Player/PlayerController";
 import { AbductionRayStates } from "../AbductionRayController";
