@@ -38,7 +38,7 @@ export default class Abduct extends UFOState {
     }
     onExit(): Record<string, any> {
         this.owner.animation.stop();
-        //this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "abduct"});
+        this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "abduct"});
 		return {};
 	}
 }

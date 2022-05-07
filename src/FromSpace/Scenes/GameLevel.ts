@@ -20,8 +20,15 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import UFOController from "../Controllers/Enemies/UFOController";
 import MainMenu from "./MainMenu";
-import Level1 from "./Level1";
+//import Level1 from "./Level1";
 import AbductionRayController from "../Controllers/Enemies/AbductionRayController";
+// import Level2 from "./Level2";
+// import Level3 from "./Level3";
+// import Level4 from "./Level4";
+// import Level5 from "./Level5";
+// import Level3 from "./Level3";
+// import Level4 from "./Level4";
+// import Level5 from "./Level5";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -51,6 +58,10 @@ export default class GameLevel extends Scene {
     protected levelTransitionTimer: Timer;
     protected levelTransitionScreen: Rect;
 
+    // In game timer
+    protected gameTimerLabel: Label;
+    protected timeLeft: number = 10000
+
     // Pause Screen
     protected pause: Layer;
     protected isPaused: Boolean;
@@ -70,12 +81,15 @@ export default class GameLevel extends Scene {
         this.controls.setHidden(true);
 
         this.respawnTimer = new Timer(1000, () => {
+            (<PlayerController>this.player._ai).hiding = false
             this.player.position = this.playerSpawn.clone()
             this.player.visible = true
             this.player.enablePhysics();
             Input.enableInput();
+            this.player.isCollidable = true
             this.player.unfreeze();
         });
+
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -91,11 +105,16 @@ export default class GameLevel extends Scene {
     }
 
     updateScene(deltaT: number){
+        this.timeLeft -= deltaT
+        this.gameTimerLabel.text = (Math.round(this.timeLeft * 100) / 100).toFixed(2).toString()
+
+        if(this.timeLeft <= 0){
+            GameLevel.livesCount = 20
+            this.sceneManager.changeToScene(MainMenu);
+        }
+
         if (Input.isJustPressed("pause")) {
             this.emitter.fireEvent(FUS_Events.PAUSE);
-        }
-        if (Input.isJustPressed("1")) {
-            this.emitter.fireEvent("level1");
         }
         
         if (Input.isKeyJustPressed("i")) {
@@ -115,25 +134,36 @@ export default class GameLevel extends Scene {
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
-                case 'level1':
-                    {
-                        let sceneOptions = {
-                            physics: {
-                                groupNames: ["ground", "player", "alien", "ufo", "ray"],
-                                collisions:
-                                [
-                                    [0, 1, 1, 1, 1],
-                                    [1, 0, 1, 1, 0],
-                                    [1, 1, 0, 1, 1],
-                                    [1, 1, 1, 0, 1],
-                                    [1, 0, 1, 1, 0],
-        
-                                ]
-                            }
-                        }
-                        this.sceneManager.changeToScene(Level1, {}, sceneOptions);
-                    }
-                    break;
+                // case 'level1':
+                //     {
+                //         this.goToLevel(Level1)
+                //     }
+                //     break;
+
+                // case 'level2':
+                //     {
+                //         this.goToLevel(Level2)
+                //     }
+                //     break;
+
+                // case 'level3':
+                //     {
+                //         this.goToLevel(Level3)
+                //     }
+                //     break;
+
+                // case 'level4':
+                //     {
+                //         this.goToLevel(Level4)
+                //     }
+                //     break;
+
+                // case 'level5':
+                //     {
+                //         this.goToLevel(Level5)
+                //     }
+                //     break;
+
                 case 'main menu':
                     {
                         let size = this.viewport.getHalfSize();
@@ -179,8 +209,8 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.ATTACK_FINISHED:
                     {
-                        (<PlayerController>this.player._ai).attacking = false
-                        console.log('hi')
+                        (<PlayerController>this.player._ai).attacking = false;
+                        (<PlayerController>this.player._ai).attackRegion = null;
                     }
                     break;
 
@@ -217,9 +247,9 @@ export default class GameLevel extends Scene {
                                     collisions:
                                     [
                                         [0, 1, 1, 1, 1],
-                                        [1, 0, 1, 1, 0],
+                                        [1, 0, 1, 0, 0],
                                         [1, 1, 0, 1, 1],
-                                        [1, 1, 1, 0, 1],
+                                        [1, 0, 1, 0, 1],
                                         [1, 0, 1, 1, 0],
 
                                     ]
@@ -229,6 +259,12 @@ export default class GameLevel extends Scene {
                         }
                     }
                     break;
+
+                    case FUS_Events.ALIEN_STUNNED:
+                    {
+                        let alien = (this.sceneGraph.getNode(event.data.get("node")))
+                    }
+                    break
 
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
@@ -251,13 +287,17 @@ export default class GameLevel extends Scene {
                             playerSprite = <AnimatedSprite>other
                         }
 
+                        
+
                         this.handlePlayerAlienCollision(playerSprite, alienSprite);
                     }
                     break;
                     
                     case FUS_Events.PLAYER_CAUGHT: 
                     {   
+                        console.log('caught')
                         GameLevel.livesCount--;
+                        this.livesCountLabel.text = "Lives Left: " + GameLevel.livesCount
                         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "caught", loop: false, holdReference: false});
                        // this.player.tweens.play("caught");
                         Input.disableInput();
@@ -265,6 +305,7 @@ export default class GameLevel extends Scene {
                         this.player.position.x = 0;
                         this.player.position.y = 0
                         this.player.visible = false
+                        this.player.isCollidable = false
 
                         if(GameLevel.livesCount === 0){
                             GameLevel.livesCount = 20
@@ -325,6 +366,7 @@ export default class GameLevel extends Scene {
             FUS_Events.ALIEN_HIT_PLAYER,
             FUS_Events.PLAYER_CAUGHT,
             FUS_Events.UNLOAD_ASSET,
+            FUS_Events.ALIEN_STUNNED,
             'controls',
             'controlsBack',
             'main menu'
@@ -393,6 +435,15 @@ export default class GameLevel extends Scene {
         controlBack.backgroundColor = Color.BLACK;
         controlBack.onClickEventId = "controlsBack";
 
+        // IN GAME UI
+        this.livesCountLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(80, 30), text: "Lives Left: " + (GameLevel.livesCount)});
+        this.livesCountLabel.textColor = Color.BLACK
+        this.livesCountLabel.font = "PixelSimple";
+
+        this.gameTimerLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(570, 30), text: "Lives: " + GameLevel.livesCount});
+        this.gameTimerLabel.textColor = Color.BLACK;
+        this.gameTimerLabel.font = "PixelSimple";
+
 
         // End of level label (start off screen)
         this.levelEndLabel = <Label>this.add.uiElement(UIElementType.LABEL, "UI", {position: new Vec2(-300, 200), text: "Level Complete"});
@@ -449,6 +500,8 @@ export default class GameLevel extends Scene {
             ],
             onEnd: FUS_Events.LEVEL_START
         });
+
+
     }
 
     protected initPlayer(): void {
@@ -503,7 +556,10 @@ export default class GameLevel extends Scene {
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
         if(typeof alien !== 'undefined'){
-            this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
+            if(this.player.isCollidable){
+                this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
+            }
         }
     }
+
 }

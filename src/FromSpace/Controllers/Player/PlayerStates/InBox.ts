@@ -27,9 +27,11 @@ export default class InBox extends PlayerState {
         if(Input.isJustPressed("unhide")){
             console.log('inbox')
             this.owner.animation.play('unhide', false, FUS_Events.FINISHED_HIDING)
-            this.finished(PlayerStates.IDLE)
+            //this.finished(PlayerStates.IDLE)
 		}
         if(!this.parent.hiding){
+            this.parent.hiding = false
+            this.owner.animation.stop();
             this.finished(PlayerStates.IDLE)
         }
 
@@ -39,8 +41,8 @@ export default class InBox extends PlayerState {
 
     onExit(): Record<string, any> {
         //console.log('leave inbox')
-        this.parent.hiding = false
-        this.owner.animation.stop();
+        // this.parent.hiding = false
+        // this.owner.animation.stop();
 		return {};
 	}
 }

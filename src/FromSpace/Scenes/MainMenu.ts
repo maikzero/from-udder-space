@@ -10,6 +10,11 @@ import Layer from "../../Wolfie2D/Scene/Layer";
 import Sprite from "../../Wolfie2D/Nodes/Sprites/Sprite";
 import Level1 from "./Level1";
 import Input from "../../Wolfie2D/Input/Input";
+import GameLevel from "./GameLevel";
+import Level2 from "./Level2";
+import Level3 from "./Level3";
+import Level4 from "./Level4";
+import Level5 from "./Level5";
 
 
 export default class MainMenu extends Scene {
@@ -283,31 +288,24 @@ export default class MainMenu extends Scene {
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
     }
     updateScene(){
+
         if (Input.isKeyJustPressed("1")) {
-            this.emitter.fireEvent("level1");
-            console.log("Skip to lvl1");
-        }
-        else if (Input.isKeyJustPressed("2")) {
-            this.emitter.fireEvent("level2");
-            console.log("Skip to lvl2");
-        }
-        else if (Input.isKeyJustPressed("3")) {
-            this.emitter.fireEvent("level3");
-            console.log("Skip to lvl3");
-        }
-        else if (Input.isKeyJustPressed("4")) {
-            this.emitter.fireEvent("level4");
-            console.log("Skip to lvl4");
-        }
-        else if (Input.isKeyJustPressed("5")) {
-            this.emitter.fireEvent("level5");
-            console.log("Skip to lvl5");
-        }
-        else if (Input.isKeyJustPressed("6")) {
-            this.emitter.fireEvent("level6");
-            console.log("Skip to lvl6");
+            this.goToLevel(Level1)
         }
 
+        if (Input.isKeyJustPressed("2")) {
+            this.goToLevel(Level2)
+        }
+
+        if (Input.isKeyJustPressed("3")) {
+            this.goToLevel(Level3)
+        }
+        if (Input.isKeyJustPressed("4")) {
+            this.goToLevel(Level4)
+        }
+        if (Input.isKeyJustPressed("5")) {
+            this.goToLevel(Level5)
+        }
 
 
         while(this.receiver.hasNextEvent()){
@@ -322,9 +320,9 @@ export default class MainMenu extends Scene {
                         collisions:
                         [
                             [0, 1, 1, 1, 1],
-                            [1, 0, 1, 1, 0],
+                            [1, 0, 1, 0, 0],
                             [1, 1, 0, 1, 1],
-                            [1, 1, 1, 0, 1],
+                            [1, 0, 1, 0, 1],
                             [1, 0, 1, 1, 0],
 
                         ]
@@ -334,24 +332,21 @@ export default class MainMenu extends Scene {
             }
 
             if(event.type === "level1"){
-                let sceneOptions = {
-                    physics: {
-                        groupNames: ["ground", "player", "alien", "ufo", "ray"],
-                        collisions:
-                        [
-                            [0, 1, 1, 1, 1],
-                            [1, 0, 1, 1, 0],
-                            [1, 1, 0, 1, 1],
-                            [1, 1, 1, 0, 1],
-                            [1, 0, 1, 1, 0],
-
-                        ]
-                    }
-                }
-                this.sceneManager.changeToScene(Level1, {}, sceneOptions);
+                this.goToLevel(Level1)
             }
 
-
+            if(event.type === "level2"){
+                this.goToLevel(Level2)
+            }
+            if(event.type === "level3"){
+                this.goToLevel(Level3)
+            }
+            if(event.type === "level4"){
+                this.goToLevel(Level4)
+            }
+            if(event.type === "level5"){
+                this.goToLevel(Level5)
+            }
             if(event.type === "about"){
                 this.about.setHidden(false);
                 this.mainMenu.setHidden(true);
@@ -379,5 +374,23 @@ export default class MainMenu extends Scene {
     unloadScene(): void {
         // The scene is being destroyed, so we can stop playing the song
         this.emitter.fireEvent(GameEventType.STOP_SOUND, {key: "menu"});
+    }
+
+    goToLevel(level: new (...args: any) => GameLevel): void{
+        let sceneOptions = {
+            physics: {
+                groupNames: ["ground", "player", "alien", "ufo", "ray"],
+                collisions:
+                [
+                    [0, 1, 1, 1, 1],
+                    [1, 0, 1, 0, 0],
+                    [1, 1, 0, 1, 1],
+                    [1, 0, 1, 0, 1],
+                    [1, 0, 1, 1, 0],
+
+                ]
+            }
+        }
+        this.sceneManager.changeToScene(level, {}, sceneOptions);
     }
 }
