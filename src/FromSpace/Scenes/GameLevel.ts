@@ -190,6 +190,8 @@ export default class GameLevel extends Scene {
                         this.pause.setHidden(false);
                         this.isPaused = true;
                         (<PlayerController>this.player._ai).paused = true;
+                        (<UFOController>this.ufo._ai).paused = true;
+                        (<AlienController>this.alien._ai).paused = true;
                     }
                     break;
                 case FUS_Events.UNPAUSE:
@@ -200,6 +202,8 @@ export default class GameLevel extends Scene {
                         this.pause.setHidden(true);
                         this.controls.setHidden(true);
                         (<PlayerController>this.player._ai).paused = false;
+                        (<UFOController>this.ufo._ai).paused = false;
+                        (<AlienController>this.alien._ai).paused = false;
                     }
                     break;
                 case FUS_Events.PLAY_HIDE:

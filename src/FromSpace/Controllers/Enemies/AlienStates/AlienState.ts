@@ -8,6 +8,7 @@ import { FUS_Color } from "../../../fus_color";
 import { FUS_Events } from "../../../fus_enums";
 import AlienController, { AlienStates } from "../AlienController";
 
+
 export default abstract class BalloonState extends State {
     owner: GameNode;
 	gravity: number = 500;

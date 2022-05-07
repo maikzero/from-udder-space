@@ -127,7 +127,7 @@ export default class PlayerController extends StateMachineAI {
             this.stack.push(this.stateMap.get(stateName))
         }
 
-        if (this.paused && !(this.stack.peek() instanceof Paused)) {
+        if (this.paused) {
             this.stack.pop();
             super.changeState(PlayerStates.PAUSED);
         }

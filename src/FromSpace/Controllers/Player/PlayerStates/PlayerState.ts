@@ -7,6 +7,7 @@ import GameNode from "../../../../Wolfie2D/Nodes/GameNode";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
 import { FUS_Events } from "../../../fus_enums";
 import PlayerController from "../PlayerController";
+import { PlayerStates } from "../PlayerController";
 
 export default abstract class PlayerState extends State {
     owner: GameNode;
@@ -35,11 +36,14 @@ export default abstract class PlayerState extends State {
 	}
 
 	update(deltaT: number): void {
-
+		
 		if (this.positionTimer.isStopped()){
 			this.emitter.fireEvent(FUS_Events.PLAYER_MOVE, {position: this.owner.position.clone()});
 			this.positionTimer.start();
 		}
 		this.parent.velocity.y += this.parent.gravity*deltaT;
+
+		if (this.parent.paused) 
+        	this.finished(PlayerStates.PAUSED)
 	}
 }

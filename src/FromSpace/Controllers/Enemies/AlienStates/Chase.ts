@@ -20,8 +20,10 @@ export default class Chase extends AlienState {
         super.update(deltaT)
         this.parent.playerPos = this.parent.getPlayerPosition()
         this.parent.lastPlayerPos = this.parent.playerPos;
+        if (this.parent.paused)
+			this.finished(AlienStates.PAUSED)
 
-        if(this.parent.lastPlayerPos === null){
+        else if(this.parent.lastPlayerPos === null){
             this.finished(AlienStates.PATROL)
         }
         else{
