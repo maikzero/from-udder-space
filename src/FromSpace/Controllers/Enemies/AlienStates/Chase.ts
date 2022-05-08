@@ -20,8 +20,14 @@ export default class Chase extends AlienState {
         super.update(deltaT)
         this.parent.playerPos = this.parent.getPlayerPosition()
         this.parent.lastPlayerPos = this.parent.playerPos;
+        if (this.parent.paused) {
+			this.finished(AlienStates.PAUSED)
+        }
+        else if (this.parent.stunned) {
+            this.finished(AlienStates.STUNNED)
+        }
 
-        if(this.parent.lastPlayerPos === null){
+        else if(this.parent.lastPlayerPos === null){
             this.finished(AlienStates.PATROL)
         }
         else{
@@ -38,7 +44,6 @@ export default class Chase extends AlienState {
     chaseOpps(deltaT: number): void {
         let tilePosition = new Vec2(Math.floor(this.owner.position.x / 32), Math.ceil(this.owner.position.y / 32))
         let tile = this.parent.tilemap.getTileAtRowCol(tilePosition)
-        console.log(tile)
 
         if(this.parent.playerPos.x > this.owner.position.x){
             this.parent.direction.x = 1;

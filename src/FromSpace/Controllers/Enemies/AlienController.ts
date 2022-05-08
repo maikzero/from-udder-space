@@ -8,10 +8,14 @@ import OrthogonalTilemap from "../../../Wolfie2D/Nodes/Tilemaps/OrthogonalTilema
 import EnemyController from "./EnemyController";
 import Patrol from "./AlienStates/Patrol";
 import Chase from "./AlienStates/Chase";
+import Stunned from "./AlienStates/Stunned";
+import Paused from "./AlienStates/Paused";
 
 export enum AlienStates {
 	CHASE = "CHASE",
-	PATROL = "patrol"
+	PATROL = "patrol",
+    PAUSED = "paused",
+    STUNNED = 'stunned'
 }
 
 export default class AlienController extends EnemyController {
@@ -19,6 +23,7 @@ export default class AlienController extends EnemyController {
 	gravity: number = 1000;
     inRange: number = 150
     tilemap: OrthogonalTilemap;
+    stunned: Boolean;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -27,7 +32,9 @@ export default class AlienController extends EnemyController {
         // State transitions will be handled in the update method, Balloon method of state transition
         // Not top down shooter GOAP
         this.addState(AlienStates.PATROL, new Patrol(this, owner));
-        this.addState(AlienStates.CHASE, new Chase(this, owner))
+        this.addState(AlienStates.CHASE, new Chase(this, owner));
+        this.addState(AlienStates.PAUSED, new Paused(this, owner));
+        this.addState(AlienStates.STUNNED, new Stunned(this, owner));
 
         this.direction = new Vec2(-1, 0);
         // Initialize starting state as patrol
@@ -57,7 +64,7 @@ export default class AlienController extends EnemyController {
     }
 
     changeState(stateName: string): void {
-        super.changeState(stateName);
+       super.changeState(stateName);
 	}
 
 	update(deltaT: number): void {

@@ -6,9 +6,10 @@ import PlayerState from "./PlayerState";
 import OnGround from "./OnGround";
 import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Rect from "../../../../Wolfie2D/Nodes/Graphics/Rect";
+import GameLevel from "../../../Scenes/GameLevel";
 
 
-export default class InBox extends PlayerState {
+export default class Attack extends PlayerState {
     owner: AnimatedSprite;
 
     onEnter(options: Record<string, any>): void {
@@ -16,7 +17,7 @@ export default class InBox extends PlayerState {
         if(this.owner.invertX){
             behindAdder = 32
         }
-        //this.parent.addAttackRegion(new Vec2(this.owner.position.x + behindAdder, this.owner.position.y), new Vec2(2,2))
+        this.parent.addAttackRegion(new Vec2(this.owner.position.x + behindAdder, this.owner.position.y), new Vec2(2,2))
         this.owner.animation.play('fart', false, FUS_Events.ATTACK_FINISHED)
         this.parent.attacking = true
 	}
@@ -33,7 +34,7 @@ export default class InBox extends PlayerState {
     }
 
     onExit(): Record<string, any> {
-        //this.parent.attackRegion = null
+        this.parent.removeAttackRegion()
         return { }
     }
 }

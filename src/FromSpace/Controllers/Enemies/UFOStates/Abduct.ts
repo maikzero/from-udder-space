@@ -16,9 +16,11 @@ export default class Abduct extends UFOState {
         this.parent.playerPos = this.parent.player.position.clone()
         this.parent.lastPlayerPos = this.parent.playerPos;
         let playerAI = <PlayerController>this.parent.player._ai
+        if (this.parent.paused)
+			this.finished(UFOStates.PAUSED)
 
         // if player is no longer visible/in range, or is now hiding, go back to patrol
-        if(this.parent.abducting === 0 || (playerAI.hiding)){
+        else if(this.parent.abducting === 0 || (playerAI.hiding)){
             this.finished(UFOStates.SCAN)
         }
 
@@ -32,8 +34,8 @@ export default class Abduct extends UFOState {
                 (<AnimatedSprite>this.owner).invertX = !(<AnimatedSprite>this.owner).invertX;
             }
 
-             this.parent.velocity.x = this.parent.direction.x * this.parent.speed
-		     this.owner.move(this.parent.velocity.scaled(deltaT));
+            this.parent.velocity.x = this.parent.direction.x * this.parent.speed
+		    this.owner.move(this.parent.velocity.scaled(deltaT));
         }
     }
     onExit(): Record<string, any> {

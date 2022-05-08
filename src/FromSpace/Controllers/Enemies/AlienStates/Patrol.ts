@@ -13,7 +13,13 @@ export default class Patrol extends AlienState {
     update(deltaT: number): void {
         super.update(deltaT)
         this.parent.lastPlayerPos = this.parent.getPlayerPosition()
-        if(this.parent.lastPlayerPos !== null){
+        if (this.parent.paused) {
+			this.finished(AlienStates.PAUSED)
+        }
+        else if (this.parent.stunned) {
+            this.finished(AlienStates.STUNNED)
+        }
+        else if(this.parent.lastPlayerPos !== null){
             let distance = this.owner.position.distanceTo(this.parent.lastPlayerPos)
 
             if(distance < this.parent.inRange && !(<PlayerController>this.parent.player._ai).hiding){

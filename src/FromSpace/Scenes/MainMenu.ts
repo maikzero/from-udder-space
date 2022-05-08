@@ -247,12 +247,12 @@ export default class MainMenu extends Scene {
         controlsHeader.fontSize = 45;
 
 
-        const controls1 = "AD to Move Left and Right"
-        const controls2 = "W to Jump"
-        const controls3 = "E to Hide under Box"
-        const controls4 = "R to Remove Box"
-        const controls5 = "Q to Fart"
-        const controls6 = "ESC to Pause"
+        const controls1 = "WAD to Move"
+        const controls2 = "E to Hide under Box"
+        const controls3 = "R to Remove Box"
+        const controls4 = "Q to Fart"
+        const controls5 = "I/U to Turn On/Off Invincibility"
+        const controls6 = "N to Skip to Next Level"
 
         const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 150), text: controls1});
         const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "control", {position: new Vec2(center.x, center.y - 100), text: controls2});
@@ -290,6 +290,7 @@ export default class MainMenu extends Scene {
     updateScene(){
 
         if (Input.isKeyJustPressed("1")) {
+            console.log("Skipping to level 1")
             this.goToLevel(Level1)
         }
 

@@ -3,6 +3,7 @@ import AbductionRayState from './AbductionRayState'
 import { AbductionRayStates } from "../AbductionRayController";
 import UFOController from "../UFOController";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
+import GameLevel from "../../../Scenes/GameLevel";
 
 export default class Active extends AbductionRayState {
     owner: AnimatedSprite;
@@ -14,6 +15,9 @@ export default class Active extends AbductionRayState {
     update(deltaT: number): void {
         super.update(deltaT)
         let ufoAI = <UFOController>this.parent.ufo._ai
+        if (this.parent.paused) {
+			this.finished(AbductionRayStates.PAUSED)
+        }
 
         this.parent.velocity.x = (ufoAI).direction.x * ufoAI.speed
 		this.owner.move(this.parent.velocity.scaled(deltaT));
@@ -21,7 +25,7 @@ export default class Active extends AbductionRayState {
         if(this.pollTimer.isStopped()){
             this.parent.updateRay()
             
-            if(this.parent.hits()){
+            if(this.parent.hits() && !(<GameLevel>this.owner.getScene()).invincible){
                 this.finished(AbductionRayStates.ABDUCTING)
             }
             else{

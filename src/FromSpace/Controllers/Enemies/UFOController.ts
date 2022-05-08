@@ -7,23 +7,24 @@ import EnemyController from "./EnemyController"
 import AbductionRayController from "./AbductionRayController"
 import Scan from "./UFOStates/Scan";
 import Abduct from "./UFOStates/Abduct";
+import Paused from "./UFOStates/Paused";
 import Graphic from "../../../Wolfie2D/Nodes/Graphic";
 import Line from "../../../Wolfie2D/Nodes/Graphics/Line";
 import Color from "../../../Wolfie2D/Utils/Color";
 
 export enum UFOStates {
 	SCAN = "scan",
-	ABDUCT = "abduct"
+	ABDUCT = "abduct",
+    PAUSED = "paused"
 }
 
 export default class UFOController extends EnemyController {
     speed: number = 100;
 	gravity: number = 0;
-    abductionRays: Array<Graphic>
-    inRange: number
-    abducting: number
+    abductionRays: Array<Graphic>;
+    inRange: number;
+    abducting: number;
     invincible: Boolean;
-
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -34,7 +35,8 @@ export default class UFOController extends EnemyController {
 
         // TODO: Initialize starting state
         this.addState(UFOStates.SCAN, new Scan(this, owner));
-        this.addState(UFOStates.ABDUCT, new Abduct(this, owner))
+        this.addState(UFOStates.ABDUCT, new Abduct(this, owner));
+        this.addState(UFOStates.PAUSED, new Paused(this, owner));
 
         this.inRange = 500
         this.abducting = 0

@@ -23,6 +23,5 @@ export default abstract class UFOState extends State {
     }
 
     update(deltaT: number): void {
-		
     }
 }

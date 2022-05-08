@@ -3,7 +3,7 @@ import Debug from "../../Wolfie2D/Debug/Debug";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
-
+import Input from "../../Wolfie2D/Input/Input";
 
 export default class Level5 extends GameLevel {
     loadScene(): void {

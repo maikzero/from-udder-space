@@ -4,6 +4,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Level4 from "./Level4";
+import Input from "../../Wolfie2D/Input/Input";
 
 export default class Level3 extends GameLevel {
     loadScene(): void {
@@ -44,5 +45,23 @@ export default class Level3 extends GameLevel {
 
     updateScene(deltaT: number): void {
         super.updateScene(deltaT);
+        if (Input.isKeyJustPressed("n")) {
+            console.log("Skipping to next level")
+            let sceneOptions = {
+                physics: {
+                    groupNames: ["ground", "player", "alien", "ufo", "ray"],
+                    collisions:
+                    [
+                        [0, 1, 1, 1, 1],
+                        [1, 0, 1, 0, 0],
+                        [1, 1, 0, 1, 1],
+                        [1, 0, 1, 0, 1],
+                        [1, 0, 1, 1, 0],
+
+                    ]
+                }
+            }
+            this.sceneManager.changeToScene(Level4, {}, sceneOptions)
+        }
     }
 }

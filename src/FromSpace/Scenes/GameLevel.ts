@@ -20,15 +20,9 @@ import Button from "../../Wolfie2D/Nodes/UIElements/Button";
 import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import UFOController from "../Controllers/Enemies/UFOController";
 import MainMenu from "./MainMenu";
-//import Level1 from "./Level1";
 import AbductionRayController from "../Controllers/Enemies/AbductionRayController";
-// import Level2 from "./Level2";
-// import Level3 from "./Level3";
-// import Level4 from "./Level4";
-// import Level5 from "./Level5";
-// import Level3 from "./Level3";
-// import Level4 from "./Level4";
-// import Level5 from "./Level5";
+import List from "../../Wolfie2D/DataTypes/List";
+import EnemyController from "../Controllers/Enemies/EnemyController";
 
 // TODO: Puzzle elements, tasks to do before entering level end
 // TODO: Enemy AI
@@ -37,12 +31,14 @@ export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
     protected player: AnimatedSprite;
-    protected invincible: Boolean;
+    invincible: Boolean;
     protected respawnTimer: Timer;
 
     // Enemy variables
     protected alien: AnimatedSprite;
     protected ufo: AnimatedSprite;
+
+    protected enemies: EnemyController[];
 
     // Lives counter
     protected static livesCount: number = 20;
@@ -90,6 +86,8 @@ export default class GameLevel extends Scene {
             this.player.unfreeze();
         });
 
+        this.enemies = []
+
 
         this.levelTransitionTimer = new Timer(500);
         this.levelEndTimer = new Timer(3000, () => {
@@ -114,56 +112,29 @@ export default class GameLevel extends Scene {
         }
 
         if (Input.isJustPressed("pause")) {
-            this.emitter.fireEvent(FUS_Events.PAUSE);
+            if (this.isPaused) 
+                this.emitter.fireEvent(FUS_Events.UNPAUSE);
+            else
+                this.emitter.fireEvent(FUS_Events.PAUSE);
         }
         
         if (Input.isKeyJustPressed("i")) {
-            (<UFOController>this.ufo.ai).invincible = true;
+            //(<UFOController>this.ufo.ai).invincible = true;
             this.invincible = true;
             console.log("Invincible");
         }
         if (Input.isKeyJustPressed("u")) {
-            (<UFOController>this.ufo.ai).invincible = false;
+            //(<UFOController>this.ufo.ai).invincible = false;
             this.invincible = false;
             console.log("Uninvincible");
         }
-        
+
         while(this.receiver.hasNextEvent()){
             let event = this.receiver.getNextEvent();
             
             // TODO, Event handling
             console.log(event.type);
             switch(event.type){
-                // case 'level1':
-                //     {
-                //         this.goToLevel(Level1)
-                //     }
-                //     break;
-
-                // case 'level2':
-                //     {
-                //         this.goToLevel(Level2)
-                //     }
-                //     break;
-
-                // case 'level3':
-                //     {
-                //         this.goToLevel(Level3)
-                //     }
-                //     break;
-
-                // case 'level4':
-                //     {
-                //         this.goToLevel(Level4)
-                //     }
-                //     break;
-
-                // case 'level5':
-                //     {
-                //         this.goToLevel(Level5)
-                //     }
-                //     break;
-
                 case 'main menu':
                     {
                         let size = this.viewport.getHalfSize();
@@ -185,21 +156,29 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.PAUSE:
                     {
-                        Input.disableKeyInput();
+                        //Input.disableKeyInput();
                         console.log("PAUSED")
                         this.pause.setHidden(false);
                         this.isPaused = true;
                         (<PlayerController>this.player._ai).paused = true;
+
+                        this.enemies.forEach((enemy: EnemyController) => {
+                            enemy.paused = true
+                        });
                     }
                     break;
                 case FUS_Events.UNPAUSE:
                     {
                         console.log("UNPAUSED");
-                        Input.enableKeyInput();
+                        //Input.enableKeyInput();
                         this.isPaused = false;
                         this.pause.setHidden(true);
                         this.controls.setHidden(true);
                         (<PlayerController>this.player._ai).paused = false;
+
+                        this.enemies.forEach((enemy: EnemyController) => {
+                            enemy.paused = false
+                        });
                     }
                     break;
                 case FUS_Events.PLAY_HIDE:
@@ -211,6 +190,8 @@ export default class GameLevel extends Scene {
                     {
                         (<PlayerController>this.player._ai).attacking = false;
                         (<PlayerController>this.player._ai).attackRegion = null;
+                        //this.sceneGraph.removeNode((<PlayerController>this.player._ai).attackRegion)
+                        
                     }
                     break;
 
@@ -262,9 +243,10 @@ export default class GameLevel extends Scene {
 
                     case FUS_Events.ALIEN_STUNNED:
                     {
-                        let alien = (this.sceneGraph.getNode(event.data.get("node")))
+                        let alien = (this.sceneGraph.getNode(event.data.get("node")));
+                        (<AlienController>alien._ai).stunned = true;
                     }
-                    break
+                    break;
 
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
@@ -375,7 +357,9 @@ export default class GameLevel extends Scene {
 
     protected addUI(){
         // Pause Screen
+        this.viewport.setCenter(600,400);
         const center = this.viewport.getCenter();
+        
 
         let pauseBack = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, (center.y / 2) + 50), text: "Back"});
         pauseBack.size.set(200, 50);
@@ -407,12 +391,12 @@ export default class GameLevel extends Scene {
         controlsHeader.textColor = Color.WHITE;
         controlsHeader.fontSize = 45;
 
-        const controls1 = "AD to Move Left and Right"
-        const controls2 = "W to Jump"
-        const controls3 = "E to Hide under Box"
-        const controls4 = "R to Remove Box"
-        const controls5 = "Q to Fart"
-        const controls6 = "ESC to Pause"
+        const controls1 = "WAD to Move"
+        const controls2 = "E to Hide under Box"
+        const controls3 = "R to Remove Box"
+        const controls4 = "Q to Fart"
+        const controls5 = "I/U to Turn On/Off Invincibility"
+        const controls6 = "N to Skip to Next Level"
 
         const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 60), text: controls1});
         const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 40), text: controls2});
@@ -420,6 +404,7 @@ export default class GameLevel extends Scene {
         const control_line4 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2)), text: controls4});
         const control_line5 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 20), text: controls5});
         const control_line6 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 40), text: controls6});
+        
 
         control_line1.textColor = Color.WHITE;
         control_line2.textColor = Color.WHITE;
@@ -427,8 +412,9 @@ export default class GameLevel extends Scene {
         control_line4.textColor = Color.WHITE;
         control_line5.textColor = Color.WHITE;
         control_line6.textColor = Color.WHITE;
+ 
 
-        const controlBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 80), text: "Back"});
+        const controlBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 100), text: "Back"});
         controlBack.size.set(200, 50);
         controlBack.borderWidth = 2;
         controlBack.borderColor = Color.WHITE;
@@ -533,25 +519,31 @@ export default class GameLevel extends Scene {
     }
     
     protected addAlien(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
-        this.alien = this.add.animatedSprite(spriteKey, "primary");
-        this.alien.isCollidable = true;
-        this.alien.position.set(tilePos.x*32, tilePos.y*32);
-        this.alien.scale.set(2, 2);
-        this.alien.addPhysics();
-        this.alien.addAI(AlienController, aiOptions);
-        this.alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
-        this.alien.setGroup("alien");
+        let alien = this.add.animatedSprite(spriteKey, "primary");
+
+        alien.isCollidable = true;
+        alien.position.set(tilePos.x*32, tilePos.y*32);
+        alien.scale.set(2, 2);
+        alien.addPhysics();
+        alien.addAI(AlienController, aiOptions);
+        alien.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
+        alien.setGroup("alien");
+
+        this.enemies.push(<EnemyController>alien._ai)
     }
 
     protected addUFO(spriteKey: string, tilePos: Vec2, aiOptions: Record<string, any>): void {
-        this.ufo = this.add.animatedSprite(spriteKey, "primary");
-        this.ufo.isCollidable = true;
-        this.ufo.position.set(tilePos.x*32, tilePos.y*32);
-        this.ufo.scale.set(2, 2);
-        this.ufo.addPhysics();
-        this.ufo.addAI(UFOController, aiOptions);
-        this.ufo.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
-        this.ufo.setGroup("ufo");
+        let ufo = this.add.animatedSprite(spriteKey, "primary");
+
+        ufo.isCollidable = true;
+        ufo.position.set(tilePos.x*32, tilePos.y*32);
+        ufo.scale.set(2, 2);
+        ufo.addPhysics();
+        ufo.addAI(UFOController, aiOptions);
+        ufo.setTrigger('player', FUS_Events.ALIEN_HIT_PLAYER, null)
+        ufo.setGroup("ufo");
+
+        this.enemies.push(<EnemyController>ufo._ai)
     }
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
@@ -560,6 +552,24 @@ export default class GameLevel extends Scene {
                 this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
             }
         }
+    }
+
+    goToLevel(level: new (...args: any) => GameLevel): void{
+        let sceneOptions = {
+            physics: {
+                groupNames: ["ground", "player", "alien", "ufo", "ray"],
+                collisions:
+                [
+                    [0, 1, 1, 1, 1],
+                    [1, 0, 1, 0, 0],
+                    [1, 1, 0, 1, 1],
+                    [1, 0, 1, 0, 1],
+                    [1, 0, 1, 1, 0],
+
+                ]
+            }
+        }
+        this.sceneManager.changeToScene(level, {}, sceneOptions);
     }
 
 }
