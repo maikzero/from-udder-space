@@ -17,11 +17,11 @@ export default class Attack extends PlayerState {
 
 
     onEnter(options: Record<string, any>): void {
-        let behindAdder = -128
+        let behindAdder = -32
         if(this.owner.invertX){
-            behindAdder = 128
+            behindAdder = 32
         }
-        this.parent.addAttackRegion(new Vec2(this.owner.position.x + behindAdder, this.owner.position.y), new Vec2(200,200))
+        this.parent.addAttackRegion(new Vec2(this.owner.position.x + behindAdder, this.owner.position.y), new Vec2(20,20))
         this.owner.animation.play('fart', false, FUS_Events.ATTACK_FINISHED)
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "fart", loop: false, holdReference: false});
         this.parent.attacking = true

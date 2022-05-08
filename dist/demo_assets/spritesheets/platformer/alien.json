@@ -42,7 +42,7 @@
 			"frames": [
 				{
 					"index": 5,
-					"duration": 10
+					"duration": 5
 				},
 				{
 					"index": 6,
@@ -61,6 +61,16 @@
 					"duration": 10
 				}
 			]
-		}
+		},
+        {
+            "name": "stunned_loop",
+            "repeat": true,
+            "frames": [
+                {
+                    "index": 9,
+                    "duration": 10
+                }
+            ]
+        }
 	]
 }
