@@ -168,7 +168,7 @@ export default class PlayerController extends StateMachineAI {
         this.attackRegion.addPhysics(undefined, undefined, false, false);
         this.attackRegion.isCollidable = true
         this.attackRegion.setTrigger("alien", FUS_Events.ALIEN_STUNNED, null);
-        this.attackRegion.color = new Color(0, 0, 0, 0);
+        this.attackRegion.color = new Color(0, 0, 0, 0);//Color.RED
     }
 
     removeAttackRegion(): void {

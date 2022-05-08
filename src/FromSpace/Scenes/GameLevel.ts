@@ -189,7 +189,7 @@ export default class GameLevel extends Scene {
                 case FUS_Events.ATTACK_FINISHED:
                     {
                         (<PlayerController>this.player._ai).attacking = false;
-                        (<PlayerController>this.player._ai).attackRegion = null;
+                        //(<PlayerController>this.player._ai).attackRegion = null;
                         //this.sceneGraph.removeNode((<PlayerController>this.player._ai).attackRegion)
                         
                     }
