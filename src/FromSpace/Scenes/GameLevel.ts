@@ -112,7 +112,10 @@ export default class GameLevel extends Scene {
         }
 
         if (Input.isJustPressed("pause")) {
-            this.emitter.fireEvent(FUS_Events.PAUSE);
+            if (this.isPaused) 
+                this.emitter.fireEvent(FUS_Events.UNPAUSE);
+            else
+                this.emitter.fireEvent(FUS_Events.PAUSE);
         }
         
         if (Input.isKeyJustPressed("i")) {
@@ -153,7 +156,7 @@ export default class GameLevel extends Scene {
                     break;
                 case FUS_Events.PAUSE:
                     {
-                        Input.disableKeyInput();
+                        //Input.disableKeyInput();
                         console.log("PAUSED")
                         this.pause.setHidden(false);
                         this.isPaused = true;
@@ -167,7 +170,7 @@ export default class GameLevel extends Scene {
                 case FUS_Events.UNPAUSE:
                     {
                         console.log("UNPAUSED");
-                        Input.enableKeyInput();
+                        //Input.enableKeyInput();
                         this.isPaused = false;
                         this.pause.setHidden(true);
                         this.controls.setHidden(true);
@@ -354,7 +357,9 @@ export default class GameLevel extends Scene {
 
     protected addUI(){
         // Pause Screen
+        this.viewport.setCenter(600,400);
         const center = this.viewport.getCenter();
+        
 
         let pauseBack = <Button>this.add.uiElement(UIElementType.BUTTON, "pause", {position: new Vec2(center.x / 2, (center.y / 2) + 50), text: "Back"});
         pauseBack.size.set(200, 50);
