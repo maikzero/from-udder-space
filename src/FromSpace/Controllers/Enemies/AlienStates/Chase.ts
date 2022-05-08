@@ -14,7 +14,7 @@ export default class Chase extends AlienState {
         this.owner.animation.play('walk', true)
         this.pollTimer = new Timer(100)
         this.exitTimer = new Timer(1000)
-        this.parent.speed = 200
+        this.parent.speed = 140
 	}
 
     update(deltaT: number): void {
@@ -61,7 +61,7 @@ export default class Chase extends AlienState {
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
-        this.parent.speed = 200
+        this.parent.speed = 50
 		return {};
 	}
 }
