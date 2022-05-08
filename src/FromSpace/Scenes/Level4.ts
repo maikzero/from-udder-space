@@ -37,6 +37,7 @@ export default class Level4 extends GameLevel {
         this.viewport.setBounds(0, 0, 60*32, 60*32);
 
         this.playerSpawn = new Vec2(30*32, 40*32);
+        this.caughtPosition = new Vec2(30*32, 40*32);
 
         super.startScene();
         this.nextLevel = Level5

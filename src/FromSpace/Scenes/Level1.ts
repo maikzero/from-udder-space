@@ -44,6 +44,7 @@ export default class Level1 extends GameLevel {
 
         // TODO: Different Spawn
         this.playerSpawn = new Vec2(5*32, 5*32);
+        this.caughtPosition = new Vec2(0, 0)
 
         super.startScene();
 

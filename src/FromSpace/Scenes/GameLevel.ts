@@ -30,9 +30,12 @@ import EnemyController from "../Controllers/Enemies/EnemyController";
 export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
+    protected caughtPosition: Vec2;
     protected player: AnimatedSprite;
     invincible: Boolean;
     protected respawnTimer: Timer;
+
+    protected respawnBufferTimer: Timer;
 
     // Enemy variables
     protected alien: AnimatedSprite;
@@ -81,12 +84,17 @@ export default class GameLevel extends Scene {
         this.respawnTimer = new Timer(1000, () => {
             (<PlayerController>this.player._ai).hiding = false
             this.player.position = this.playerSpawn.clone()
+            //this.viewport.setCenter(this.player.position)
             this.player.visible = true
             this.player.enablePhysics();
             Input.enableInput();
-            this.player.isCollidable = true
             this.player.unfreeze();
+            this.respawnBufferTimer.start()
         });
+
+        this.respawnBufferTimer = new Timer(2000, () => {
+            this.player.isCollidable = true
+        })
 
         this.enemies = []
 
@@ -119,6 +127,7 @@ export default class GameLevel extends Scene {
 
         if(!this.viewport.includes(this.player) && this.started && this.player.isCollidable){
             this.player.isCollidable = false
+            let end = this.getWorldSize().y
             this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
         }
 
@@ -326,8 +335,9 @@ export default class GameLevel extends Scene {
                        // this.player.tweens.play("caught");
                         Input.disableInput();
                         this.player.disablePhysics();
-                        this.player.position.x = 0;
-                        this.player.position.y = 0
+                        this.player.position = this.caughtPosition.clone()
+                        // this.player.position.x = 0;
+                        // this.player.position.y = 0
                         this.player.visible = false
                         this.player.isCollidable = false
 
