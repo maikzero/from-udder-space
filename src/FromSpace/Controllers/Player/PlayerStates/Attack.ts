@@ -8,6 +8,7 @@ import Vec2 from "../../../../Wolfie2D/DataTypes/Vec2";
 import Rect from "../../../../Wolfie2D/Nodes/Graphics/Rect";
 import GameLevel from "../../../Scenes/GameLevel";
 import Timer from "../../../../Wolfie2D/Timing/Timer";
+import { GameEventType } from "../../../../Wolfie2D/Events/GameEventType";
 
 
 export default class Attack extends PlayerState {
@@ -22,6 +23,7 @@ export default class Attack extends PlayerState {
         }
         this.parent.addAttackRegion(new Vec2(this.owner.position.x + behindAdder, this.owner.position.y), new Vec2(200,200))
         this.owner.animation.play('fart', false, FUS_Events.ATTACK_FINISHED)
+        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "fart", loop: false, holdReference: false});
         this.parent.attacking = true
         //this.timer = new Timer(5000)
         //this.timer.start()
