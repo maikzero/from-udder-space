@@ -18,6 +18,7 @@ import { EaseFunctionType } from "../../../Wolfie2D/Utils/EaseFunctions";
 import Rect from "../../../Wolfie2D/Nodes/Graphics/Rect";
 import { GraphicType } from "../../../Wolfie2D/Nodes/Graphics/GraphicTypes";
 import Color from "../../../Wolfie2D/Utils/Color";
+import AABB from "../../../Wolfie2D/DataTypes/Shapes/AABB"
 
 export enum PlayerType {
     PLATFORMER = "platformer",
@@ -50,7 +51,7 @@ export default class PlayerController extends StateMachineAI {
     hiding: Boolean = false;
     paused: Boolean = false;
     gravity: number = 1000;
-    attackRegion: Rect
+    attackRegion: Rect;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         this.owner = owner;
@@ -163,10 +164,14 @@ export default class PlayerController extends StateMachineAI {
     }
 
     addAttackRegion(startingTile: Vec2, size: Vec2): void {
-        this.attackRegion = <Rect>this.owner.getScene().add.graphic(GraphicType.RECT, "primary", {position: startingTile.scale(32), size: size.scale(32)});
-        this.attackRegion.addPhysics(undefined, undefined, false, true);
+        this.attackRegion = <Rect>this.owner.getScene().add.graphic(GraphicType.RECT, "primary", {position: startingTile, size: size});
+        this.attackRegion.addPhysics(undefined, undefined, false, false);
         this.attackRegion.setTrigger("alien", FUS_Events.ALIEN_STUNNED, null);
         this.attackRegion.color = new Color(0, 0, 0, 0);
+    }
+
+    removeAttackRegion(): void {
+        this.owner.getScene().remove(this.attackRegion);
     }
 
 

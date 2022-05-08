@@ -187,6 +187,8 @@ export default class GameLevel extends Scene {
                     {
                         (<PlayerController>this.player._ai).attacking = false;
                         (<PlayerController>this.player._ai).attackRegion = null;
+                        //this.sceneGraph.removeNode((<PlayerController>this.player._ai).attackRegion)
+                        
                     }
                     break;
 
@@ -238,9 +240,10 @@ export default class GameLevel extends Scene {
 
                     case FUS_Events.ALIEN_STUNNED:
                     {
-                        let alien = (this.sceneGraph.getNode(event.data.get("node")))
+                        let alien = (this.sceneGraph.getNode(event.data.get("node")));
+                        (<AlienController>alien._ai).stunned = true;
                     }
-                    break
+                    break;
 
                     case FUS_Events.ALIEN_HIT_PLAYER: 
                     {   
@@ -383,12 +386,12 @@ export default class GameLevel extends Scene {
         controlsHeader.textColor = Color.WHITE;
         controlsHeader.fontSize = 45;
 
-        const controls1 = "AD to Move Left and Right"
-        const controls2 = "W to Jump"
-        const controls3 = "E to Hide under Box"
-        const controls4 = "R to Remove Box"
-        const controls5 = "Q to Fart"
-        const controls6 = "ESC to Pause"
+        const controls1 = "WAD to Move"
+        const controls2 = "E to Hide under Box"
+        const controls3 = "R to Remove Box"
+        const controls4 = "Q to Fart"
+        const controls5 = "I/U to Turn On/Off Invincibility"
+        const controls6 = "N to Skip to Next Level"
 
         const control_line1 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 60), text: controls1});
         const control_line2 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) - 40), text: controls2});
@@ -396,6 +399,7 @@ export default class GameLevel extends Scene {
         const control_line4 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2)), text: controls4});
         const control_line5 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 20), text: controls5});
         const control_line6 = <Label>this.add.uiElement(UIElementType.LABEL, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 40), text: controls6});
+        
 
         control_line1.textColor = Color.WHITE;
         control_line2.textColor = Color.WHITE;
@@ -403,8 +407,9 @@ export default class GameLevel extends Scene {
         control_line4.textColor = Color.WHITE;
         control_line5.textColor = Color.WHITE;
         control_line6.textColor = Color.WHITE;
+ 
 
-        const controlBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 80), text: "Back"});
+        const controlBack = this.add.uiElement(UIElementType.BUTTON, "controls", {position: new Vec2(center.x / 2, (center.y / 2) + 100), text: "Back"});
         controlBack.size.set(200, 50);
         controlBack.borderWidth = 2;
         controlBack.borderColor = Color.WHITE;

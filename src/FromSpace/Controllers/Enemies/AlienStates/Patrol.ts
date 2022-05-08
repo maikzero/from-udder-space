@@ -16,6 +16,9 @@ export default class Patrol extends AlienState {
         if (this.parent.paused) {
 			this.finished(AlienStates.PAUSED)
         }
+        else if (this.parent.stunned) {
+            this.finished(AlienStates.STUNNED)
+        }
         else if(this.parent.lastPlayerPos !== null){
             let distance = this.owner.position.distanceTo(this.parent.lastPlayerPos)
 
