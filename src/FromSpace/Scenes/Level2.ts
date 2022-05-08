@@ -15,6 +15,7 @@ export default class Level2 extends GameLevel {
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
         this.load.audio("jump", "demo_assets/sounds/jump.wav");
         this.load.audio("abduct", "demo_assets/sounds/abduct.wav");
+        this.load.audio("fart", "demo_assets/sounds/fart.wav");
         this.load.audio("caught", "demo_assets/sounds/caught.wav");
         this.load.audio("music", "demo_assets/sounds/game-music.mp3");
     }
@@ -26,6 +27,7 @@ export default class Level2 extends GameLevel {
         this.resourceManager.keepAudio("jump")
         this.resourceManager.keepAudio("abduct")
         this.resourceManager.keepAudio("caught")
+        this.resourceManager.keepAudio("fart")
         this.resourceManager.keepAudio("music")
     }
 
@@ -35,6 +37,7 @@ export default class Level2 extends GameLevel {
         this.viewport.setBounds(0, 0, 64*32, 24*32);
 
         this.playerSpawn = new Vec2(4*32, 15*32);
+        this.caughtPosition = new Vec2(4*32, 15*32);
 
         super.startScene();
         this.nextLevel = Level3

@@ -30,9 +30,12 @@ import EnemyController from "../Controllers/Enemies/EnemyController";
 export default class GameLevel extends Scene {
     // Player variables
     protected playerSpawn: Vec2;
+    protected caughtPosition: Vec2;
     protected player: AnimatedSprite;
     invincible: Boolean;
     protected respawnTimer: Timer;
+
+    protected respawnBufferTimer: Timer;
 
     // Enemy variables
     protected alien: AnimatedSprite;
@@ -65,6 +68,8 @@ export default class GameLevel extends Scene {
     // Controls Screen
     protected controls: Layer;
 
+    protected started: Boolean = false;
+
     startScene(): void {
         this.initLayers();
         this.initViewport();
@@ -79,12 +84,17 @@ export default class GameLevel extends Scene {
         this.respawnTimer = new Timer(1000, () => {
             (<PlayerController>this.player._ai).hiding = false
             this.player.position = this.playerSpawn.clone()
+            //this.viewport.setCenter(this.player.position)
             this.player.visible = true
             this.player.enablePhysics();
             Input.enableInput();
-            this.player.isCollidable = true
             this.player.unfreeze();
+            this.respawnBufferTimer.start()
         });
+
+        this.respawnBufferTimer = new Timer(2000, () => {
+            this.player.isCollidable = true
+        })
 
         this.enemies = []
 
@@ -100,6 +110,10 @@ export default class GameLevel extends Scene {
 
         // Initially disable player movement
         Input.disableInput();
+
+        
+
+        
     }
 
     updateScene(deltaT: number){
@@ -109,6 +123,12 @@ export default class GameLevel extends Scene {
         if(this.timeLeft <= 0){
             GameLevel.livesCount = 20
             this.sceneManager.changeToScene(MainMenu);
+        }
+
+        if(!this.viewport.includes(this.player) && this.started && this.player.isCollidable){
+            this.player.isCollidable = false
+            let end = this.getWorldSize().y
+            this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
         }
 
         if (Input.isJustPressed("pause")) {
@@ -189,7 +209,7 @@ export default class GameLevel extends Scene {
                 case FUS_Events.ATTACK_FINISHED:
                     {
                         (<PlayerController>this.player._ai).attacking = false;
-                        (<PlayerController>this.player._ai).attackRegion = null;
+                        //(<PlayerController>this.player._ai).attackRegion = null;
                         //this.sceneGraph.removeNode((<PlayerController>this.player._ai).attackRegion)
                         
                     }
@@ -215,6 +235,7 @@ export default class GameLevel extends Scene {
                     {
                         // Re-enable controls
                         Input.enableInput();
+                        this.started = true
                     }
                     break;
                 
@@ -236,6 +257,7 @@ export default class GameLevel extends Scene {
                                     ]
                                 }
                             }
+                            this.started = false
                             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
                         }
                     }
@@ -243,8 +265,37 @@ export default class GameLevel extends Scene {
 
                     case FUS_Events.ALIEN_STUNNED:
                     {
-                        let alien = (this.sceneGraph.getNode(event.data.get("node")));
-                        (<AlienController>alien._ai).stunned = true;
+                        console.log('hit player')
+                        let node = this.sceneGraph.getNode(event.data.get("node"));
+                        let other = this.sceneGraph.getNode(event.data.get("other"));
+
+                        var alienSprite
+                        var attackRegionSprite
+                        
+                        if(node === (<PlayerController>this.player._ai).attackRegion){
+                            // Node is player, other is balloon
+                            alienSprite = <AnimatedSprite>other
+                            attackRegionSprite = <AnimatedSprite>node
+                        }
+                        else {
+                            // Other is player, node is balloon
+                            alienSprite = <AnimatedSprite>node
+                            attackRegionSprite = <AnimatedSprite>other
+                        }
+
+                        if((<PlayerController>this.player._ai).attackRegion?.isCollidable){
+                            (<AlienController>alienSprite._ai).stunned = true;
+                        }
+                        // cleans up hanging attack regions
+                        else{
+                            if(attackRegionSprite.isCollidable){
+                                attackRegionSprite.disablePhysics()
+                                attackRegionSprite.isCollidable = false
+                                this.remove(attackRegionSprite);
+                                attackRegionSprite.destroy()
+                                attackRegionSprite = null
+                            }
+                        }
                     }
                     break;
 
@@ -284,8 +335,9 @@ export default class GameLevel extends Scene {
                        // this.player.tweens.play("caught");
                         Input.disableInput();
                         this.player.disablePhysics();
-                        this.player.position.x = 0;
-                        this.player.position.y = 0
+                        this.player.position = this.caughtPosition.clone()
+                        // this.player.position.x = 0;
+                        // this.player.position.y = 0
                         this.player.visible = false
                         this.player.isCollidable = false
 
@@ -548,7 +600,7 @@ export default class GameLevel extends Scene {
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
         if(typeof alien !== 'undefined'){
-            if(this.player.isCollidable){
+            if(this.player.isCollidable && !(<AlienController>alien._ai).stunned){
                 this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
             }
         }

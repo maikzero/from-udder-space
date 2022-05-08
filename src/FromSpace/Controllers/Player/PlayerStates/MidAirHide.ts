@@ -11,12 +11,14 @@ import PlayerState from "./PlayerState";
 
 export default class MidAirHide extends PlayerState {
 	owner: AnimatedSprite;
+    direction: Vec2;
 
     onEnter(options: Record<string, any>): void {
         console.log('enter mahide')
         if(!this.parent.hiding){
             this.owner.animation.play('hide', false, FUS_Events.PLAY_HIDE)
         }
+        this.direction = this.getInputDirection()
 
         this.parent.hiding = true
 	}
@@ -31,7 +33,7 @@ export default class MidAirHide extends PlayerState {
 
         // This equation slows you down horizontally as you fall/rise through the air
         if(this.parent.velocity.x !== 0){
-		    this.parent.velocity.x += this.parent.speed/3.5 - 0.4*this.parent.velocity.x;
+		    this.parent.velocity.x += this.direction.x * (this.parent.speed/3.5 - this.direction.x * 0.4 * this.parent.velocity.x);
         }
 
         this.owner.move(this.parent.velocity.scaled(deltaT));
