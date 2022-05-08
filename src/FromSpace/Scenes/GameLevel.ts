@@ -65,6 +65,8 @@ export default class GameLevel extends Scene {
     // Controls Screen
     protected controls: Layer;
 
+    protected started: Boolean = false;
+
     startScene(): void {
         this.initLayers();
         this.initViewport();
@@ -100,6 +102,10 @@ export default class GameLevel extends Scene {
 
         // Initially disable player movement
         Input.disableInput();
+
+        
+
+        
     }
 
     updateScene(deltaT: number){
@@ -109,6 +115,11 @@ export default class GameLevel extends Scene {
         if(this.timeLeft <= 0){
             GameLevel.livesCount = 20
             this.sceneManager.changeToScene(MainMenu);
+        }
+
+        if(!this.viewport.includes(this.player) && this.started && this.player.isCollidable){
+            this.player.isCollidable = false
+            this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
         }
 
         if (Input.isJustPressed("pause")) {
@@ -215,6 +226,7 @@ export default class GameLevel extends Scene {
                     {
                         // Re-enable controls
                         Input.enableInput();
+                        this.started = true
                     }
                     break;
                 
@@ -236,6 +248,7 @@ export default class GameLevel extends Scene {
                                     ]
                                 }
                             }
+                            this.started = false
                             this.sceneManager.changeToScene(this.nextLevel, {}, sceneOptions);
                         }
                     }
