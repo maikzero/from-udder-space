@@ -166,12 +166,19 @@ export default class PlayerController extends StateMachineAI {
     addAttackRegion(startingTile: Vec2, size: Vec2): void {
         this.attackRegion = <Rect>this.owner.getScene().add.graphic(GraphicType.RECT, "primary", {position: startingTile, size: size});
         this.attackRegion.addPhysics(undefined, undefined, false, false);
+        this.attackRegion.isCollidable = true
         this.attackRegion.setTrigger("alien", FUS_Events.ALIEN_STUNNED, null);
         this.attackRegion.color = new Color(0, 0, 0, 0);
     }
 
     removeAttackRegion(): void {
-        this.owner.getScene().remove(this.attackRegion);
+        if(this.attackRegion !== null){
+            this.attackRegion.disablePhysics()
+            this.attackRegion.isCollidable = false
+            this.owner.getScene().remove(this.attackRegion);
+            this.attackRegion.destroy()
+            this.attackRegion = null
+        }
     }
 
 

@@ -9,8 +9,9 @@ export default class Stunned extends AlienState {
     timer: Timer
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('stunned', false)
-        this.timer = new Timer(2000)
+        this.owner.animation.play('stunned', true)
+        //this.owner.isCollidable = false
+        this.timer = new Timer(10000)
         this.timer.start()
         console.log("STUNNED")
         
@@ -25,6 +26,7 @@ export default class Stunned extends AlienState {
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
+       // this.owner.isCollidable = true
         this.parent.stunned = false;
 		return {};
 	}

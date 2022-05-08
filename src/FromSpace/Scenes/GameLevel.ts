@@ -243,8 +243,37 @@ export default class GameLevel extends Scene {
 
                     case FUS_Events.ALIEN_STUNNED:
                     {
-                        let alien = (this.sceneGraph.getNode(event.data.get("node")));
-                        (<AlienController>alien._ai).stunned = true;
+                        console.log('hit player')
+                        let node = this.sceneGraph.getNode(event.data.get("node"));
+                        let other = this.sceneGraph.getNode(event.data.get("other"));
+
+                        var alienSprite
+                        var attackRegionSprite
+                        
+                        if(node === (<PlayerController>this.player._ai).attackRegion){
+                            // Node is player, other is balloon
+                            alienSprite = <AnimatedSprite>other
+                            attackRegionSprite = <AnimatedSprite>node
+                        }
+                        else {
+                            // Other is player, node is balloon
+                            alienSprite = <AnimatedSprite>node
+                            attackRegionSprite = <AnimatedSprite>other
+                        }
+
+                        if((<PlayerController>this.player._ai).attackRegion?.isCollidable){
+                            (<AlienController>alienSprite._ai).stunned = true;
+                        }
+                        // cleans up hanging attack regions
+                        else{
+                            if(attackRegionSprite.isCollidable){
+                                attackRegionSprite.disablePhysics()
+                                attackRegionSprite.isCollidable = false
+                                this.remove(attackRegionSprite);
+                                attackRegionSprite.destroy()
+                                attackRegionSprite = null
+                            }
+                        }
                     }
                     break;
 
@@ -548,7 +577,7 @@ export default class GameLevel extends Scene {
 
     protected handlePlayerAlienCollision(player: AnimatedSprite, alien: AnimatedSprite){
         if(typeof alien !== 'undefined'){
-            if(this.player.isCollidable){
+            if(this.player.isCollidable && !(<AlienController>alien._ai).stunned){
                 this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
             }
         }
