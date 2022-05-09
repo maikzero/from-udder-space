@@ -60,7 +60,7 @@ export default class Level1 extends GameLevel {
                     ]
 
         aliensInitial.forEach((options) => {
-            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player, spawn: options.start, pitDeath: 24*32});
         })
 
         let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14},

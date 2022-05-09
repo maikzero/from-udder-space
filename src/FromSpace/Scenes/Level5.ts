@@ -5,6 +5,7 @@ import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Input from "../../Wolfie2D/Input/Input";
 import Level6 from "./Level6";
+import PlayerController from "../Controllers/Player/PlayerController";
 
 
 export default class Level5 extends GameLevel {
@@ -44,7 +45,7 @@ export default class Level5 extends GameLevel {
         this.nextLevel = Level6
 
         this.addLevelEnd(new Vec2(58, 24), new Vec2(2, 2));
-
+        (<PlayerController>this.player._ai).gravity = 600
         
 
        // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});

@@ -10,6 +10,7 @@ import Patrol from "./AlienStates/Patrol";
 import Chase from "./AlienStates/Chase";
 import Stunned from "./AlienStates/Stunned";
 import Paused from "./AlienStates/Paused";
+import GameLevel from "../../Scenes/GameLevel";
 
 export enum AlienStates {
 	CHASE = "CHASE",
@@ -24,6 +25,8 @@ export default class AlienController extends EnemyController {
     inRange: number = 150
     tilemap: OrthogonalTilemap;
     stunned: Boolean;
+    spawnPoint: Vec2;
+    pitDeath: number;
 
     initializeAI(owner: GameNode, options: Record<string, any>){
         super.initializeAI(owner, options)
@@ -35,6 +38,9 @@ export default class AlienController extends EnemyController {
         this.addState(AlienStates.CHASE, new Chase(this, owner));
         this.addState(AlienStates.PAUSED, new Paused(this, owner));
         this.addState(AlienStates.STUNNED, new Stunned(this, owner));
+
+        this.spawnPoint = new Vec2(options.spawn.x * 32, options.spawn.y * 32)
+        this.pitDeath = options.pitDeath
 
         this.direction = new Vec2(-1, 0);
         // Initialize starting state as patrol
@@ -69,5 +75,8 @@ export default class AlienController extends EnemyController {
 
 	update(deltaT: number): void {
 		super.update(deltaT);
+        if(this.owner.position.y > this.pitDeath){
+            this.owner.position = this.spawnPoint.clone()
+        }
 	}
 }

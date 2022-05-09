@@ -35,7 +35,7 @@ export default class GameLevel extends Scene {
     invincible: Boolean;
     protected respawnTimer: Timer;
 
-    protected pitDeath: number;
+    pitDeath: number;
 
     protected respawnBufferTimer: Timer;
 
@@ -86,6 +86,7 @@ export default class GameLevel extends Scene {
         this.respawnTimer = new Timer(1000, () => {
             (<PlayerController>this.player._ai).hiding = false
             this.player.position = this.playerSpawn.clone()
+            this.player._velocity.y = 0
             //this.viewport.setCenter(this.player.position)
             this.player.visible = true
             this.player.enablePhysics();
@@ -341,6 +342,7 @@ export default class GameLevel extends Scene {
                         Input.disableInput();
                         this.player.disablePhysics();
                         this.player.position = this.caughtPosition.clone()
+                        this.player._velocity.y = 0
                         // this.player.position.x = 0;
                         // this.player.position.y = 0
                         this.player.visible = false

@@ -15,6 +15,7 @@ import Level2 from "./Level2";
 import Level3 from "./Level3";
 import Level4 from "./Level4";
 import Level5 from "./Level5";
+import Level6 from "./Level6";
 
 
 export default class MainMenu extends Scene {
@@ -307,6 +308,9 @@ export default class MainMenu extends Scene {
         if (Input.isKeyJustPressed("5")) {
             this.goToLevel(Level5)
         }
+        if (Input.isKeyJustPressed("6")) {
+            this.goToLevel(Level6)
+        }
 
 
         while(this.receiver.hasNextEvent()){
@@ -346,6 +350,9 @@ export default class MainMenu extends Scene {
             }
             if(event.type === "level5"){
                 this.goToLevel(Level5)
+            }
+            if(event.type === "level6"){
+                this.goToLevel(Level6)
             }
             if(event.type === "about"){
                 this.about.setHidden(false);

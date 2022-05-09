@@ -6,6 +6,7 @@ import GameLevel from "./GameLevel";
 import Level5 from "./Level5";
 import Input from "../../Wolfie2D/Input/Input";
 import MainMenu from "./MainMenu";
+import PlayerController from "../Controllers/Player/PlayerController";
 
 export default class Level4 extends GameLevel {
     loadScene(): void {
@@ -50,7 +51,7 @@ export default class Level4 extends GameLevel {
                     ]
 
         aliensInitial.forEach((options) => {
-            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player, spawn: options.start, pitDeath: 60*32});
         })
 
         let ufosInitial = [{start: new Vec2(10, 5), left: 2, right: 22},
@@ -59,7 +60,9 @@ export default class Level4 extends GameLevel {
             this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
         }) 
 
-       this.addLevelEnd(new Vec2(61, 22), new Vec2(3, 3));
+       this.addLevelEnd(new Vec2(890/32, 400/32), new Vec2(3, 3));
+
+       (<PlayerController>this.player._ai).gravity = 600
 
        // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }

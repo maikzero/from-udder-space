@@ -138,29 +138,29 @@ export default class PlayerController extends StateMachineAI {
 
     update(deltaT: number): void {
 		super.update(deltaT);
-        while(this.receiver.hasNextEvent()){
-            let event = this.receiver.getNextEvent();
+        // while(this.receiver.hasNextEvent()){
+        //     let event = this.receiver.getNextEvent();
 
-            switch(event.type){
-                case FUS_Events.ATTACK_FINISHED:
-                    {
-                        this.changeState(PlayerStates.IDLE)
-                    }
-                    break;
-                case FUS_Events.PAUSE:
-                    {
-                       // console.log('got pause');
-                        this.changeState(PlayerStates.PAUSED);
-                    }
-                    break;
-                case FUS_Events.UNPAUSE:
-                    {
-                       // console.log('got unpause');
-                        this.changeState(PlayerStates.IDLE)
-                    }
-            }
+        //     switch(event.type){
+        //         case FUS_Events.ATTACK_FINISHED:
+        //             {
+        //                 this.changeState(PlayerStates.IDLE)
+        //             }
+        //             break;
+        //         case FUS_Events.PAUSE:
+        //             {
+        //                // console.log('got pause');
+        //                 this.changeState(PlayerStates.PAUSED);
+        //             }
+        //             break;
+        //         case FUS_Events.UNPAUSE:
+        //             {
+        //                // console.log('got unpause');
+        //                 this.changeState(PlayerStates.IDLE)
+        //             }
+        //     }
 
-        }
+        // }
     }
 
     addAttackRegion(startingTile: Vec2, size: Vec2): void {

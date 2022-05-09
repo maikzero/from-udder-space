@@ -4,6 +4,7 @@ import { GameEventType } from "../../Wolfie2D/Events/GameEventType";
 import { FUS_Color } from "../fus_color";
 import GameLevel from "./GameLevel";
 import Input from "../../Wolfie2D/Input/Input";
+import MainMenu from "./MainMenu";
 
 export default class Level6 extends GameLevel {
     loadScene(): void {
@@ -65,7 +66,7 @@ export default class Level6 extends GameLevel {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level5, {}, sceneOptions)
+            this.sceneManager.changeToScene(MainMenu, {}, sceneOptions)
         }
     }
 }
