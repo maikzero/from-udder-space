@@ -19,7 +19,7 @@ export enum AlienStates {
 }
 
 export default class AlienController extends EnemyController {
-    speed: number = 100;
+    speed: number = 50;
 	gravity: number = 1000;
     inRange: number = 150
     tilemap: OrthogonalTilemap;
