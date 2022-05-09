@@ -9,7 +9,8 @@ export default class Stunned extends AlienState {
     timer: Timer
 
     onEnter(options: Record<string, any>): void {
-        this.owner.animation.play('stunned', true)
+        this.owner.animation.play('stunned', false)
+        this.owner.animation.queue('stunned_loop', true)
         this.timer = new Timer(3000)
         this.timer.start()
 
