@@ -14,6 +14,7 @@ export default class Stunned extends AlienState {
         this.timer = new Timer(3000)
         this.timer.start()
 
+        
         console.log("STUNNED")
         
 	}
