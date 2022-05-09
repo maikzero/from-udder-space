@@ -83,7 +83,7 @@ export default class Level5 extends GameLevel {
                     ]
                 }
             }
-            this.sceneManager.changeToScene(Level5, {}, sceneOptions)
+            this.sceneManager.changeToScene(Level6, {}, sceneOptions)
         }
     }
 }
