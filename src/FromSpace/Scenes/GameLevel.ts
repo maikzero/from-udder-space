@@ -35,6 +35,8 @@ export default class GameLevel extends Scene {
     invincible: Boolean;
     protected respawnTimer: Timer;
 
+    protected pitDeath: number;
+
     protected respawnBufferTimer: Timer;
 
     // Enemy variables
@@ -125,10 +127,13 @@ export default class GameLevel extends Scene {
             this.sceneManager.changeToScene(MainMenu);
         }
 
-        if(!this.viewport.includes(this.player) && this.started && this.player.isCollidable){
-            this.player.isCollidable = false
-            let end = this.getWorldSize().y
-            this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
+        //if(!this.viewport.includes(this.player) && this.started && this.player.isCollidable){
+        if(this.player.position.y > this.pitDeath){
+            if(this.player.isCollidable){
+                this.player.isCollidable = false
+                let end = this.getWorldSize().y
+                this.emitter.fireEvent(FUS_Events.PLAYER_CAUGHT)
+            }
         }
 
         if (Input.isJustPressed("pause")) {

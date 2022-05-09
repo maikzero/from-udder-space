@@ -35,6 +35,7 @@ export default class Level4 extends GameLevel {
         // Add the level 2 tilemap
         this.add.tilemap("level4", new Vec2(1, 1));
         this.viewport.setBounds(0, 0, 60*32, 60*32);
+        this.pitDeath = 60*32
 
         this.playerSpawn = new Vec2(30*32, 40*32);
         this.caughtPosition = new Vec2(30*32, 40*32);
