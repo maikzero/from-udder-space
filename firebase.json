@@ -6,7 +6,7 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "redirects": [ {
+    "redirects": [  {
       "source": "/benchmark1",
       "destination": "/benchmark1.html",
       "type": 301

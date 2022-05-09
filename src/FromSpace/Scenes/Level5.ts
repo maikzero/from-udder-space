@@ -44,20 +44,22 @@ export default class Level5 extends GameLevel {
         super.startScene();
         this.nextLevel = Level6
 
-        let aliensInitial = [{start: new Vec2(23, 14), left: 20, right: 26},
-                        {start: new Vec2(23, 21), left: 19, right: 28},
-                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
-                        {start: new Vec2(44, 9), left: 40, right: 48},
+        let aliensInitial = [{start: new Vec2(26, 16), left: 25, right: 26},
+                        {start: new Vec2(14, 20), left: 12, right: 16},
+                        {start: new Vec2(20, 5), left: 13, right: 27},
+                        {start: new Vec2(37, 20), left: 33, right: 40},
                     ]
 
         aliensInitial.forEach((options) => {
             this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player, spawn: options.start, pitDeath: 24*32});
         })
 
-        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14}]
+        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14},
+            {start: new Vec2(15, 1), left: 20, right: 30},
+            {start: new Vec2(50, 1), left: 40, right: 60}]
         ufosInitial.forEach((options) => {
             this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
-        }) 
+        })
 
        this.addLevelEnd(new Vec2(57, 12), new Vec2(3, 3));
 
