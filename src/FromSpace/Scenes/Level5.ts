@@ -63,6 +63,8 @@ export default class Level5 extends GameLevel {
 
        this.addLevelEnd(new Vec2(57, 12), new Vec2(3, 3));
 
+       (<PlayerController>this.player._ai).gravity = 600
+
         
 
        // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
