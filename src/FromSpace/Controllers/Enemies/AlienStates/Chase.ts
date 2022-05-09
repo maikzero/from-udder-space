@@ -61,11 +61,7 @@ export default class Chase extends AlienState {
 
     onExit(): Record<string, any> {
         this.owner.animation.stop();
-<<<<<<< HEAD
-        //this.parent.speed = 200
-=======
         this.parent.speed = 50
->>>>>>> 76d8934143ed04a6f5b6171f1aec4f33cbaf55a3
 		return {};
 	}
 }
