@@ -42,7 +42,23 @@ export default class Level4 extends GameLevel {
         super.startScene();
         this.nextLevel = Level5
 
-        this.addLevelEnd(new Vec2(1990/32, 720/32), new Vec2(2, 2));
+        let aliensInitial = [{start: new Vec2(24, 31), left: 20, right: 29},
+                        {start: new Vec2(23, 19), left: 18, right: 28},
+                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
+                        {start: new Vec2(44, 9), left: 40, right: 48},
+                    ]
+
+        aliensInitial.forEach((options) => {
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        })
+
+        let ufosInitial = [{start: new Vec2(10, 5), left: 2, right: 22},
+                            {start: new Vec2(49, 6), left: 43, right: 56}]
+        ufosInitial.forEach((options) => {
+            this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        }) 
+
+       this.addLevelEnd(new Vec2(61, 22), new Vec2(3, 3));
 
        // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }
