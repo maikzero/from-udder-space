@@ -45,8 +45,8 @@ export default class Level5 extends GameLevel {
         this.nextLevel = Level6
 
         let aliensInitial = [{start: new Vec2(23, 14), left: 20, right: 26},
-                        {start: new Vec2(23, 21), left: 19, right: 28},
-                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
+                        {start: new Vec2(23, 16), left: 22, right: 28},
+                        {start: new Vec2(48.5, 16), left: 48.5, right: 48.5},
                         {start: new Vec2(44, 9), left: 40, right: 48},
                     ]
 
@@ -60,6 +60,8 @@ export default class Level5 extends GameLevel {
         }) 
 
        this.addLevelEnd(new Vec2(57, 12), new Vec2(3, 3));
+
+       (<PlayerController>this.player._ai).gravity = 600
 
         
 
