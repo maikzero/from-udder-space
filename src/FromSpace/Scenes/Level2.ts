@@ -9,7 +9,7 @@ import Level3 from "./Level3";
 export default class Level2 extends GameLevel {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level2", "final project assets/level2.json");
+        this.load.tilemap("level2", "final project assets/outsidebarn.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
@@ -41,8 +41,23 @@ export default class Level2 extends GameLevel {
 
         super.startScene();
         this.nextLevel = Level3
+        
+        let aliensInitial = [{start: new Vec2(49, 6), left: 15, right: 24},
+                        {start: new Vec2(42, 22), left: 36, right: 48},
+                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
+                        {start: new Vec2(44, 9), left: 40, right: 48},
+                    ]
 
-        this.addLevelEnd(new Vec2(1990/32, 720/32), new Vec2(2, 2));
+        aliensInitial.forEach((options) => {
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        })
+
+        let ufosInitial = [{start: new Vec2(33, 0), left: 23, right: 45}]
+        ufosInitial.forEach((options) => {
+            this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        }) 
+
+        this.addLevelEnd(new Vec2(61, 22), new Vec2(3, 3));
 
         //this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "music", loop: true, holdReference: true});
     }

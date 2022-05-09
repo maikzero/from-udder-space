@@ -9,7 +9,7 @@ import Input from "../../Wolfie2D/Input/Input";
 export default class Level3 extends GameLevel {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level3", "final project assets/outsidebarn.json");
+        this.load.tilemap("level3", "final project assets/level2.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
@@ -40,6 +40,20 @@ export default class Level3 extends GameLevel {
 
         super.startScene();
         this.nextLevel = Level4
+        let aliensInitial = [{start: new Vec2(23, 14), left: 20, right: 26},
+                        {start: new Vec2(23, 21), left: 19, right: 28},
+                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
+                        {start: new Vec2(44, 9), left: 40, right: 48},
+                    ]
+
+        aliensInitial.forEach((options) => {
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        })
+
+        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14}]
+        ufosInitial.forEach((options) => {
+            this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        }) 
 
        // this.addLevelEnd(new Vec2(418/32, 720/32), new Vec2(2, 2));
 
