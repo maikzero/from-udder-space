@@ -10,7 +10,7 @@ import Level6 from "./Level6";
 export default class Level5 extends GameLevel {
     loadScene(): void {
         // Load resources
-        this.load.tilemap("level5", "final project assets/space.json");
+        this.load.tilemap("level5", "final project assets/moon.json");
         this.load.spritesheet("player", "demo_assets/spritesheets/platformer/cow.json");
         this.load.spritesheet("alien", "demo_assets/spritesheets/platformer/alien.json");
         this.load.spritesheet("ufo", "demo_assets/spritesheets/platformer/ufo.json");
@@ -42,7 +42,22 @@ export default class Level5 extends GameLevel {
         super.startScene();
         this.nextLevel = Level6
 
-        this.addLevelEnd(new Vec2(58, 24), new Vec2(2, 2));
+        let aliensInitial = [{start: new Vec2(23, 14), left: 20, right: 26},
+                        {start: new Vec2(23, 21), left: 19, right: 28},
+                        {start: new Vec2(48.5, 21), left: 48.5, right: 48.5},
+                        {start: new Vec2(44, 9), left: 40, right: 48},
+                    ]
+
+        aliensInitial.forEach((options) => {
+            this.addAlien("alien", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        })
+
+        let ufosInitial = [{start: new Vec2(10, 1), left: 6, right: 14}]
+        ufosInitial.forEach((options) => {
+            this.addUFO("ufo", options.start, {leftLimit: options.left, rightLimit: options.right, player: this.player});
+        }) 
+
+       this.addLevelEnd(new Vec2(57, 12), new Vec2(3, 3));
 
         
 

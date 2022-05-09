@@ -49,23 +49,6 @@ export default class Level6 extends GameLevel {
 
     updateScene(deltaT: number): void {
         super.updateScene(deltaT);
-        if (Input.isKeyJustPressed("n")) {
-            console.log("Skipping to next level")
-            let sceneOptions = {
-                physics: {
-                    groupNames: ["ground", "player", "alien", "ufo", "ray"],
-                    collisions:
-                    [
-                        [0, 1, 1, 1, 1],
-                        [1, 0, 0, 0, 0],
-                        [1, 0, 0, 1, 1],
-                        [1, 0, 1, 0, 1],
-                        [1, 0, 1, 1, 0]
-
-                    ]
-                }
-            }
-            this.sceneManager.changeToScene(Level5, {}, sceneOptions)
-        }
+        
     }
 }
