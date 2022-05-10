@@ -286,7 +286,7 @@ export default class MainMenu extends Scene {
         this.receiver.subscribe(["level1", "level2", "level3", "level4", "level5", "level6"]);
 
         // Scene has started, so start playing music
-        this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
+       // this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: "menu", loop: true, holdReference: true});
     }
     updateScene(){
 
